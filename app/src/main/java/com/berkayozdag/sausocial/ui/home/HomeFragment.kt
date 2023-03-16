@@ -4,35 +4,45 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.berkayozdag.sausocial.databinding.FragmentHomeBinding
+import com.berkayozdag.sausocial.ui.home.adapters.ViewPagerAdapter
+import com.google.android.material.tabs.TabLayoutMediator
+
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
-
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        setupViewPager()
+        return binding.root
+    }
 
-        val textView: TextView = binding.textViewHome
-        homeViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
-        return root
+    private fun setupViewPager() = with(binding) {
+        val fragmentList = arrayListOf(
+            AllPostsFragment(),
+            PostsIFollowFragment(),
+        )
+
+        val adapter = ViewPagerAdapter(fragmentList, childFragmentManager, lifecycle)
+        viewPager.adapter = adapter
+
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            when (position) {
+                0 -> {
+                    tab.text = "All posts"
+                }
+                1 -> {
+                    tab.text = "Following"
+                }
+            }
+        }.attach()
     }
 
     override fun onDestroyView() {

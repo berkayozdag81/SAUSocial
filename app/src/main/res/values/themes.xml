@@ -17,4 +17,18 @@
         <item name="fontFamily">@font/text_regular</item>
         <item name="textAllCaps">false</item>
     </style>
+
+    <!-- Post Detail Follow Button-->
+    <style name="PostDetailFollowButton">
+        <item name="fontFamily">@font/text_bold</item>
+        <item name="textAllCaps">false</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <!-- Post Detail Comment Edit Text-->
+    <style name="PostDetailCommentEditText">
+        <item name="fontFamily">@font/text_regular</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
 </resources>

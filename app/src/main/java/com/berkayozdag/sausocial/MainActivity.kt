@@ -1,11 +1,11 @@
 package com.berkayozdag.sausocial
 
 import android.os.Bundle
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupWithNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
+import com.berkayozdag.sausocial.R.*
 import com.berkayozdag.sausocial.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -14,21 +14,24 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(id.nav_host_fragment_activity_main) as NavHostFragment
+        val navController = navHostFragment.navController
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id == id.postDetailFragment) {
+                binding.bottomNavigationView.visibility = View.GONE
+            } else {
+                binding.bottomNavigationView.visibility = View.VISIBLE
+            }
+        }
 
-        val bottomNavigationView: BottomNavigationView = binding.bottomNavigationView
-
-        val navController = findNavController(R.id.nav_host_fragment_activity_main)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_home, R.id.navigation_search, R.id.navigation_polls, R.id.navigation_profile
+        binding.bottomNavigationView.apply {
+            NavigationUI.setupWithNavController(
+                this,
+                navController
             )
-        )
-
-        bottomNavigationView.setupWithNavController(navController)
+        }
     }
 }

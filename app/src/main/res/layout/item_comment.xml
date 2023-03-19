@@ -4,10 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/selectableItemBackground"
-    android:clickable="true"
-    android:focusable="true"
-    android:id="@+id/layoutPost"
     android:padding="16dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -25,61 +21,42 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="@+id/imageViewUserProfile"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageViewUserProfile"
         app:layout_constraintTop_toTopOf="@+id/imageViewUserProfile">
 
         <TextView
             android:id="@+id/textViewUserName"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/text_bold"
-            tools:text="Ahmet Selim Öztürk"
             android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            tools:text="Ahmet Selim Öztürk" />
 
         <TextView
             android:id="@+id/textViewUserDepartment"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:fontFamily="@font/text_regular"
-            tools:text="Computer Engineering"
             android:textColor="@color/grey_500"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            tools:text="Computer Engineering" />
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/layoutPostContent"
+    <TextView
+        android:id="@+id/textViewComment"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:fontFamily="@font/text_regular"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/layoutNameAndDepartment"
         app:layout_constraintStart_toStartOf="@+id/layoutNameAndDepartment"
-        app:layout_constraintTop_toBottomOf="@+id/layoutNameAndDepartment">
-
-        <ImageView
-            android:id="@+id/imageViewPost"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/sample_post_image"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/textViewPostDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/text_regular"
-            tools:text="We are going to be here again next week. You should come eaerlier so you can get in the front."
-            android:textColor="@color/black"
-            android:textSize="16sp" />
-
-    </LinearLayout>
+        app:layout_constraintTop_toBottomOf="@id/layoutNameAndDepartment"
+        tools:text="We are going to be here again next week. You should come eaerlier so you can get in the front." />
 
     <LinearLayout
         android:id="@+id/layoutLikesAndComments"
@@ -88,8 +65,8 @@
         android:layout_marginTop="8dp"
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/layoutPostContent"
-        app:layout_constraintTop_toBottomOf="@id/layoutPostContent">
+        app:layout_constraintStart_toStartOf="@+id/textViewComment"
+        app:layout_constraintTop_toBottomOf="@id/textViewComment">
 
         <TextView
             android:id="@+id/textViewPostCreatedDate"
@@ -97,7 +74,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:fontFamily="@font/text_regular"
-            tools:text="11 hours ago"
+            android:text="18.03.2023 23:11"
             android:textColor="@color/grey_500"
             android:textSize="12sp" />
 
@@ -105,26 +82,9 @@
             android:id="@+id/buttonPostLike"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/ic_like" />
-
-        <TextView
-            android:id="@+id/textViewPostNumberOfComment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:fontFamily="@font/text_regular"
-            tools:text="124"
-            android:textColor="@color/grey_500"
-            android:textSize="12sp" />
-
-        <ImageButton
-            android:id="@+id/buttonPostComment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/ic_comment" />
+            android:src="@drawable/ic_like" />
 
         <TextView
             android:id="@+id/textViewPostNumberOfLike"
@@ -132,10 +92,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:fontFamily="@font/text_regular"
-            tools:text="96"
+            android:text="96"
             android:textColor="@color/grey_500"
             android:textSize="12sp" />
-
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,4 @@
-package com.berkayozdag.sausocial.ui.home
+package com.berkayozdag.sausocial.ui.post_detail
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,23 +9,23 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.berkayozdag.sausocial.R
+import com.berkayozdag.sausocial.common.Comment
 import com.berkayozdag.sausocial.common.HomeMockData
-import com.berkayozdag.sausocial.common.Post
-import com.berkayozdag.sausocial.databinding.FragmentAllPostBinding
-import com.berkayozdag.sausocial.ui.home.adapters.PostsAdapter
+import com.berkayozdag.sausocial.databinding.FragmentPostDetailBinding
+import com.berkayozdag.sausocial.ui.post_detail.adapters.CommentsAdapter
 
-class AllPostsFragment : Fragment() {
 
-    private var _binding: FragmentAllPostBinding? = null
+class PostDetailFragment : Fragment() {
+
+    private var _binding: FragmentPostDetailBinding? = null
     private val binding get() = _binding!!
-    private val adapter = PostsAdapter()
+    private val adapter = CommentsAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentAllPostBinding.inflate(inflater, container, false)
+        _binding = FragmentPostDetailBinding.inflate(inflater, container, false)
         setupRecyclerview()
         setupListeners()
         onItemClick()
@@ -34,12 +34,14 @@ class AllPostsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        loadPosts(HomeMockData.getPost())
+        HomeMockData.getComments()?.let {
+            loadComments(it)
+        }
     }
 
     private fun setupListeners() = with(binding) {
-        swipeRefreshLayout.setOnRefreshListener {
-            swipeRefreshLayout.isRefreshing = false
+        buttonBackButton.setOnClickListener {
+            findNavController().popBackStack()
         }
     }
 
@@ -49,23 +51,18 @@ class AllPostsFragment : Fragment() {
             context,
             DividerItemDecoration.VERTICAL
         )
-        recyclerViewPosts.addItemDecoration(itemDecoration)
-        recyclerViewPosts.layoutManager = layoutManager
+        recyclerViewPostComments.addItemDecoration(itemDecoration)
+        recyclerViewPostComments.layoutManager = layoutManager
     }
 
-    private fun loadPosts(posts: List<Post>) = with(binding) {
-        adapter.setData(posts)
-        recyclerViewPosts.adapter = adapter
+    private fun loadComments(comments: List<Comment>) = with(binding) {
+        adapter.setData(comments)
+        recyclerViewPostComments.adapter = adapter
     }
 
     private fun onItemClick() {
         adapter.onItemClicked = {
-            findNavController().navigate(R.id.action_navigation_home_to_postDetailFragment)
-        }
-    }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        }
     }
 }

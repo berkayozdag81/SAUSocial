@@ -1,8 +1,8 @@
 package com.berkayozdag.sausocial
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.berkayozdag.sausocial.databinding.ActivitySplashBinding
 
 class SplashActivity : AppCompatActivity() {

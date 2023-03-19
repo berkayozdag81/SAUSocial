@@ -44,7 +44,6 @@ class HomeFragment : Fragment() {
             }
         }.attach()
     }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

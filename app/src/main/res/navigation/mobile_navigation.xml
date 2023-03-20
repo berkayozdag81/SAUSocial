@@ -17,6 +17,14 @@
             app:exitAnim="@anim/to_right"
             app:popEnterAnim="@anim/from_right"
             app:popExitAnim="@anim/to_left" />
+        <action
+            android:id="@+id/action_navigation_home_to_postCreateFragment"
+            app:destination="@id/postCreateFragment"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/from_right"
+            app:popExitAnim="@anim/to_left"
+            />
     </fragment>
 
     <fragment
@@ -45,5 +53,17 @@
             app:destination="@id/navigation_home"
             app:enterAnim="@anim/from_right"
             app:exitAnim="@anim/to_left" />
+    </fragment>
+    <fragment
+        android:id="@+id/postCreateFragment"
+        android:name="com.berkayozdag.sausocial.ui.post_create.PostCreateFragment"
+        android:label="fragment_post_create"
+        tools:layout="@layout/fragment_post_create" >
+        <action
+            android:id="@+id/action_postCreateFragment_to_navigation_home"
+            app:destination="@id/navigation_home"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            />
     </fragment>
 </navigation>

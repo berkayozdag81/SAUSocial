@@ -31,4 +31,10 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <!-- Login Edit Text-->
+    <style name="LoginEditText">
+        <item name="fontFamily">@font/text_bold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
 </resources>

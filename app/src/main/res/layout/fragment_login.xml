@@ -4,14 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E8E8F1"
-    tools:context=".ui.authantication.LoginFragment">
+    android:background="@color/screens_background_color"
+    android:padding="16dp"
+    tools:context=".ui.authentication.LoginFragment">
 
     <TextView
         android:id="@+id/fragment_login_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:fontFamily="@font/text_bold"
         android:gravity="center"
         android:text="Hello Again!"
@@ -26,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/text_light"
-        android:gravity="center|top"
+        android:gravity="center"
         android:padding="16dp"
         android:text="Wellcome back you've been missed!"
         android:textSize="24sp"
@@ -39,16 +40,15 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginTop="16dp"
         android:hint="Enter username"
         android:padding="16dp"
         app:boxCornerRadiusBottomEnd="12dp"
         app:boxCornerRadiusBottomStart="12dp"
         app:boxCornerRadiusTopEnd="12dp"
         app:boxCornerRadiusTopStart="12dp"
-        app:hintTextColor="#D0CFD4"
+        app:boxStrokeColor="@color/grey_500"
+        app:hintTextColor="@color/black"
         app:layout_constraintTop_toBottomOf="@id/fragment_login_header2">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -64,49 +64,51 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
         android:hint="Password"
         android:padding="16dp"
         app:boxCornerRadiusBottomEnd="12dp"
         app:boxCornerRadiusBottomStart="12dp"
         app:boxCornerRadiusTopEnd="12dp"
         app:boxCornerRadiusTopStart="12dp"
-        app:hintTextColor="#D0CFD4"
+        app:boxStrokeColor="@color/grey_500"
+        app:endIconMode="password_toggle"
+        app:hintTextColor="@color/black"
         app:layout_constraintTop_toBottomOf="@id/fragment_login_textInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/fragment_login_textInputEditText2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableRight="@drawable/ic_hidden_password" />
+            android:drawableEnd="@drawable/ic_hidden_password"
+            android:inputType="textPassword" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/fragment_login_recovery_password_txt"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
+        android:fontFamily="@font/text_regular"
         android:gravity="end"
         android:padding="16dp"
         android:text="Recovery Password"
         android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/fragment_login_textInputLayout2"
+        app:layout_constraintStart_toStartOf="@+id/fragment_login_textInputLayout2"
         app:layout_constraintTop_toBottomOf="@id/fragment_login_textInputLayout2" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/login_button"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="48dp"
+        android:layout_marginTop="16dp"
         android:backgroundTint="@color/main_color"
+        android:fontFamily="@font/text_regular"
         android:padding="16dp"
         android:text="Login"
         app:cornerRadius="12dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/fragment_login_recovery_password_txt"
+        app:layout_constraintStart_toStartOf="@+id/fragment_login_recovery_password_txt"
         app:layout_constraintTop_toBottomOf="@id/fragment_login_recovery_password_txt" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,4 @@
-package com.berkayozdag.sausocial
+package com.berkayozdag.sausocial.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -16,7 +16,7 @@ class SplashActivity : AppCompatActivity() {
             splashLayout.alpha = 0f
             splashLayout.animate().setDuration(2000).alpha(1f).withEndAction {
                 startActivity(
-                    Intent(this@SplashActivity, MainActivity::class.java)
+                    Intent(this@SplashActivity, AuthenticationActivity::class.java)
                 )
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                 finish()

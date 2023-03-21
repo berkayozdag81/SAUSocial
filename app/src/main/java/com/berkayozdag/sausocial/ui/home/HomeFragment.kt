@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.berkayozdag.sausocial.R
 import com.berkayozdag.sausocial.databinding.FragmentHomeBinding
 import com.berkayozdag.sausocial.ui.home.adapters.ViewPagerAdapter
 import com.google.android.material.tabs.TabLayoutMediator
@@ -21,7 +23,14 @@ class HomeFragment : Fragment() {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         setupViewPager()
+        setupListeners()
         return binding.root
+    }
+
+    private fun setupListeners() = with(binding) {
+        createPostButton.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_home_to_postCreateFragment)
+        }
     }
 
     private fun setupViewPager() = with(binding) {

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/screens_background_color"
+    tools:context=".ui.post_create.PostCreateFragment">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/main_color"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
+
+            <ImageButton
+                android:id="@+id/buttonCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                app:srcCompat="@drawable/ic_cancel"
+                app:tint="@color/white" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonSend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="16dp"
+                android:alpha="0.5"
+                android:backgroundTint="#2F4F9C"
+                android:clickable="false"
+                android:text="Send"
+                android:textAppearance="@style/PostDetailFollowButton"
+                android:textColor="@color/white"
+                app:cornerRadius="24dp"
+                app:layout_constraintBottom_toBottomOf="@+id/layoutNameAndDepartment"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/layoutNameAndDepartment" />
+
+        </com.google.android.material.appbar.MaterialToolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutUserNameAndUserPhoto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingHorizontal="8dp"
+        android:paddingTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appBarLayout">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imageViewUserProfile"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/sample_profile_photo"
+            app:civ_border_color="@color/main_color"
+            app:civ_border_width="1dp" />
+
+        <TextView
+            android:id="@+id/textViewUserName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/text_bold"
+            android:text="Ahmet Selim Öztürk"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/editTextPostDescription"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@null"
+        android:backgroundTint="@color/main_color"
+        android:gravity="start"
+        android:hint="What do you want to talk about ?"
+        android:inputType="textMultiLine"
+        android:padding="8dp"
+        android:scrollbars="vertical"
+        android:textAppearance="@style/PostDetailCommentEditText"
+        android:textColorHighlight="@color/main_color"
+        android:textColorLink="@color/main_color"
+        app:layout_constraintBottom_toTopOf="@+id/layoutGalleryAndCamera"
+        app:layout_constraintTop_toBottomOf="@+id/layoutUserNameAndUserPhoto"
+        android:importantForAutofill="no" />
+
+    <LinearLayout
+        android:id="@+id/layoutGalleryAndCamera"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <ImageButton
+            android:id="@+id/buttonGallery"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:srcCompat="@drawable/ic_gallery"
+            app:tint="@color/main_color" />
+
+        <ImageButton
+            android:id="@+id/buttonCamera"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:srcCompat="@drawable/ic_camera"
+            app:tint="@color/main_color" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

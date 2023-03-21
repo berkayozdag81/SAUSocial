@@ -252,13 +252,13 @@
             android:id="@+id/editTextComment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:autofillHints=""
             android:backgroundTint="@color/main_color"
             android:hint="Leave a comment"
             android:inputType="textMultiLine"
             android:textAppearance="@style/PostDetailCommentEditText"
             android:textColorHighlight="@color/main_color"
-            android:textColorLink="@color/main_color" />
+            android:textColorLink="@color/main_color"
+            android:importantForAutofill="no" />
 
         <ImageButton
             android:id="@+id/buttonSendComment"

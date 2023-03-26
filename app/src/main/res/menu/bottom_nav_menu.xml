@@ -12,9 +12,9 @@
         android:title="@string/title_search" />
 
     <item
-        android:id="@+id/navigation_polls"
-        android:icon="@drawable/ic_polls_menu"
-        android:title="@string/title_polls" />
+        android:id="@+id/navigation_groups"
+        android:icon="@drawable/ic_groups_menu"
+        android:title="@string/title_groups" />
     <item
         android:id="@+id/navigation_profile"
         android:icon="@drawable/ic_profile_menu"

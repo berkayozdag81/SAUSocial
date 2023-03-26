@@ -34,10 +34,10 @@
         tools:layout="@layout/fragment_search" />
 
     <fragment
-        android:id="@+id/navigation_polls"
-        android:name="com.berkayozdag.sausocial.ui.polls.PollsFragment"
-        android:label="@string/title_polls"
-        tools:layout="@layout/fragment_polls" />
+        android:id="@+id/navigation_groups"
+        android:name="com.berkayozdag.sausocial.ui.groups.GroupsFragment"
+        android:label="Groups"
+        tools:layout="@layout/fragment_groups" />
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.berkayozdag.sausocial.ui.profile.ProfileFragment"

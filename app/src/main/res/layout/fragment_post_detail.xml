@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                app:srcCompat="@drawable/ic_back"
+                app:srcCompat="@drawable/ic_back_button"
                 app:tint="@color/white" />
 
             <TextView
@@ -45,6 +45,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/actionBarSize"
+        android:layout_marginBottom="?attr/actionBarSize"
         android:paddingTop="16dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout

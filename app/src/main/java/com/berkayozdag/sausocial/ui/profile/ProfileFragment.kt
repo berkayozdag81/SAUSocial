@@ -19,12 +19,8 @@ import com.berkayozdag.sausocial.ui.home.adapters.PostsAdapter
 class ProfileFragment : Fragment() {
 
     private var _binding: FragmentProfileBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
     private val adapter = PostsAdapter()
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,13 +28,9 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
-
         setupRecyclerview()
         onItemClick()
-
-        val root: View = binding.root
-
-        return root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -63,7 +55,7 @@ class ProfileFragment : Fragment() {
 
     private fun onItemClick() {
         adapter.onItemClicked = {
-            findNavController().navigate(R.id.action_navigation_home_to_postDetailFragment)
+            findNavController().navigate(R.id.action_navigation_profile_to_postDetailFragment)
         }
     }
 

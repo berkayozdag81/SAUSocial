@@ -42,7 +42,13 @@
         android:id="@+id/navigation_profile"
         android:name="com.berkayozdag.sausocial.ui.profile.ProfileFragment"
         android:label="@string/title_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_navigation_profile_to_postDetailFragment"
+            app:destination="@id/postDetailFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left" />
+    </fragment>
     <fragment
         android:id="@+id/postDetailFragment"
         android:name="com.berkayozdag.sausocial.ui.post_detail.PostDetailFragment"
@@ -53,6 +59,13 @@
             app:destination="@id/navigation_home"
             app:enterAnim="@anim/from_right"
             app:exitAnim="@anim/to_left" />
+        <action
+            android:id="@+id/action_postDetailFragment_to_navigation_profile"
+            app:destination="@id/navigation_profile"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/from_right"
+            app:popExitAnim="@anim/to_left" />
     </fragment>
     <fragment
         android:id="@+id/postCreateFragment"

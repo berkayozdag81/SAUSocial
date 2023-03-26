@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="16dp"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardCornerRadius="12dp">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/imageViewGroup"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            tools:background="@drawable/sample_post_image"
+            android:scaleType="centerCrop"
+            android:src="@drawable/item_group_gradient" />
+
+        <TextView
+            android:id="@+id/textViewGroupName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="8dp"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/text_bold"
+            android:text="Bilgisayar Topluluğu"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imageViewUserMembers"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imageViewGroup"/>
+
+        <ImageView
+            android:layout_marginEnd="4dp"
+            android:id="@+id/imageViewUserMembers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_groups"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewGroupName"
+            app:layout_constraintEnd_toStartOf="@+id/textViewMembersCount"
+            app:layout_constraintTop_toTopOf="@+id/textViewGroupName" />
+
+        <TextView
+            android:id="@+id/textViewMembersCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1245"
+            android:textSize="12sp"
+            android:fontFamily="@font/text_regular"
+            android:textColor="@color/grey_500"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageViewUserMembers"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/imageViewUserMembers" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

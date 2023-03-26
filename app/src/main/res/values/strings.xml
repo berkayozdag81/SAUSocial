@@ -2,7 +2,7 @@
     <string name="app_name">SAU Social</string>
     <string name="title_home">Home</string>
     <string name="title_search">Search</string>
-    <string name="title_polls">Polls</string>
+    <string name="title_groups">Groups</string>
     <string name="title_profile">Profile</string>
     <string name="version_number">Version:1.0.0</string>
     <!-- TODO: Remove or change this placeholder text -->

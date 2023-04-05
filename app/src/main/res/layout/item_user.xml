@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutPost"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:padding="16dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imageViewUserProfile"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/sample_profile_photo"
+        app:civ_border_color="@color/main_color"
+        app:civ_border_width="1dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/layoutNameAndDepartment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewUserProfile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageViewUserProfile"
+        app:layout_constraintTop_toTopOf="@+id/imageViewUserProfile">
+
+        <TextView
+            android:id="@+id/textViewUserName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/text_bold"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            tools:text="Ahmet Selim Öztürk" />
+
+        <TextView
+            android:id="@+id/textViewUserDepartment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/text_regular"
+            android:textColor="@color/grey_500"
+            android:textSize="12sp"
+            tools:text="Computer Engineering" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

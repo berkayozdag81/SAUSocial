@@ -30,10 +30,56 @@ data class Group(
     var name: String,
     var users: List<User>,
     var posts: List<Post>,
-    var imageUrl:String
+    var imageUrl: String
 )
 
 object HomeMockData {
+    private val users = arrayListOf(
+        User(
+            "1",
+            "userImage",
+            "Computer Engineer",
+            "Berkay Özdağ"
+        ),
+        User(
+            "1",
+            "userImage",
+            "Computer Engineer",
+            "Selim Öztürk"
+        ),
+        User(
+            "1",
+            "userImage",
+            "Computer Engineer",
+            "Adem Kepçe"
+        ),
+        User(
+            "1",
+            "userImage",
+            "Computer Engineer",
+            "Burak Can Özdağ"
+        ),
+        User(
+            "1",
+            "userImage",
+            "Computer Engineer",
+            "Furkan Ergün"
+        ),
+        User(
+            "1",
+            "userImage",
+            "Computer Engineer",
+            "Davud Samed Tombul"
+        ),
+        User(
+            "1",
+            "userImage",
+            "Computer Engineer",
+            "Furkan Kablan"
+        )
+
+    )
+
     private val posts = arrayListOf(
         Post(
             "1",
@@ -170,6 +216,10 @@ object HomeMockData {
 
     fun getPost(): ArrayList<Post> {
         return posts
+    }
+
+    fun getUser(): ArrayList<User> {
+        return users
     }
 
     fun getComments(): List<Comment>? {

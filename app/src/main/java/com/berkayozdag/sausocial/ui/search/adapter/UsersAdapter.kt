@@ -1,13 +1,10 @@
-package com.berkayozdag.sausocial.ui.search
+package com.berkayozdag.sausocial.ui.search.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.berkayozdag.sausocial.common.Post
 import com.berkayozdag.sausocial.common.User
-import com.berkayozdag.sausocial.databinding.ItemPostBinding
 import com.berkayozdag.sausocial.databinding.ItemUserBinding
 
 class UsersAdapter(var onItemClicked: ((User) -> Unit) = {}) :

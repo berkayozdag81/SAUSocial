@@ -4,26 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.berkayozdag.sausocial.R
 import com.berkayozdag.sausocial.common.HomeMockData
-import com.berkayozdag.sausocial.common.Post
 import com.berkayozdag.sausocial.common.User
 import com.berkayozdag.sausocial.databinding.FragmentSearchBinding
-import com.berkayozdag.sausocial.ui.groups.GroupsFragment
-import com.berkayozdag.sausocial.ui.home.AllPostsFragment
-import com.berkayozdag.sausocial.ui.home.PostsIFollowFragment
-import com.berkayozdag.sausocial.ui.home.adapters.PostsAdapter
-import com.berkayozdag.sausocial.ui.home.adapters.ViewPagerAdapter
-import com.google.android.material.tabs.TabLayoutMediator
+import com.berkayozdag.sausocial.ui.search.adapter.UsersAdapter
 
 class SearchFragment : Fragment() {
 

@@ -1,4 +1,4 @@
-package com.berkayozdag.sausocial.ui.search
+package com.berkayozdag.sausocial.ui.search.adapter
 
 import androidx.recyclerview.widget.DiffUtil
 import com.berkayozdag.sausocial.common.User

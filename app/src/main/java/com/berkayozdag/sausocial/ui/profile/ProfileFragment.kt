@@ -5,15 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.berkayozdag.sausocial.R
-import com.berkayozdag.sausocial.common.HomeMockData
-import com.berkayozdag.sausocial.common.Post
 import com.berkayozdag.sausocial.databinding.FragmentProfileBinding
+import com.berkayozdag.sausocial.ui.home.model.PostResponseItem
 import com.berkayozdag.sausocial.ui.home.adapters.PostsAdapter
 
 class ProfileFragment : Fragment() {
@@ -35,7 +33,6 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        loadPosts(HomeMockData.getPost())
     }
 
     private fun setupRecyclerview() = with(binding) {
@@ -48,7 +45,7 @@ class ProfileFragment : Fragment() {
         rwProfileUserPost.layoutManager = layoutManager
     }
 
-    private fun loadPosts(posts: List<Post>) = with(binding) {
+    private fun loadPosts(posts: List<PostResponseItem>) = with(binding) {
         adapter.setData(posts)
         rwProfileUserPost.adapter = adapter
     }

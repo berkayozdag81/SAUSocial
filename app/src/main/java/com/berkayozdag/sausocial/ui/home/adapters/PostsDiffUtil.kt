@@ -1,11 +1,11 @@
 package com.berkayozdag.sausocial.ui.home.adapters
 
 import androidx.recyclerview.widget.DiffUtil
-import com.berkayozdag.sausocial.common.Post
+import com.berkayozdag.sausocial.ui.home.model.PostResponseItem
 
 class PostsDiffUtil(
-    private val oldList: List<Post>,
-    private val newList: List<Post>
+    private val oldList: List<PostResponseItem>,
+    private val newList: List<PostResponseItem>
 ) : DiffUtil.Callback() {
 
     override fun getOldListSize(): Int {

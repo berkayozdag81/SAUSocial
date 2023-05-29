@@ -1,30 +1,26 @@
 package com.berkayozdag.sausocial.ui.home.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.berkayozdag.sausocial.common.Post
 import com.berkayozdag.sausocial.databinding.ItemPostBinding
+import com.berkayozdag.sausocial.ui.home.model.PostResponseItem
 
-class PostsAdapter(var onItemClicked: ((Post) -> Unit) = {}) :
+class PostsAdapter(var onItemClicked: ((PostResponseItem) -> Unit) = {}) :
     RecyclerView.Adapter<PostsAdapter.PostViewHolder>() {
 
-    private var items: List<Post> = emptyList()
+    private var items: List<PostResponseItem> = emptyList()
 
     inner class PostViewHolder(private val binding: ItemPostBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(post: Post) = with(binding) {
-            textViewUserName.text = post.user.userName
-            textViewUserDepartment.text = post.user.userDepartment
-            textViewPostDescription.text = post.description
-            textViewPostCreatedDate.text = post.createdDate
-            textViewPostNumberOfComment.text = post.numberOfComment.toString()
-            textViewPostNumberOfLike.text = post.numberOfLike.toString()
-            post.postImage?.let {
-                binding.imageViewPost.visibility = View.VISIBLE
-            }
+        fun bind(post: PostResponseItem) = with(binding) {
+            textViewUserName.text = post.appUser.name
+            textViewUserDepartment.text = post.appUser.part
+            textViewPostDescription.text = post.content
+            textViewPostCreatedDate.text = post.publishedDate
+            textViewPostNumberOfComment.text = post.comments.size.toString()
+            textViewPostNumberOfLike.text = post.likeCount.toString()
             layoutPost.setOnClickListener {
                 onItemClicked(post)
             }
@@ -42,7 +38,7 @@ class PostsAdapter(var onItemClicked: ((Post) -> Unit) = {}) :
 
     override fun getItemCount() = items.size
 
-    fun setData(newPostItems: List<Post>) {
+    fun setData(newPostItems: List<PostResponseItem>) {
         val diffUtil = PostsDiffUtil(items, newPostItems)
         val diffResults = DiffUtil.calculateDiff(diffUtil)
         items = newPostItems

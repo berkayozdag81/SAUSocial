@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.berkayozdag.sausocial.common.Comment
 import com.berkayozdag.sausocial.databinding.ItemCommentBinding
+import com.berkayozdag.sausocial.ui.post_detail.model.Comment
 
 class CommentsAdapter(var onItemClicked: ((Comment) -> Unit) = {}) :
     RecyclerView.Adapter<CommentsAdapter.CommentViewHolder>() {
@@ -15,9 +15,10 @@ class CommentsAdapter(var onItemClicked: ((Comment) -> Unit) = {}) :
     inner class CommentViewHolder(private val binding: ItemCommentBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(comment: Comment) = with(binding) {
-            textViewUserName.text = comment.user.userName
-            textViewUserDepartment.text = comment.user.userDepartment
-            textViewComment.text = comment.comment
+            textViewUserName.text = comment.appUser.name + " " + comment.appUser.surname
+            textViewUserDepartment.text = comment.appUser.part
+            textViewComment.text = comment.message
+            textViewCommentCreatedDate.text = comment.publishedDate
         }
     }
 

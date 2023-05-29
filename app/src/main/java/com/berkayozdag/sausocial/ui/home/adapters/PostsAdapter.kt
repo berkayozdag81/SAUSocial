@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.berkayozdag.sausocial.databinding.ItemPostBinding
 import com.berkayozdag.sausocial.ui.home.model.PostResponseItem
 
-class PostsAdapter(var onItemClicked: ((PostResponseItem) -> Unit) = {}) :
+class PostsAdapter(var onItemClicked: ((Int) -> Unit) = {}) :
     RecyclerView.Adapter<PostsAdapter.PostViewHolder>() {
 
     private var items: List<PostResponseItem> = emptyList()
@@ -22,7 +22,7 @@ class PostsAdapter(var onItemClicked: ((PostResponseItem) -> Unit) = {}) :
             textViewPostNumberOfComment.text = post.comments.size.toString()
             textViewPostNumberOfLike.text = post.likeCount.toString()
             layoutPost.setOnClickListener {
-                onItemClicked(post)
+                onItemClicked(post.id)
             }
         }
     }
@@ -44,5 +44,4 @@ class PostsAdapter(var onItemClicked: ((PostResponseItem) -> Unit) = {}) :
         items = newPostItems
         diffResults.dispatchUpdatesTo(this)
     }
-
 }

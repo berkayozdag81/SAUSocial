@@ -69,7 +69,7 @@
         app:layout_constraintTop_toBottomOf="@id/textViewComment">
 
         <TextView
-            android:id="@+id/textViewPostCreatedDate"
+            android:id="@+id/textViewCommentCreatedDate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -79,7 +79,7 @@
             android:textSize="12sp" />
 
         <ImageButton
-            android:id="@+id/buttonPostLike"
+            android:id="@+id/buttonCommentLike"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -87,7 +87,7 @@
             android:src="@drawable/ic_like" />
 
         <TextView
-            android:id="@+id/textViewPostNumberOfLike"
+            android:id="@+id/textViewCommentNumberOfLike"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"

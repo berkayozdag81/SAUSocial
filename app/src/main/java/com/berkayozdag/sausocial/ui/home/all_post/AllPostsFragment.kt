@@ -88,8 +88,13 @@ class AllPostsFragment : Fragment() {
     }
 
     private fun onItemClick() {
-        adapter.onItemClicked = {
-            findNavController().navigate(R.id.action_navigation_home_to_postDetailFragment)
+        adapter.onItemClicked = { id ->
+            val postIdBundle = Bundle()
+            postIdBundle.putInt("id", id)
+            findNavController().navigate(
+                R.id.action_navigation_home_to_postDetailFragment,
+                postIdBundle
+            )
         }
     }
 

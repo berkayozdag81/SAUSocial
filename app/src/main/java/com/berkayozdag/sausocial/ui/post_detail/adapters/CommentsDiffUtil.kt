@@ -1,7 +1,7 @@
 package com.berkayozdag.sausocial.ui.post_detail.adapters
 
 import androidx.recyclerview.widget.DiffUtil
-import com.berkayozdag.sausocial.common.Comment
+import com.berkayozdag.sausocial.ui.post_detail.model.Comment
 
 class CommentsDiffUtil(
     private val oldList: List<Comment>,

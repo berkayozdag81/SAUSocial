@@ -109,35 +109,18 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/layoutNameAndDepartment" />
 
-            <LinearLayout
-                android:id="@+id/layoutPostContent"
+            <TextView
+                android:id="@+id/textViewPostDescription"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:orientation="vertical"
+                android:fontFamily="@font/text_regular"
+                android:text="We are going to be here again next week. You should come eaerlier so you can get in the front."
+                android:textColor="@color/black"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="@+id/buttonFollow"
                 app:layout_constraintStart_toStartOf="@+id/imageViewUserProfile"
-                app:layout_constraintTop_toBottomOf="@+id/layoutNameAndDepartment">
-
-                <ImageView
-                    android:id="@+id/imageViewPost"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/sample_post_image"
-                    android:visibility="visible" />
-
-                <TextView
-                    android:id="@+id/textViewPostDescription"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/text_regular"
-                    android:text="We are going to be here again next week. You should come eaerlier so you can get in the front."
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-            </LinearLayout>
+                app:layout_constraintTop_toBottomOf="@+id/layoutNameAndDepartment" />
 
             <LinearLayout
                 android:id="@+id/layoutLikesAndComments"
@@ -145,9 +128,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
-                app:layout_constraintEnd_toEndOf="@+id/layoutPostContent"
-                app:layout_constraintStart_toStartOf="@+id/layoutPostContent"
-                app:layout_constraintTop_toBottomOf="@id/layoutPostContent">
+                app:layout_constraintEnd_toEndOf="@+id/textViewPostDescription"
+                app:layout_constraintStart_toStartOf="@+id/textViewPostDescription"
+                app:layout_constraintTop_toBottomOf="@id/textViewPostDescription">
 
                 <TextView
                     android:id="@+id/textViewPostCreatedDate"
@@ -167,7 +150,7 @@
                     android:src="@drawable/ic_like" />
 
                 <TextView
-                    android:id="@+id/textViewPostNumberOfComment"
+                    android:id="@+id/textViewPostNumberOfLike"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
@@ -185,7 +168,7 @@
                     android:src="@drawable/ic_comment" />
 
                 <TextView
-                    android:id="@+id/textViewPostNumberOfLike"
+                    android:id="@+id/textViewPostNumberOfComment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
@@ -203,7 +186,7 @@
                 android:background="@color/grey_300"
                 app:layout_constraintEnd_toEndOf="@+id/layoutLikesAndComments"
                 app:layout_constraintStart_toStartOf="@+id/layoutLikesAndComments"
-                app:layout_constraintTop_toBottomOf="@id/layoutLikesAndComments"/>
+                app:layout_constraintTop_toBottomOf="@id/layoutLikesAndComments" />
 
             <TextView
                 android:id="@+id/textViewComments"
@@ -226,7 +209,7 @@
                 android:background="@color/grey_300"
                 app:layout_constraintEnd_toEndOf="@+id/textViewComments"
                 app:layout_constraintStart_toStartOf="@+id/textViewComments"
-                app:layout_constraintTop_toBottomOf="@id/textViewComments"/>
+                app:layout_constraintTop_toBottomOf="@id/textViewComments" />
 
 
             <androidx.recyclerview.widget.RecyclerView
@@ -255,11 +238,11 @@
             android:layout_height="match_parent"
             android:backgroundTint="@color/main_color"
             android:hint="Leave a comment"
+            android:importantForAutofill="no"
             android:inputType="textMultiLine"
             android:textAppearance="@style/PostDetailCommentEditText"
             android:textColorHighlight="@color/main_color"
-            android:textColorLink="@color/main_color"
-            android:importantForAutofill="no" />
+            android:textColorLink="@color/main_color" />
 
         <ImageButton
             android:id="@+id/buttonSendComment"

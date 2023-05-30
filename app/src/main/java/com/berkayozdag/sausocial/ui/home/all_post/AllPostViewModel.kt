@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.berkayozdag.sausocial.data.NetworkResponse
 import com.berkayozdag.sausocial.data.repository.SocialAppRepository
-import com.berkayozdag.sausocial.ui.home.model.PostResponseItem
+import com.berkayozdag.sausocial.model.Post
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -16,8 +16,8 @@ class AllPostViewModel @Inject constructor(
     private val repository: SocialAppRepository
 ) : ViewModel() {
 
-    private val _postResponse = MutableLiveData<NetworkResponse<List<PostResponseItem>>>(null)
-    val postResponse: LiveData<NetworkResponse<List<PostResponseItem>>> = _postResponse
+    private val _postResponse = MutableLiveData<NetworkResponse<List<Post>>>(null)
+    val postResponse: LiveData<NetworkResponse<List<Post>>> = _postResponse
 
     fun getPosts() = viewModelScope.launch {
         _postResponse.postValue(NetworkResponse.Loading)

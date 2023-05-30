@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.berkayozdag.sausocial.R
 import com.berkayozdag.sausocial.data.NetworkResponse
 import com.berkayozdag.sausocial.databinding.FragmentAllPostBinding
-import com.berkayozdag.sausocial.ui.home.model.PostResponseItem
+import com.berkayozdag.sausocial.model.Post
 import com.berkayozdag.sausocial.ui.home.adapters.PostsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -82,7 +82,7 @@ class AllPostsFragment : Fragment() {
         recyclerViewPosts.layoutManager = layoutManager
     }
 
-    private fun loadPosts(posts: List<PostResponseItem>) = with(binding) {
+    private fun loadPosts(posts: List<Post>) = with(binding) {
         adapter.setData(posts)
         recyclerViewPosts.adapter = adapter
     }

@@ -1,7 +1,8 @@
-package com.berkayozdag.sausocial.ui.post_detail.model
+package com.berkayozdag.sausocial.model
 
-data class PostDetailResponseItem(
+data class Post(
     val appUser: AppUser,
+    val appUserId: Int,
     val comments: List<Comment>,
     val content: String,
     val id: Int,

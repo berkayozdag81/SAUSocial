@@ -5,17 +5,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.berkayozdag.sausocial.databinding.ItemPostBinding
-import com.berkayozdag.sausocial.ui.home.model.PostResponseItem
+import com.berkayozdag.sausocial.model.Post
 
 class PostsAdapter(var onItemClicked: ((Int) -> Unit) = {}) :
     RecyclerView.Adapter<PostsAdapter.PostViewHolder>() {
 
-    private var items: List<PostResponseItem> = emptyList()
+    private var items: List<Post> = emptyList()
 
     inner class PostViewHolder(private val binding: ItemPostBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(post: PostResponseItem) = with(binding) {
-            textViewUserName.text = post.appUser.name
+        fun bind(post: Post) = with(binding) {
+            textViewUserName.text = post.appUser.name+" "+post.appUser.surname
             textViewUserDepartment.text = post.appUser.part
             textViewPostDescription.text = post.content
             textViewPostCreatedDate.text = post.publishedDate
@@ -38,7 +38,7 @@ class PostsAdapter(var onItemClicked: ((Int) -> Unit) = {}) :
 
     override fun getItemCount() = items.size
 
-    fun setData(newPostItems: List<PostResponseItem>) {
+    fun setData(newPostItems: List<Post>) {
         val diffUtil = PostsDiffUtil(items, newPostItems)
         val diffResults = DiffUtil.calculateDiff(diffUtil)
         items = newPostItems

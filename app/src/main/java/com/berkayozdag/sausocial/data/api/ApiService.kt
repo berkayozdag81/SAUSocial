@@ -1,9 +1,9 @@
 package com.berkayozdag.sausocial.data.api
 
-import com.berkayozdag.sausocial.ui.authentication.model.LoginRequest
-import com.berkayozdag.sausocial.ui.authentication.model.LoginResponse
-import com.berkayozdag.sausocial.ui.home.model.PostResponseItem
-import com.berkayozdag.sausocial.ui.post_detail.model.PostDetailResponseItem
+import com.berkayozdag.sausocial.model.Post
+import com.berkayozdag.sausocial.model.authentication.LoginRequest
+import com.berkayozdag.sausocial.model.authentication.LoginResponse
+import com.berkayozdag.sausocial.model.profile.ProfileResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -13,13 +13,16 @@ interface ApiService {
 
     @POST("Auth/Login")
     suspend fun login(
-        @Body request: LoginRequest
+            @Body request: LoginRequest
     ): LoginResponse
 
-
     @GET("Posts")
-    suspend fun getPosts(): List<PostResponseItem>
+    suspend fun getPosts(): List<Post>
 
     @GET("Posts/{id}")
-    suspend fun getPostById(@Path("id")id:Int): List<PostDetailResponseItem>
+    suspend fun getPostById(@Path("id") id: Int): Post
+
+    @GET("User/{id}")
+    suspend fun getUserById(@Path("id") id: Int): ProfileResponse
+
 }

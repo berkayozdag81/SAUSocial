@@ -1,11 +1,11 @@
 package com.berkayozdag.sausocial.ui.search.adapter
 
 import androidx.recyclerview.widget.DiffUtil
-import com.berkayozdag.sausocial.common.User
+import com.berkayozdag.sausocial.model.profile.ProfileResponse
 
 class UsersDiffUtil(
-    private val oldList: List<User>,
-    private val newList: List<User>
+    private val oldList: List<ProfileResponse>,
+    private val newList: List<ProfileResponse>
 ) : DiffUtil.Callback() {
 
     override fun getOldListSize(): Int {

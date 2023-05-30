@@ -25,4 +25,7 @@ interface ApiService {
     @GET("User/{id}")
     suspend fun getUserById(@Path("id") id: Int): ProfileResponse
 
+    @GET("User")
+    suspend fun getUsers(): List<ProfileResponse>
+
 }

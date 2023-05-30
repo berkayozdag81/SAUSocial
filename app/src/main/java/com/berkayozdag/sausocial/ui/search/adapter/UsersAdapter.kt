@@ -6,17 +6,18 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.berkayozdag.sausocial.common.User
 import com.berkayozdag.sausocial.databinding.ItemUserBinding
+import com.berkayozdag.sausocial.model.profile.ProfileResponse
 
-class UsersAdapter(var onItemClicked: ((User) -> Unit) = {}) :
+class UsersAdapter(var onItemClicked: ((ProfileResponse) -> Unit) = {}) :
     RecyclerView.Adapter<UsersAdapter.UserViewHolder>() {
 
-    private var items: List<User> = emptyList()
+    private var items: List<ProfileResponse> = emptyList()
 
     inner class UserViewHolder(private val binding: ItemUserBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(user: User) = with(binding) {
-            textViewUserName.text = user.userName
-            textViewUserDepartment.text = user.userDepartment
+        fun bind(user: ProfileResponse) = with(binding) {
+            textViewUserName.text = user.name + " " + user.surname
+            textViewUserDepartment.text = user.part
             layoutPost.setOnClickListener {
                 onItemClicked(user)
             }
@@ -34,7 +35,7 @@ class UsersAdapter(var onItemClicked: ((User) -> Unit) = {}) :
 
     override fun getItemCount() = items.size
 
-    fun setData(newUserItems: List<User>) {
+    fun setData(newUserItems: List<ProfileResponse>) {
         val diffUtil = UsersDiffUtil(items, newUserItems)
         val diffResults = DiffUtil.calculateDiff(diffUtil)
         items = newUserItems

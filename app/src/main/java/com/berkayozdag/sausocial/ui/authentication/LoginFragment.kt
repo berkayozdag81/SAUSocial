@@ -8,11 +8,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
+import com.berkayozdag.sausocial.common.SessionManager
+import com.berkayozdag.sausocial.common.checkEditTexts
+import com.berkayozdag.sausocial.common.setVisible
 import com.berkayozdag.sausocial.data.NetworkResponse
 import com.berkayozdag.sausocial.databinding.FragmentLoginBinding
 import com.berkayozdag.sausocial.ui.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
@@ -21,9 +24,12 @@ class LoginFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var loginViewModel: LoginViewModel
+
+    @Inject
+    lateinit var sessionManager: SessionManager
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
 
@@ -41,10 +47,14 @@ class LoginFragment : Fragment() {
 
     private fun setupListeners() {
         binding.loginButton.setOnClickListener {
-            loginViewModel.login(
-                binding.fragmentLoginTextInputUserName.text.toString(),
-                binding.fragmentLoginTextInputPassword.text.toString()
-            )
+            val username = binding.fragmentLoginTextInputUserName
+            val password = binding.fragmentLoginTextInputPassword
+            if (checkEditTexts(username, password)) {
+                loginViewModel.login(
+                        username.text.toString(),
+                        password.text.toString()
+                )
+            }
         }
     }
 
@@ -53,19 +63,21 @@ class LoginFragment : Fragment() {
             when (it) {
                 is NetworkResponse.Loading -> {
                     //some code
-                    binding.loginProgressBar.visibility = View.VISIBLE
+                    binding.loginProgressBar.setVisible(true)
                 }
                 is NetworkResponse.Success -> {
                     //navigate to home
-                    binding.loginProgressBar.visibility = View.GONE
+                    binding.loginProgressBar.setVisible(false)
                     val intent = Intent(requireContext(), MainActivity::class.java)
                     startActivity(intent)
+                    sessionManager.setLogin(true)
+                    sessionManager.setUserId(it.data.id)
                     activity?.finish()
                 }
                 is NetworkResponse.Error -> {
                     //error
-                    binding.loginProgressBar.visibility = View.GONE
-                    Toast.makeText(this.context,"Hatalı kullanıcı adı veya şifre", Toast.LENGTH_LONG).show()
+                    binding.loginProgressBar.setVisible(false)
+                    Toast.makeText(this.context, "Hatalı kullanıcı adı veya şifre", Toast.LENGTH_LONG).show()
                 }
             }
         }

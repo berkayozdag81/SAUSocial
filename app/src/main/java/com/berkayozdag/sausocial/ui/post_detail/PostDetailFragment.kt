@@ -1,6 +1,5 @@
 package com.berkayozdag.sausocial.ui.post_detail
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,11 +10,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.berkayozdag.sausocial.common.HomeMockData
 import com.berkayozdag.sausocial.data.NetworkResponse
 import com.berkayozdag.sausocial.databinding.FragmentPostDetailBinding
+import com.berkayozdag.sausocial.model.Comment
 import com.berkayozdag.sausocial.ui.post_detail.adapters.CommentsAdapter
-import com.berkayozdag.sausocial.ui.post_detail.model.Comment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -28,16 +26,14 @@ class PostDetailFragment : Fragment() {
     private val postDetailViewModel by viewModels<PostDetailViewModel>()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View {
         _binding = FragmentPostDetailBinding.inflate(inflater, container, false)
         setupRecyclerview()
         setupListeners()
         setupObserves()
-        onItemClick()
         postId = arguments?.getInt("id")
-
         return binding.root
     }
 
@@ -52,20 +48,19 @@ class PostDetailFragment : Fragment() {
         }
     }
 
-    @SuppressLint("SetTextI18n")
     private fun setupObserves() = with(binding) {
         postDetailViewModel.postDetailResponse.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResponse.Success -> {
                     // İstek başarılı oldu, veriler kullanılabilir
                     textViewUserName.text =
-                        response.data[0].appUser.name + " " + response.data[0].appUser.surname
-                    textViewUserDepartment.text = response.data[0].appUser.part
-                    textViewPostDescription.text = response.data[0].content
-                    textViewPostCreatedDate.text = response.data[0].publishedDate
-                    textViewPostNumberOfLike.text = response.data[0].likeCount.toString()
-                    textViewPostNumberOfComment.text = response.data[0].comments.size.toString()
-                    loadComments(response.data[0].comments)
+                            response.data.appUser.name + " " + response.data.appUser.surname
+                    textViewUserDepartment.text = response.data.appUser.part
+                    textViewPostDescription.text = response.data.content
+                    textViewPostCreatedDate.text = response.data.publishedDate
+                    textViewPostNumberOfLike.text = response.data.likeCount.toString()
+                    textViewPostNumberOfComment.text = response.data.comments.size.toString()
+                    loadComments(response.data.comments)
                 }
                 is NetworkResponse.Error -> {
                     // İstekte bir hata oluştu
@@ -82,8 +77,8 @@ class PostDetailFragment : Fragment() {
     private fun setupRecyclerview() = with(binding) {
         val layoutManager = LinearLayoutManager(requireContext())
         val itemDecoration: RecyclerView.ItemDecoration = DividerItemDecoration(
-            context,
-            DividerItemDecoration.VERTICAL
+                context,
+                DividerItemDecoration.VERTICAL
         )
         recyclerViewPostComments.addItemDecoration(itemDecoration)
         recyclerViewPostComments.layoutManager = layoutManager
@@ -94,9 +89,4 @@ class PostDetailFragment : Fragment() {
         recyclerViewPostComments.adapter = adapter
     }
 
-    private fun onItemClick() {
-        adapter.onItemClicked = {
-
-        }
-    }
 }

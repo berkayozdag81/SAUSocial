@@ -1,4 +1,4 @@
-package com.berkayozdag.sausocial.ui.authentication.model
+package com.berkayozdag.sausocial.model.authentication
 
 data class LoginResponse(
    val id: Int,

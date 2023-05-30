@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.berkayozdag.sausocial.databinding.ItemCommentBinding
-import com.berkayozdag.sausocial.ui.post_detail.model.Comment
+import com.berkayozdag.sausocial.model.Comment
 
-class CommentsAdapter(var onItemClicked: ((Comment) -> Unit) = {}) :
+class CommentsAdapter() :
     RecyclerView.Adapter<CommentsAdapter.CommentViewHolder>() {
 
     private var items: List<Comment> = emptyList()

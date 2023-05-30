@@ -1,4 +1,4 @@
-package com.berkayozdag.sausocial.ui.authentication.model
+package com.berkayozdag.sausocial.model.authentication
 
 import com.squareup.moshi.Json
 

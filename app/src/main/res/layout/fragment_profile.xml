@@ -78,12 +78,24 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:fontFamily="@font/text_bold"
-                android:text="Berkay Özdağ"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="@+id/profile_avatar"
                 app:layout_constraintStart_toStartOf="@+id/profile_avatar"
-                app:layout_constraintTop_toBottomOf="@+id/profile_avatar" />
+                app:layout_constraintTop_toBottomOf="@+id/profile_avatar"
+                tools:text="Berkay Özdağ" />
+
+            <TextView
+                android:id="@+id/profile_department_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/text_regular"
+                android:textColor="@color/grey_500"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="@+id/profile_name_text"
+                app:layout_constraintStart_toStartOf="@+id/profile_name_text"
+                app:layout_constraintTop_toBottomOf="@+id/profile_name_text"
+                tools:text="Computer Engineering" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonFollow"
@@ -95,9 +107,9 @@
                 app:cornerRadius="24dp"
                 app:icon="@drawable/ic_user_add"
                 app:iconGravity="end"
-                app:layout_constraintEnd_toEndOf="@+id/profile_name_text"
-                app:layout_constraintStart_toStartOf="@+id/profile_name_text"
-                app:layout_constraintTop_toBottomOf="@+id/profile_name_text" />
+                app:layout_constraintEnd_toEndOf="@+id/profile_department_text"
+                app:layout_constraintStart_toStartOf="@+id/profile_department_text"
+                app:layout_constraintTop_toBottomOf="@+id/profile_department_text" />
 
             <LinearLayout
                 android:id="@+id/profile_user_information_layout"
@@ -121,8 +133,8 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/text_bold"
                         android:gravity="center"
-                        android:text="547"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        tools:text="547" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -140,14 +152,14 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/profile_following_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/text_bold"
-                        android:text="150"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        tools:text="150" />
 
                     <TextView
-                        android:id="@+id/profile_following_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/text_medium"
@@ -166,8 +178,8 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/text_bold"
                         android:gravity="center"
-                        android:text="28"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        tools:text="28" />
 
                     <TextView
                         android:layout_width="match_parent"

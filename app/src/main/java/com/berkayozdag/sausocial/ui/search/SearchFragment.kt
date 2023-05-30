@@ -94,6 +94,7 @@ class SearchFragment : Fragment() {
         adapter.onItemClicked = {
             val profileIdBundle = Bundle()
             profileIdBundle.putInt("id", it.id)
+            profileIdBundle.putBoolean("isOther",true)
             findNavController().navigate(
                 R.id.action_navigation_search_to_navigation_profile,
                 profileIdBundle

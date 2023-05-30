@@ -34,9 +34,9 @@ class ProfileFragment : Fragment() {
     lateinit var sessionManager: SessionManager
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         return binding.root
@@ -44,7 +44,11 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        profileViewModel.getUserById(sessionManager.getUserId())
+        if (arguments?.getBoolean("isOther") == true) {
+            arguments?.getInt("id")?.let { profileViewModel.getUserById(it) }
+        } else {
+            profileViewModel.getUserById(sessionManager.getUserId())
+        }
         setupObservers()
         setupRecyclerview()
         onItemClick()
@@ -54,8 +58,8 @@ class ProfileFragment : Fragment() {
     private fun setupRecyclerview() = with(binding) {
         val layoutManager = LinearLayoutManager(requireContext())
         val itemDecoration: RecyclerView.ItemDecoration = DividerItemDecoration(
-                context,
-                DividerItemDecoration.VERTICAL
+            context,
+            DividerItemDecoration.VERTICAL
         )
         rwProfileUserPost.addItemDecoration(itemDecoration)
         rwProfileUserPost.layoutManager = layoutManager
@@ -88,10 +92,13 @@ class ProfileFragment : Fragment() {
     }
 
     private fun onItemClick() {
-        adapter.onItemClicked = {id->
+        adapter.onItemClicked = { id ->
             val postIdBundle = Bundle()
             postIdBundle.putInt("id", id)
-            findNavController().navigate(R.id.action_navigation_profile_to_postDetailFragment, postIdBundle)
+            findNavController().navigate(
+                R.id.action_navigation_profile_to_postDetailFragment,
+                postIdBundle
+            )
         }
     }
 

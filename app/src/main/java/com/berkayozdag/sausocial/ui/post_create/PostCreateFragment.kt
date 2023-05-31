@@ -24,8 +24,8 @@ class PostCreateFragment : Fragment() {
     private var _binding: FragmentPostCreateBinding? = null
     private val binding get() = _binding!!
     private val postCreateViewModel: PostCreateViewModel by viewModels()
-    val dateFormat = SimpleDateFormat("dd.MM.yyyy")
-    val currentDate = Date()
+    private val dateFormat = SimpleDateFormat("dd.MM.yyyy")
+    private val currentDate = Date()
 
     @Inject
     lateinit var sessionManager: SessionManager

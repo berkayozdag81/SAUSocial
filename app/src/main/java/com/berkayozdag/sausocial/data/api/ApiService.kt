@@ -1,8 +1,6 @@
 package com.berkayozdag.sausocial.data.api
 
-import com.berkayozdag.sausocial.model.Post
-import com.berkayozdag.sausocial.model.PostRequest
-import com.berkayozdag.sausocial.model.PostResponse
+import com.berkayozdag.sausocial.model.*
 import com.berkayozdag.sausocial.model.authentication.LoginRequest
 import com.berkayozdag.sausocial.model.authentication.LoginResponse
 import com.berkayozdag.sausocial.model.profile.ProfileResponse
@@ -28,6 +26,11 @@ interface ApiService {
     suspend fun sendPost(
         @Body postRequest: PostRequest
     ): PostResponse
+
+    @POST("Comment")
+    suspend fun sendComment(
+        @Body commentRequest: CommentRequest
+    ): CommentResponse
 
     @GET("User/{id}")
     suspend fun getUserById(@Path("id") id: Int): ProfileResponse

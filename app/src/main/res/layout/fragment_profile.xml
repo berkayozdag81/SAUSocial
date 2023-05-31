@@ -20,7 +20,7 @@
             android:layout_height="?attr/actionBarSize">
 
             <ImageButton
-                android:id="@+id/profile_screen_back_btn"
+                android:id="@+id/profile_back_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
@@ -40,13 +40,13 @@
                 android:textSize="20sp" />
 
             <ImageButton
-                android:id="@+id/profile_settings_btn"
+                android:id="@+id/profile_logout_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_marginEnd="16dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/ic_three_dots"
+                android:src="@drawable/ic_logout"
                 app:tint="@color/white" />
         </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>

@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val navHostFragment =
-            supportFragmentManager.findFragmentById(id.nav_host_fragment_activity_main) as NavHostFragment
+                supportFragmentManager.findFragmentById(id.nav_host_fragment_activity_main) as NavHostFragment
         val navController = navHostFragment.navController
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == id.postDetailFragment || destination.id == id.postCreateFragment) {
@@ -31,9 +31,16 @@ class MainActivity : AppCompatActivity() {
 
         binding.bottomNavigationView.apply {
             NavigationUI.setupWithNavController(
-                this,
-                navController
+                    this,
+                    navController
             )
+            setOnItemSelectedListener { item ->
+                NavigationUI.onNavDestinationSelected(item, navController)
+                true
+            }
+            setOnItemReselectedListener {
+                navController.popBackStack(destinationId = it.itemId, inclusive = false)
+            }
         }
     }
 }

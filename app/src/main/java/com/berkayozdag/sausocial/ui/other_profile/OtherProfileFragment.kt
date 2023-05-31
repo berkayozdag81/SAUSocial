@@ -1,7 +1,5 @@
-package com.berkayozdag.sausocial.ui.profile
+package com.berkayozdag.sausocial.ui.other_profile
 
-import android.app.AlertDialog
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,51 +11,45 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.berkayozdag.sausocial.R
-import com.berkayozdag.sausocial.common.SessionManager
 import com.berkayozdag.sausocial.common.setVisible
 import com.berkayozdag.sausocial.common.showToast
 import com.berkayozdag.sausocial.data.NetworkResponse
-import com.berkayozdag.sausocial.databinding.FragmentProfileBinding
-import com.berkayozdag.sausocial.databinding.SignOutDialogBinding
+import com.berkayozdag.sausocial.databinding.FragmentOtherProfileBinding
 import com.berkayozdag.sausocial.model.Post
-import com.berkayozdag.sausocial.ui.AuthenticationActivity
 import com.berkayozdag.sausocial.ui.home.adapters.PostsAdapter
+import com.berkayozdag.sausocial.ui.profile.ProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
-class ProfileFragment : Fragment() {
+class OtherProfileFragment : Fragment() {
 
-    private var _binding: FragmentProfileBinding? = null
+    private var _binding: FragmentOtherProfileBinding? = null
     private val binding get() = _binding!!
     private val adapter = PostsAdapter()
     private val profileViewModel: ProfileViewModel by viewModels()
-
-    @Inject
-    lateinit var sessionManager: SessionManager
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentProfileBinding.inflate(inflater, container, false)
-        binding.profileBackBtn.setVisible(false)
+        _binding = FragmentOtherProfileBinding.inflate(inflater, container, false)
+        initViews()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        profileViewModel.getUserById(sessionManager.getUserId())
-        initViews()
+        arguments?.getInt("id")?.let { profileViewModel.getUserById(it) }
         setupObservers()
         setupRecyclerview()
         onItemClick()
     }
 
     private fun initViews() {
-        binding.profileLogoutBtn.setOnClickListener {
-            signOut()
+        binding.profileLayout.profileLogoutBtn.setVisible(false)
+        binding.profileLayout.profileBackBtn.setOnClickListener {
+            findNavController().popBackStack()
         }
     }
 
@@ -67,8 +59,8 @@ class ProfileFragment : Fragment() {
             context,
             DividerItemDecoration.VERTICAL
         )
-        rwProfileUserPost.addItemDecoration(itemDecoration)
-        rwProfileUserPost.layoutManager = layoutManager
+        binding.profileLayout.rwProfileUserPost.addItemDecoration(itemDecoration)
+        binding.profileLayout.rwProfileUserPost.layoutManager = layoutManager
     }
 
     private fun setupObservers() {
@@ -77,12 +69,16 @@ class ProfileFragment : Fragment() {
                 is NetworkResponse.Loading -> {
                 }
                 is NetworkResponse.Success -> {
-                    binding.profileNameText.text = it.data.name + " " + it.data.surname
-                    binding.profileFollowerCount.text = it.data.followers.size.toString()
-                    binding.profileDepartmentText.text = it.data.part
-                    binding.profileFollowingCount.text = it.data.followings.size.toString()
-                    binding.profileFollowingCount.text = it.data.followings.size.toString()
-                    binding.profilePostCount.text = it.data.posts.size.toString()
+                    binding.profileLayout.profileNameText.text =
+                        it.data.name + " " + it.data.surname
+                    binding.profileLayout.profileFollowerCount.text =
+                        it.data.followers.size.toString()
+                    binding.profileLayout.profileDepartmentText.text = it.data.part
+                    binding.profileLayout.profileFollowingCount.text =
+                        it.data.followings.size.toString()
+                    binding.profileLayout.profileFollowingCount.text =
+                        it.data.followings.size.toString()
+                    binding.profileLayout.profilePostCount.text = it.data.posts.size.toString()
                     loadPosts(it.data.posts)
                 }
                 is NetworkResponse.Error -> {
@@ -94,7 +90,7 @@ class ProfileFragment : Fragment() {
 
     private fun loadPosts(posts: List<Post>) = with(binding) {
         adapter.setData(posts)
-        rwProfileUserPost.adapter = adapter
+        binding.profileLayout.rwProfileUserPost.adapter = adapter
     }
 
     private fun onItemClick() {
@@ -102,24 +98,9 @@ class ProfileFragment : Fragment() {
             val postIdBundle = Bundle()
             postIdBundle.putInt("id", id)
             findNavController().navigate(
-                R.id.action_navigation_profile_to_postDetailFragment,
+                R.id.action_otherProfileFragment_to_postDetailFragment,
                 postIdBundle
             )
-        }
-    }
-
-    private fun signOut() {
-        val dialogBinding: SignOutDialogBinding = SignOutDialogBinding.inflate(layoutInflater)
-        val builder = AlertDialog.Builder(requireContext()).setView(dialogBinding.root).show()
-        dialogBinding.signOutButton.setOnClickListener {
-            sessionManager.setLogin(false)
-            builder.dismiss()
-            val intent = Intent(requireContext(), AuthenticationActivity::class.java)
-            startActivity(intent)
-            requireActivity().finish()
-        }
-        dialogBinding.signOutCancelButton.setOnClickListener {
-            builder.dismiss()
         }
     }
 
@@ -127,4 +108,5 @@ class ProfileFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
 }

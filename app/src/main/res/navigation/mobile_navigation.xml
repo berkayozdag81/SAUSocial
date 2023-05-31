@@ -33,8 +33,10 @@
         android:label="@string/title_search"
         tools:layout="@layout/fragment_search" >
         <action
-            android:id="@+id/action_navigation_search_to_navigation_profile"
-            app:destination="@id/navigation_profile" />
+            android:id="@+id/action_navigation_search_to_otherProfileFragment"
+            app:destination="@id/otherProfileFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left" />
     </fragment>
 
     <fragment
@@ -70,6 +72,11 @@
             app:exitAnim="@anim/to_right"
             app:popEnterAnim="@anim/from_right"
             app:popExitAnim="@anim/to_left" />
+        <action
+            android:id="@+id/action_postDetailFragment_to_otherProfileFragment"
+            app:destination="@id/otherProfileFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left" />
     </fragment>
     <fragment
         android:id="@+id/postCreateFragment"
@@ -82,5 +89,25 @@
             app:enterAnim="@anim/from_right"
             app:exitAnim="@anim/to_left"
             />
+    </fragment>
+    <fragment
+        android:id="@+id/otherProfileFragment"
+        android:name="com.berkayozdag.sausocial.ui.other_profile.OtherProfileFragment"
+        android:label="fragment_other_profile"
+        tools:layout="@layout/fragment_other_profile" >
+        <action
+            android:id="@+id/action_otherProfileFragment_to_navigation_search"
+            app:destination="@id/navigation_search"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/from_right"
+            app:popExitAnim="@anim/to_left" />
+        <action
+            android:id="@+id/action_otherProfileFragment_to_postDetailFragment"
+            app:destination="@id/postDetailFragment"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/from_right"
+            app:popExitAnim="@anim/to_left" />
     </fragment>
 </navigation>

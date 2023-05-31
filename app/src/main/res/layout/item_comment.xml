@@ -58,42 +58,18 @@
         app:layout_constraintTop_toBottomOf="@id/layoutNameAndDepartment"
         tools:text="We are going to be here again next week. You should come eaerlier so you can get in the front." />
 
-    <LinearLayout
-        android:id="@+id/layoutLikesAndComments"
+    <TextView
+        android:id="@+id/textViewCommentCreatedDate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:gravity="center"
+        android:layout_weight="1"
+        android:fontFamily="@font/text_regular"
+        android:text="18.03.2023 23:11"
+        android:textColor="@color/grey_500"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textViewComment"
-        app:layout_constraintTop_toBottomOf="@id/textViewComment">
+        app:layout_constraintTop_toBottomOf="@id/textViewComment" />
 
-        <TextView
-            android:id="@+id/textViewCommentCreatedDate"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fontFamily="@font/text_regular"
-            android:text="18.03.2023 23:11"
-            android:textColor="@color/grey_500"
-            android:textSize="12sp" />
-
-        <ImageButton
-            android:id="@+id/buttonCommentLike"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/ic_like" />
-
-        <TextView
-            android:id="@+id/textViewCommentNumberOfLike"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:fontFamily="@font/text_regular"
-            android:text="96"
-            android:textColor="@color/grey_500"
-            android:textSize="12sp" />
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.berkayozdag.sausocial.common.User
 import com.berkayozdag.sausocial.databinding.ItemUserBinding
 import com.berkayozdag.sausocial.model.profile.ProfileResponse
 

@@ -34,51 +34,6 @@ data class Group(
 )
 
 object HomeMockData {
-    private val users = arrayListOf(
-            User(
-                    "1",
-                    "userImage",
-                    "Computer Engineer",
-                    "Berkay Özdağ"
-            ),
-            User(
-                    "1",
-                    "userImage",
-                    "Computer Engineer",
-                    "Selim Öztürk"
-            ),
-            User(
-                    "1",
-                    "userImage",
-                    "Computer Engineer",
-                    "Adem Kepçe"
-            ),
-            User(
-                    "1",
-                    "userImage",
-                    "Computer Engineer",
-                    "Burak Can Özdağ"
-            ),
-            User(
-                    "1",
-                    "userImage",
-                    "Computer Engineer",
-                    "Furkan Ergün"
-            ),
-            User(
-                    "1",
-                    "userImage",
-                    "Computer Engineer",
-                    "Davud Samed Tombul"
-            ),
-            User(
-                    "1",
-                    "userImage",
-                    "Computer Engineer",
-                    "Furkan Kablan"
-            )
-
-    )
 
     private val posts = arrayListOf(
             Post(
@@ -213,11 +168,5 @@ object HomeMockData {
     fun getGroups(): List<Group> {
         return groups
     }
-
-
-    fun getUser(): ArrayList<User> {
-        return users
-    }
-
 
 }

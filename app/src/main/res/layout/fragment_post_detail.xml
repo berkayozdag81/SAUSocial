@@ -1,257 +1,264 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipeRefreshLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/screens_background_color"
     tools:context=".ui.post_detail.PostDetailFragment">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/main_color"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/topAppBar"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize">
+            android:layout_height="wrap_content"
+            android:background="@color/main_color"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <ImageButton
-                android:id="@+id/buttonBackButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                app:srcCompat="@drawable/ic_back_button"
-                app:tint="@color/white" />
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/topAppBar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize">
 
-            <TextView
-                android:id="@+id/toolbarTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:fontFamily="@font/text_bold"
-                android:text="Post Detail"
-                android:textColor="@color/white"
-                android:textSize="20sp" />
-
-        </com.google.android.material.appbar.MaterialToolbar>
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:layout_marginBottom="?attr/actionBarSize"
-        android:paddingTop="16dp">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/imageViewUserProfile"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginStart="16dp"
-                android:src="@drawable/sample_profile_photo"
-                app:civ_border_color="@color/main_color"
-                app:civ_border_width="1dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <LinearLayout
-                android:id="@+id/layoutNameAndDepartment"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="@+id/imageViewUserProfile"
-                app:layout_constraintEnd_toStartOf="@+id/buttonFollow"
-                app:layout_constraintStart_toEndOf="@+id/imageViewUserProfile"
-                app:layout_constraintTop_toTopOf="@+id/imageViewUserProfile">
+                <ImageButton
+                    android:id="@+id/buttonBackButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    app:srcCompat="@drawable/ic_back_button"
+                    app:tint="@color/white" />
 
                 <TextView
-                    android:id="@+id/textViewUserName"
-                    android:layout_width="match_parent"
+                    android:id="@+id/toolbarTitle"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:fontFamily="@font/text_bold"
-                    android:text="Ahmet Selim Öztürk"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:text="Post Detail"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
 
-                <TextView
-                    android:id="@+id/textViewUserDepartment"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/text_regular"
-                    android:text="Computer Engineering"
-                    android:textColor="@color/grey_500"
-                    android:textSize="12sp" />
+            </com.google.android.material.appbar.MaterialToolbar>
+        </com.google.android.material.appbar.AppBarLayout>
 
-            </LinearLayout>
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:layout_marginBottom="?attr/actionBarSize"
+            android:paddingTop="16dp">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/buttonFollow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:backgroundTint="@color/main_color"
-                android:text="Follow"
-                android:textAppearance="@style/PostDetailFollowButton"
-                app:cornerRadius="24dp"
-                app:icon="@drawable/ic_user_add"
-                app:iconGravity="end"
-                app:layout_constraintBottom_toBottomOf="@+id/layoutNameAndDepartment"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/layoutNameAndDepartment" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/textViewPostDescription"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:fontFamily="@font/text_regular"
-                android:text="We are going to be here again next week. You should come eaerlier so you can get in the front."
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="@+id/buttonFollow"
-                app:layout_constraintStart_toStartOf="@+id/imageViewUserProfile"
-                app:layout_constraintTop_toBottomOf="@+id/layoutNameAndDepartment" />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/imageViewUserProfile"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="16dp"
+                    android:src="@drawable/sample_profile_photo"
+                    app:civ_border_color="@color/main_color"
+                    app:civ_border_width="1dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <LinearLayout
-                android:id="@+id/layoutLikesAndComments"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="center"
-                app:layout_constraintEnd_toEndOf="@+id/textViewPostDescription"
-                app:layout_constraintStart_toStartOf="@+id/textViewPostDescription"
-                app:layout_constraintTop_toBottomOf="@id/textViewPostDescription">
-
-                <TextView
-                    android:id="@+id/textViewPostCreatedDate"
+                <LinearLayout
+                    android:id="@+id/layoutNameAndDepartment"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/text_regular"
-                    android:text="15.03.2023 13:50"
-                    android:textColor="@color/grey_500"
-                    android:textSize="12sp" />
+                    android:layout_marginHorizontal="16dp"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageViewUserProfile"
+                    app:layout_constraintEnd_toStartOf="@+id/buttonFollow"
+                    app:layout_constraintStart_toEndOf="@+id/imageViewUserProfile"
+                    app:layout_constraintTop_toTopOf="@+id/imageViewUserProfile">
 
-                <ImageButton
-                    android:id="@+id/buttonPostLike"
+                    <TextView
+                        android:id="@+id/textViewUserName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/text_bold"
+                        android:text="Ahmet Selim Öztürk"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/textViewUserDepartment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/text_regular"
+                        android:text="Computer Engineering"
+                        android:textColor="@color/grey_500"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/buttonFollow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:src="@drawable/ic_like" />
+                    android:layout_marginEnd="16dp"
+                    android:backgroundTint="@color/main_color"
+                    android:text="Follow"
+                    android:textAppearance="@style/PostDetailFollowButton"
+                    app:cornerRadius="24dp"
+                    app:icon="@drawable/ic_user_add"
+                    app:iconGravity="end"
+                    app:layout_constraintBottom_toBottomOf="@+id/layoutNameAndDepartment"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/layoutNameAndDepartment" />
 
                 <TextView
-                    android:id="@+id/textViewPostNumberOfLike"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/textViewPostDescription"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="4dp"
                     android:fontFamily="@font/text_regular"
-                    android:text="124"
-                    android:textColor="@color/grey_500"
-                    android:textSize="12sp" />
+                    android:text="We are going to be here again next week. You should come eaerlier so you can get in the front."
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="@+id/buttonFollow"
+                    app:layout_constraintStart_toStartOf="@+id/imageViewUserProfile"
+                    app:layout_constraintTop_toBottomOf="@+id/layoutNameAndDepartment" />
 
-                <ImageButton
-                    android:id="@+id/buttonPostComment"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/layoutLikesAndComments"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:src="@drawable/ic_comment" />
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    app:layout_constraintEnd_toEndOf="@+id/textViewPostDescription"
+                    app:layout_constraintStart_toStartOf="@+id/textViewPostDescription"
+                    app:layout_constraintTop_toBottomOf="@id/textViewPostDescription">
+
+                    <TextView
+                        android:id="@+id/textViewPostCreatedDate"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/text_regular"
+                        android:text="15.03.2023 13:50"
+                        android:textColor="@color/grey_500"
+                        android:textSize="12sp" />
+
+                    <ImageButton
+                        android:id="@+id/buttonPostLike"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@drawable/ic_like" />
+
+                    <TextView
+                        android:id="@+id/textViewPostNumberOfLike"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:fontFamily="@font/text_regular"
+                        android:text="124"
+                        android:textColor="@color/grey_500"
+                        android:textSize="12sp" />
+
+                    <ImageButton
+                        android:id="@+id/buttonPostComment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@drawable/ic_comment" />
+
+                    <TextView
+                        android:id="@+id/textViewPostNumberOfComment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:fontFamily="@font/text_regular"
+                        android:text="96"
+                        android:textColor="@color/grey_500"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/viewHorizontal1"
+                    android:layout_width="0dp"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/grey_300"
+                    app:layout_constraintEnd_toEndOf="@+id/layoutLikesAndComments"
+                    app:layout_constraintStart_toStartOf="@+id/layoutLikesAndComments"
+                    app:layout_constraintTop_toBottomOf="@id/layoutLikesAndComments" />
 
                 <TextView
-                    android:id="@+id/textViewPostNumberOfComment"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/textViewComments"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:fontFamily="@font/text_regular"
-                    android:text="96"
-                    android:textColor="@color/grey_500"
-                    android:textSize="12sp" />
-            </LinearLayout>
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/text_bold"
+                    android:text="Comments"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="@+id/viewHorizontal1"
+                    app:layout_constraintStart_toStartOf="@+id/viewHorizontal1"
+                    app:layout_constraintTop_toBottomOf="@+id/viewHorizontal1" />
 
-            <View
-                android:id="@+id/viewHorizontal1"
-                android:layout_width="0dp"
-                android:layout_height="2dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/grey_300"
-                app:layout_constraintEnd_toEndOf="@+id/layoutLikesAndComments"
-                app:layout_constraintStart_toStartOf="@+id/layoutLikesAndComments"
-                app:layout_constraintTop_toBottomOf="@id/layoutLikesAndComments" />
-
-            <TextView
-                android:id="@+id/textViewComments"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:fontFamily="@font/text_bold"
-                android:text="Comments"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="@+id/viewHorizontal1"
-                app:layout_constraintStart_toStartOf="@+id/viewHorizontal1"
-                app:layout_constraintTop_toBottomOf="@+id/viewHorizontal1" />
-
-            <View
-                android:id="@+id/viewHorizontal2"
-                android:layout_width="0dp"
-                android:layout_height="2dp"
-                android:layout_marginTop="4dp"
-                android:background="@color/grey_300"
-                app:layout_constraintEnd_toEndOf="@+id/textViewComments"
-                app:layout_constraintStart_toStartOf="@+id/textViewComments"
-                app:layout_constraintTop_toBottomOf="@id/textViewComments" />
+                <View
+                    android:id="@+id/viewHorizontal2"
+                    android:layout_width="0dp"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/grey_300"
+                    app:layout_constraintEnd_toEndOf="@+id/textViewComments"
+                    app:layout_constraintStart_toStartOf="@+id/textViewComments"
+                    app:layout_constraintTop_toBottomOf="@id/textViewComments" />
 
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewPostComments"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layoutAnimation="@anim/layout_animation_fall_down"
-                app:layout_constraintTop_toBottomOf="@+id/viewHorizontal2" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewPostComments"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layoutAnimation="@anim/layout_animation_fall_down"
+                    app:layout_constraintTop_toBottomOf="@+id/viewHorizontal2" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
 
-    <RelativeLayout
-        android:id="@+id/layoutLeaveComment"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_gravity="bottom"
-        android:background="@color/white"
-        android:orientation="horizontal"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-        <EditText
-            android:id="@+id/editTextComment"
+        <RelativeLayout
+            android:id="@+id/layoutLeaveComment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:backgroundTint="@color/main_color"
-            android:hint="Leave a comment"
-            android:importantForAutofill="no"
-            android:inputType="textMultiLine"
-            android:textAppearance="@style/PostDetailCommentEditText"
-            android:textColorHighlight="@color/main_color"
-            android:textColorLink="@color/main_color" />
+            android:layout_height="48dp"
+            android:layout_gravity="bottom"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            app:layout_constraintBottom_toBottomOf="parent">
 
-        <ImageButton
-            android:id="@+id/buttonSendComment"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentEnd="true"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:hapticFeedbackEnabled="true"
-            android:src="@drawable/ic_send" />
-    </RelativeLayout>
+            <EditText
+                android:id="@+id/editTextComment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:backgroundTint="@color/main_color"
+                android:hint="Leave a comment"
+                android:importantForAutofill="no"
+                android:inputType="textMultiLine"
+                android:textAppearance="@style/PostDetailCommentEditText"
+                android:textColorHighlight="@color/main_color"
+                android:textColorLink="@color/main_color" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+            <ImageButton
+                android:id="@+id/buttonSendComment"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:hapticFeedbackEnabled="true"
+                android:src="@drawable/ic_send" />
+        </RelativeLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

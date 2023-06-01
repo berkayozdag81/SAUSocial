@@ -4,14 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.berkayozdag.sausocial.R
 import com.berkayozdag.sausocial.common.SessionManager
+import com.berkayozdag.sausocial.common.showToast
 import com.berkayozdag.sausocial.data.NetworkResponse
 import com.berkayozdag.sausocial.databinding.FragmentPostDetailBinding
 import com.berkayozdag.sausocial.model.Comment
@@ -28,10 +29,10 @@ class PostDetailFragment : Fragment() {
     private val binding get() = _binding!!
     private val adapter = CommentsAdapter()
     private var postId: Int? = null
+    private var userId: Int? = null
     private val postDetailViewModel by viewModels<PostDetailViewModel>()
-
-    val dateFormat = SimpleDateFormat("dd.MM.yyyy")
-    val currentDate = Date()
+    private val dateFormat = SimpleDateFormat("dd.MM.yyyy")
+    private val currentDate = Date()
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -40,20 +41,20 @@ class PostDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentPostDetailBinding.inflate(inflater, container, false)
-        setupRecyclerview()
-        setupListeners()
-        setupObserves()
         postId = arguments?.getInt("id")
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        userItemClicked()
+        setupRecyclerview()
+        setupListeners()
         postId?.let { id -> postDetailViewModel.getPostById(id) }
+        setupObserves()
     }
 
     private fun setupListeners() = with(binding) {
-        val formattedDate = dateFormat.format(currentDate)
 
         buttonBackButton.setOnClickListener {
             findNavController().popBackStack()
@@ -63,9 +64,47 @@ class PostDetailFragment : Fragment() {
             postId?.let { postId ->
                 postDetailViewModel.sendComment(
                     editTextComment.text.toString(),
-                    formattedDate,
+                    dateFormat.format(currentDate),
                     postId,
                     sessionManager.getUserId()
+                )
+            }
+        }
+
+        swipeRefreshLayout.setOnRefreshListener {
+            swipeRefreshLayout.isRefreshing = false
+            postId?.let { postId -> postDetailViewModel.getPostById(postId) }
+        }
+
+        imageViewUserProfile.setOnClickListener {
+            if (sessionManager.getUserId() == userId) {
+                findNavController().navigate(
+                    R.id.action_postDetailFragment_to_navigation_profile,
+                )
+            } else {
+                val userIdBundle = Bundle()
+                userId?.let { userId -> userIdBundle.putInt("id", userId) }
+                findNavController().navigate(
+                    R.id.action_postDetailFragment_to_otherProfileFragment,
+                    userIdBundle
+                )
+            }
+
+        }
+    }
+
+    private fun userItemClicked() {
+        adapter.userItemClicked = { id ->
+            if (sessionManager.getUserId() == id) {
+                findNavController().navigate(
+                    R.id.action_postDetailFragment_to_navigation_profile,
+                )
+            } else {
+                val userIdBundle = Bundle()
+                userIdBundle.putInt("id", id)
+                findNavController().navigate(
+                    R.id.action_postDetailFragment_to_otherProfileFragment,
+                    userIdBundle
                 )
             }
         }
@@ -75,7 +114,6 @@ class PostDetailFragment : Fragment() {
         postDetailViewModel.postDetailResponse.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResponse.Success -> {
-                    // İstek başarılı oldu, veriler kullanılabilir
                     textViewUserName.text =
                         response.data.appUser.name + " " + response.data.appUser.surname
                     textViewUserDepartment.text = response.data.appUser.part
@@ -83,33 +121,28 @@ class PostDetailFragment : Fragment() {
                     textViewPostCreatedDate.text = response.data.publishedDate
                     textViewPostNumberOfLike.text = response.data.likeCount.toString()
                     textViewPostNumberOfComment.text = response.data.comments.size.toString()
+                    userId = response.data.appUser.id
                     loadComments(response.data.comments)
                 }
                 is NetworkResponse.Error -> {
-                    // İstekte bir hata oluştu
-                    val errorMessage = response.errorMessage
-                    //Toast.makeText(this., errorMessage, Toast.LENGTH_LONG).show()
+                    context?.showToast(response.errorMessage)
                 }
                 NetworkResponse.Loading -> {
-                    // Yükleme animasyonu vb. gösterilebilir
                 }
             }
         }
 
-        postDetailViewModel.commentCreateResponse.observe(viewLifecycleOwner) {
-            when (it) {
+        postDetailViewModel.commentCreateResponse.observe(viewLifecycleOwner) { response ->
+            when (response) {
                 is NetworkResponse.Success -> {
-                    // İstek başarılı oldu, veriler kullanılabilir
-                    Toast.makeText(requireContext(), "Yorum paylaşıldı.", Toast.LENGTH_LONG).show()
+                    context?.showToast("Yorum paylaşıldı.")
                     postId?.let { id -> postDetailViewModel.getPostById(id) }
                     editTextComment.text.clear()
                 }
                 is NetworkResponse.Error -> {
-                    // İstekte bir hata oluştu
-                    Toast.makeText(requireContext(), "Hata", Toast.LENGTH_LONG).show()
+                    context?.showToast(response.errorMessage)
                 }
                 NetworkResponse.Loading -> {
-                    // Yükleme animasyonu vb. gösterilebilir
                 }
             }
         }

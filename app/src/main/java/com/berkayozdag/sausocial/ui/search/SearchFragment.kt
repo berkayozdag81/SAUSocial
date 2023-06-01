@@ -22,9 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class SearchFragment : Fragment() {
 
     private var _binding: FragmentSearchBinding? = null
-
     private val binding get() = _binding!!
-
     private val adapter = UsersAdapter()
     private val userItems = arrayListOf<ProfileResponse>()
     private val searchViewModel: SearchViewModel by viewModels()
@@ -35,18 +33,16 @@ class SearchFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-
-        setupObserves()
-        onItemClick()
-        return root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        searchViewModel.getUsers()
         setupRecyclerview()
+        onItemClick()
         initSearch()
+        setupObserves()
+        searchViewModel.getUsers()
     }
 
     private fun setupRecyclerview() = with(binding) {

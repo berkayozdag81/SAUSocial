@@ -15,7 +15,7 @@ class AuthRepository @Inject constructor(
             val response = api.login(loginRequest)
             NetworkResponse.Success(response)
         } catch (e: Exception) {
-            NetworkResponse.Error(e.message ?: "hata")
+            NetworkResponse.Error(e.message ?: "Bir hata oluştu")
         }
     }
 }

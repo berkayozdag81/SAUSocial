@@ -23,4 +23,11 @@ class SessionManager @Inject constructor(
         return sharedPreferences.getInt(Constants.USER_ID, -1)
     }
 
+    fun setUserName(name: String) {
+        sharedPreferences.edit().putString(Constants.USER_NAME_AND_SURNAME, name).apply()
+    }
+
+    fun getUserName(): String {
+        return sharedPreferences.getString(Constants.USER_NAME_AND_SURNAME, "") ?: ""
+    }
 }

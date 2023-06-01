@@ -13,7 +13,7 @@ interface ApiService {
 
     @POST("Auth/Login")
     suspend fun login(
-            @Body request: LoginRequest
+        @Body request: LoginRequest
     ): LoginResponse
 
     @GET("Posts")

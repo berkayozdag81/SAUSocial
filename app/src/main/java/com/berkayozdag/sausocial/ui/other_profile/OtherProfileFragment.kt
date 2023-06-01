@@ -34,16 +34,16 @@ class OtherProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentOtherProfileBinding.inflate(inflater, container, false)
-        initViews()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        arguments?.getInt("id")?.let { profileViewModel.getUserById(it) }
-        setupObservers()
         setupRecyclerview()
-        onItemClick()
+        postItemClicked()
+        initViews()
+        arguments?.getInt("id")?.let { userId -> profileViewModel.getUserById(userId) }
+        setupObservers()
     }
 
     private fun initViews() {
@@ -64,22 +64,23 @@ class OtherProfileFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        profileViewModel.profileState.observe(viewLifecycleOwner) {
-            when (it) {
+        profileViewModel.profileState.observe(viewLifecycleOwner) { response ->
+            when (response) {
                 is NetworkResponse.Loading -> {
                 }
                 is NetworkResponse.Success -> {
                     binding.profileLayout.profileNameText.text =
-                        it.data.name + " " + it.data.surname
+                        response.data.name + " " + response.data.surname
                     binding.profileLayout.profileFollowerCount.text =
-                        it.data.followers.size.toString()
-                    binding.profileLayout.profileDepartmentText.text = it.data.part
+                        response.data.followers.size.toString()
+                    binding.profileLayout.profileDepartmentText.text = response.data.part
                     binding.profileLayout.profileFollowingCount.text =
-                        it.data.followings.size.toString()
+                        response.data.followings.size.toString()
                     binding.profileLayout.profileFollowingCount.text =
-                        it.data.followings.size.toString()
-                    binding.profileLayout.profilePostCount.text = it.data.posts.size.toString()
-                    loadPosts(it.data.posts)
+                        response.data.followings.size.toString()
+                    binding.profileLayout.profilePostCount.text =
+                        response.data.posts.size.toString()
+                    loadPosts(response.data.posts)
                 }
                 is NetworkResponse.Error -> {
                     context?.showToast("Hatalı kullanıcı adı veya şifre")
@@ -93,8 +94,8 @@ class OtherProfileFragment : Fragment() {
         binding.profileLayout.rwProfileUserPost.adapter = adapter
     }
 
-    private fun onItemClick() {
-        adapter.onItemClicked = { id ->
+    private fun postItemClicked() {
+        adapter.postItemClicked = { id ->
             val postIdBundle = Bundle()
             postIdBundle.putInt("id", id)
             findNavController().navigate(

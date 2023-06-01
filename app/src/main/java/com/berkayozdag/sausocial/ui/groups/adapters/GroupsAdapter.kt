@@ -19,8 +19,8 @@ class GroupsAdapter(var onItemClicked: ((Group) -> Unit) = {}) :
     inner class GroupViewHolder(private val binding: ItemGroupBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(group: Group) = with(binding) {
-               textViewGroupName.text=group.name
-                Glide
+            textViewGroupName.text = group.name
+            Glide
                 .with(binding.root)
                 .load(group.imageUrl)
                 .centerCrop()

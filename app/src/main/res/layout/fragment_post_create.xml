@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:fontFamily="@font/text_bold"
-            android:text="Ahmet Selim Öztürk"
+            tools:text="Ahmet Selim Öztürk"
             android:textColor="@color/black"
             android:textSize="16sp" />
     </LinearLayout>

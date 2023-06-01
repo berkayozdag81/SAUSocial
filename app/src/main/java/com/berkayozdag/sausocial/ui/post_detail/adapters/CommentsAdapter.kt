@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.berkayozdag.sausocial.databinding.ItemCommentBinding
 import com.berkayozdag.sausocial.model.Comment
 
-class CommentsAdapter() :
+class CommentsAdapter(var userItemClicked: ((Int) -> Unit) = {}) :
     RecyclerView.Adapter<CommentsAdapter.CommentViewHolder>() {
 
     private var items: List<Comment> = emptyList()
@@ -19,6 +19,9 @@ class CommentsAdapter() :
             textViewUserDepartment.text = comment.appUser.part
             textViewComment.text = comment.message
             textViewCommentCreatedDate.text = comment.publishedDate
+            imageViewUserProfile.setOnClickListener {
+                userItemClicked(comment.appUser.id)
+            }
         }
     }
 

@@ -7,7 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.berkayozdag.sausocial.databinding.ItemPostBinding
 import com.berkayozdag.sausocial.model.Post
 
-class PostsAdapter(var onItemClicked: ((Int) -> Unit) = {}) :
+class PostsAdapter(
+    var postItemClicked: ((Int) -> Unit) = {},
+    var userItemClicked: ((Int) -> Unit) = {}
+) :
     RecyclerView.Adapter<PostsAdapter.PostViewHolder>() {
 
     private var items: List<Post> = emptyList()
@@ -15,14 +18,17 @@ class PostsAdapter(var onItemClicked: ((Int) -> Unit) = {}) :
     inner class PostViewHolder(private val binding: ItemPostBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(post: Post) = with(binding) {
-            textViewUserName.text = post.appUser.name+" "+post.appUser.surname
+            textViewUserName.text = post.appUser.name + " " + post.appUser.surname
             textViewUserDepartment.text = post.appUser.part
             textViewPostDescription.text = post.content
             textViewPostCreatedDate.text = post.publishedDate
             textViewPostNumberOfComment.text = post.comments.size.toString()
             textViewPostNumberOfLike.text = post.likeCount.toString()
             layoutPost.setOnClickListener {
-                onItemClicked(post.id)
+                postItemClicked(post.id)
+            }
+            imageViewUserProfile.setOnClickListener {
+                userItemClicked(post.appUser.id)
             }
         }
     }

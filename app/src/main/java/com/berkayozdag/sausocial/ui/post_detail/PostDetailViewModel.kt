@@ -6,7 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.berkayozdag.sausocial.data.NetworkResponse
 import com.berkayozdag.sausocial.data.repository.SocialAppRepository
-import com.berkayozdag.sausocial.model.*
+import com.berkayozdag.sausocial.model.CommentRequest
+import com.berkayozdag.sausocial.model.CommentResponse
+import com.berkayozdag.sausocial.model.Post
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

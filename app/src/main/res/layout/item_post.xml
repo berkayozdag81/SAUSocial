@@ -109,7 +109,7 @@
             android:src="@drawable/ic_like" />
 
         <TextView
-            android:id="@+id/textViewPostNumberOfComment"
+            android:id="@+id/textViewPostNumberOfLike"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
@@ -127,7 +127,7 @@
             android:src="@drawable/ic_comment" />
 
         <TextView
-            android:id="@+id/textViewPostNumberOfLike"
+            android:id="@+id/textViewPostNumberOfComment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"

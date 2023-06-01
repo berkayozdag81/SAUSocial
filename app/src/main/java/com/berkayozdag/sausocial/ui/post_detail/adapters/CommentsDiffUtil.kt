@@ -4,8 +4,8 @@ import androidx.recyclerview.widget.DiffUtil
 import com.berkayozdag.sausocial.model.Comment
 
 class CommentsDiffUtil(
-        private val oldList: List<Comment>,
-        private val newList: List<Comment>
+    private val oldList: List<Comment>,
+    private val newList: List<Comment>
 ) : DiffUtil.Callback() {
 
     override fun getOldListSize(): Int {

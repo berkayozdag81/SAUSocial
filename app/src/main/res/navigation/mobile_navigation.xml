@@ -25,6 +25,16 @@
             app:popEnterAnim="@anim/from_right"
             app:popExitAnim="@anim/to_left"
             />
+        <action
+            android:id="@+id/action_navigation_home_to_otherProfileFragment"
+            app:destination="@id/otherProfileFragment"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/from_right"
+            app:popExitAnim="@anim/to_left" />
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_profile"
+            app:destination="@id/navigation_profile" />
     </fragment>
 
     <fragment
@@ -75,8 +85,10 @@
         <action
             android:id="@+id/action_postDetailFragment_to_otherProfileFragment"
             app:destination="@id/otherProfileFragment"
-            app:enterAnim="@anim/from_right"
-            app:exitAnim="@anim/to_left" />
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/from_right"
+            app:popExitAnim="@anim/to_left" />
     </fragment>
     <fragment
         android:id="@+id/postCreateFragment"
@@ -103,11 +115,17 @@
             app:popEnterAnim="@anim/from_right"
             app:popExitAnim="@anim/to_left" />
         <action
+            android:id="@+id/action_otherProfileFragment_to_navigation_home"
+            app:destination="@id/navigation_home"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left" />
+        <action
             android:id="@+id/action_otherProfileFragment_to_postDetailFragment"
             app:destination="@id/postDetailFragment"
-            app:enterAnim="@anim/from_left"
-            app:exitAnim="@anim/to_right"
-            app:popEnterAnim="@anim/from_right"
-            app:popExitAnim="@anim/to_left" />
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left" />
+        <action
+            android:id="@+id/action_otherProfileFragment_to_navigation_profile"
+            app:destination="@id/navigation_profile" />
     </fragment>
 </navigation>

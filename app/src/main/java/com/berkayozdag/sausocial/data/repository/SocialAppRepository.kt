@@ -4,15 +4,19 @@ import com.berkayozdag.sausocial.data.NetworkResponse
 import com.berkayozdag.sausocial.data.api.ApiService
 import com.berkayozdag.sausocial.model.*
 import com.berkayozdag.sausocial.model.profile.ProfileResponse
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
 class SocialAppRepository @Inject constructor(
     private val api: ApiService,
 ) {
 
+    private val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+
     suspend fun getPosts(): NetworkResponse<List<Post>> {
         return try {
-            val response = api.getPosts()
+            val response = api.getPosts().sortedByDescending { dateFormat.parse(it.publishedDate) }
             NetworkResponse.Success(response)
         } catch (e: Exception) {
             NetworkResponse.Error(e.message ?: "Bir hata oluştu")

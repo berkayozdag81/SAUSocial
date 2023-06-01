@@ -4,8 +4,8 @@ import androidx.recyclerview.widget.DiffUtil
 import com.berkayozdag.sausocial.model.Post
 
 class PostsDiffUtil(
-        private val oldList: List<Post>,
-        private val newList: List<Post>
+    private val oldList: List<Post>,
+    private val newList: List<Post>
 ) : DiffUtil.Callback() {
 
     override fun getOldListSize(): Int {

@@ -4,15 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.berkayozdag.sausocial.common.SessionManager
+import com.berkayozdag.sausocial.common.showToast
 import com.berkayozdag.sausocial.data.NetworkResponse
 import com.berkayozdag.sausocial.databinding.FragmentPostCreateBinding
-import com.berkayozdag.sausocial.ui.search.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
@@ -34,16 +33,19 @@ class PostCreateFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentPostCreateBinding.inflate(inflater, container, false)
-
-        setupListeners()
-        setUpObserves()
         return binding.root
     }
 
-    private fun initView(){
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initViews()
+        setupListeners()
+        setUpObserves()
+    }
 
+    private fun initViews() {
+        binding.textViewUserName.text = sessionManager.getUserName()
     }
 
     private fun setupListeners() = with(binding) {
@@ -58,6 +60,7 @@ class PostCreateFragment : Fragment() {
                 }
             }
         }
+
         buttonCancel.setOnClickListener {
             findNavController().popBackStack()
         }
@@ -75,16 +78,17 @@ class PostCreateFragment : Fragment() {
     }
 
     private fun setUpObserves() {
-        postCreateViewModel.postCreateResponse.observe(viewLifecycleOwner) {
-            when (it) {
+        postCreateViewModel.postCreateResponse.observe(viewLifecycleOwner) {response->
+            when (response) {
                 is NetworkResponse.Loading -> {
 
                 }
                 is NetworkResponse.Success -> {
-                    Toast.makeText(this.context, "Post paylaşıldı", Toast.LENGTH_LONG).show()
+                    context?.showToast("Post paylaşıldı")
+                    findNavController().popBackStack()
                 }
                 is NetworkResponse.Error -> {
-                    Toast.makeText(this.context, "Post paylaşılmadı", Toast.LENGTH_LONG).show()
+                    context?.showToast("Post paylaşılmadı")
                 }
             }
         }

@@ -31,11 +31,6 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupViewPager()
         setupListeners()
-        setupObserves()
-    }
-
-    private fun setupObserves() {
-
     }
 
     private fun setupListeners() = with(binding) {

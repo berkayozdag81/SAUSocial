@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-        private val repository: SocialAppRepository
+    private val repository: SocialAppRepository
 ) : ViewModel() {
 
     private val _profileState = MutableLiveData<NetworkResponse<ProfileResponse>>()

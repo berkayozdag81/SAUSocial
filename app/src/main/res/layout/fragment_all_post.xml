@@ -5,6 +5,14 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.all_post.AllPostsFragment">
 
+    <include
+        android:id="@+id/layout_no_result"
+        layout="@layout/no_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmerFrameLayout"
         android:layout_width="match_parent"

@@ -1,5 +1,6 @@
 package com.berkayozdag.sausocial.ui.post_create
 
+import android.animation.Animator
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.berkayozdag.sausocial.common.SessionManager
+import com.berkayozdag.sausocial.common.setVisible
 import com.berkayozdag.sausocial.common.showToast
 import com.berkayozdag.sausocial.data.NetworkResponse
 import com.berkayozdag.sausocial.databinding.FragmentPostCreateBinding
@@ -75,17 +77,32 @@ class PostCreateFragment : Fragment() {
                 sessionManager.getUserId()
             )
         }
+
+        binding.sharePostSuccessAnimation.addAnimatorListener(object : Animator.AnimatorListener {
+            override fun onAnimationStart(p0: Animator) {
+            }
+
+            override fun onAnimationEnd(p0: Animator) {
+                findNavController().popBackStack()
+            }
+
+            override fun onAnimationCancel(p0: Animator) {
+            }
+
+            override fun onAnimationRepeat(p0: Animator) {
+            }
+        })
     }
 
     private fun setUpObserves() {
-        postCreateViewModel.postCreateResponse.observe(viewLifecycleOwner) {response->
+        postCreateViewModel.postCreateResponse.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResponse.Loading -> {
 
                 }
                 is NetworkResponse.Success -> {
-                    context?.showToast("Post paylaşıldı")
-                    findNavController().popBackStack()
+                    binding.sharePostSuccessAnimation.setVisible(true)
+                    binding.sharePostSuccessAnimation.playAnimation()
                 }
                 is NetworkResponse.Error -> {
                     context?.showToast("Post paylaşılmadı")

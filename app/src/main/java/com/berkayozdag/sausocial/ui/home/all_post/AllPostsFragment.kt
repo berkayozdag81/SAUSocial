@@ -49,16 +49,31 @@ class AllPostsFragment : Fragment() {
         setupObserves()
     }
 
+    private fun startShimmerEffect() {
+        binding.shimmerFrameLayout.startShimmer()
+        binding.shimmerFrameLayout.visibility = View.VISIBLE
+        binding.recyclerViewPosts.visibility = View.GONE
+    }
+
+    private fun stopShimmerEffect() {
+        binding.shimmerFrameLayout.stopShimmer()
+        binding.shimmerFrameLayout.visibility = View.GONE
+        binding.recyclerViewPosts.visibility = View.VISIBLE
+    }
+
     private fun setupObserves() {
         allPostViewModel.postResponse.observe(this.viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResponse.Success -> {
+                    stopShimmerEffect()
                     loadPosts(response.data)
                 }
                 is NetworkResponse.Error -> {
+                    stopShimmerEffect()
                     context?.showToast(response.errorMessage)
                 }
                 NetworkResponse.Loading -> {
+                    startShimmerEffect()
                 }
             }
         }

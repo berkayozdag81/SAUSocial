@@ -12,7 +12,7 @@ class SocialAppRepository @Inject constructor(
     private val api: ApiService,
 ) {
 
-    private val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+    private val dateFormat = SimpleDateFormat("dd.MM.yyyy hh:mm:ss", Locale.getDefault())
 
     suspend fun getPosts(): NetworkResponse<List<Post>> {
         return try {

@@ -78,10 +78,9 @@ class ProfileFragment : Fragment() {
                 }
                 is NetworkResponse.Success -> {
                     binding.profileNameText.text = response.data.name + " " + response.data.surname
-                    binding.profileFollowerCount.text = response.data.followers.size.toString()
+                    //binding.profileFollowerCount.text = response.data.followers.size.toString()
                     binding.profileDepartmentText.text = response.data.part
-                    binding.profileFollowingCount.text = response.data.followings.size.toString()
-                    binding.profileFollowingCount.text = response.data.followings.size.toString()
+                    //binding.profileFollowingCount.text = response.data.followings.size.toString()
                     binding.profilePostCount.text = response.data.posts.size.toString()
                     loadPosts(response.data.posts)
                 }

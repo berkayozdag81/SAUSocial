@@ -23,7 +23,7 @@ class PostCreateFragment : Fragment() {
     private var _binding: FragmentPostCreateBinding? = null
     private val binding get() = _binding!!
     private val postCreateViewModel: PostCreateViewModel by viewModels()
-    private val dateFormat = SimpleDateFormat("dd.MM.yyyy")
+    private val dateFormat = SimpleDateFormat("dd.MM.yyyy hh:mm:ss")
     private val currentDate = Date()
 
     @Inject

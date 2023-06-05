@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.berkayozdag.sausocial.R
 import com.berkayozdag.sausocial.common.SessionManager
+import com.berkayozdag.sausocial.common.setVisible
 import com.berkayozdag.sausocial.common.showToast
 import com.berkayozdag.sausocial.data.NetworkResponse
 import com.berkayozdag.sausocial.databinding.FragmentAllPostBinding
@@ -67,6 +68,7 @@ class AllPostsFragment : Fragment() {
             when (response) {
                 is NetworkResponse.Success -> {
                     stopShimmerEffect()
+                    binding.layoutNoResult.root.setVisible(response.data.isEmpty())
                     loadPosts(response.data)
                 }
                 is NetworkResponse.Error -> {
@@ -130,8 +132,8 @@ class AllPostsFragment : Fragment() {
         }
     }
 
-    private fun likeClicked(){
-        adapter.likeClicked={
+    private fun likeClicked() {
+        adapter.likeClicked = {
             context?.showToast("Like ettim")
         }
     }

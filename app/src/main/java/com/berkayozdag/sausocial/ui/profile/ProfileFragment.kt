@@ -75,6 +75,7 @@ class ProfileFragment : Fragment() {
         profileViewModel.profileState.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResponse.Loading -> {
+                    binding.profileProgressBar.setVisible(true)
                 }
                 is NetworkResponse.Success -> {
                     binding.profileNameText.text = response.data.name + " " + response.data.surname
@@ -82,9 +83,11 @@ class ProfileFragment : Fragment() {
                     binding.profileDepartmentText.text = response.data.part
                     //binding.profileFollowingCount.text = response.data.followings.size.toString()
                     binding.profilePostCount.text = response.data.posts.size.toString()
+                    binding.profileProgressBar.setVisible(false)
                     loadPosts(response.data.posts)
                 }
                 is NetworkResponse.Error -> {
+                    binding.profileProgressBar.setVisible(false)
                     context?.showToast("Hatalı kullanıcı adı veya şifre")
                 }
             }

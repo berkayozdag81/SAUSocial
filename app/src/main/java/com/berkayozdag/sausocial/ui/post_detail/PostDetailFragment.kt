@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.berkayozdag.sausocial.R
 import com.berkayozdag.sausocial.common.SessionManager
+import com.berkayozdag.sausocial.common.setVisible
 import com.berkayozdag.sausocial.common.showToast
 import com.berkayozdag.sausocial.data.NetworkResponse
 import com.berkayozdag.sausocial.databinding.FragmentPostDetailBinding
@@ -31,7 +32,7 @@ class PostDetailFragment : Fragment() {
     private var postId: Int? = null
     private var userId: Int? = null
     private val postDetailViewModel by viewModels<PostDetailViewModel>()
-    private val dateFormat = SimpleDateFormat("dd.MM.yyyy")
+    private val dateFormat = SimpleDateFormat("dd.MM.yyyy hh:mm:ss")
     private val currentDate = Date()
 
     @Inject
@@ -122,12 +123,16 @@ class PostDetailFragment : Fragment() {
                     textViewPostNumberOfLike.text = response.data.likeCount.toString()
                     textViewPostNumberOfComment.text = response.data.comments.size.toString()
                     userId = response.data.appUser.id
+                    binding.layoutNoResult.root.setVisible(response.data.comments.isEmpty())
+                    postDetailProgressBar.setVisible(false)
                     loadComments(response.data.comments)
                 }
                 is NetworkResponse.Error -> {
+                    postDetailProgressBar.setVisible(false)
                     context?.showToast(response.errorMessage)
                 }
                 NetworkResponse.Loading -> {
+                    postDetailProgressBar.setVisible(true)
                 }
             }
         }
@@ -136,13 +141,16 @@ class PostDetailFragment : Fragment() {
             when (response) {
                 is NetworkResponse.Success -> {
                     context?.showToast("Yorum paylaşıldı.")
+                    postDetailProgressBar.setVisible(false)
                     postId?.let { id -> postDetailViewModel.getPostById(id) }
                     editTextComment.text.clear()
                 }
                 is NetworkResponse.Error -> {
+                    postDetailProgressBar.setVisible(false)
                     context?.showToast(response.errorMessage)
                 }
                 NetworkResponse.Loading -> {
+                    postDetailProgressBar.setVisible(true)
                 }
             }
         }

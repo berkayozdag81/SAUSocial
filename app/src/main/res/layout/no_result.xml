@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/no_result" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24.0dip"
+        android:fontFamily="@font/text_bold"
+        android:text="Sonuç yok"
+        android:textColor="@color/main_color"
+        android:textSize="16.0sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16.0dip"
+        android:fontFamily="@font/text_regular"
+        android:gravity="center"
+        android:lineSpacingExtra="8.0sp"
+        android:text="Herhangi bir sonuç bulunamadı"
+        android:textColor="@color/grey_500" />
+</LinearLayout>

@@ -45,6 +45,7 @@ class AllPostsFragment : Fragment() {
         setupListeners()
         postItemClick()
         userItemClicked()
+        likeClicked()
         allPostViewModel.getPosts()
         setupObserves()
     }
@@ -112,7 +113,6 @@ class AllPostsFragment : Fragment() {
         }
     }
 
-
     private fun userItemClicked() {
         adapter.userItemClicked = { id ->
             if (sessionManager.getUserId() == id) {
@@ -127,6 +127,12 @@ class AllPostsFragment : Fragment() {
                     userIdBundle
                 )
             }
+        }
+    }
+
+    private fun likeClicked(){
+        adapter.likeClicked={
+            context?.showToast("Like ettim")
         }
     }
 

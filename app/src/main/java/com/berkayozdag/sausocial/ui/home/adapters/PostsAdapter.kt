@@ -9,7 +9,8 @@ import com.berkayozdag.sausocial.model.Post
 
 class PostsAdapter(
     var postItemClicked: ((Int) -> Unit) = {},
-    var userItemClicked: ((Int) -> Unit) = {}
+    var userItemClicked: ((Int) -> Unit) = {},
+    var likeClicked: ((Int) -> Unit) = {}
 ) :
     RecyclerView.Adapter<PostsAdapter.PostViewHolder>() {
 
@@ -29,6 +30,9 @@ class PostsAdapter(
             }
             imageViewUserProfile.setOnClickListener {
                 userItemClicked(post.appUser.id)
+            }
+            buttonPostLike.setOnClickListener {
+                likeClicked(post.id)
             }
         }
     }

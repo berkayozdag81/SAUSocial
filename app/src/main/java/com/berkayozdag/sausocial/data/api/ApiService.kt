@@ -5,6 +5,7 @@ import com.berkayozdag.sausocial.model.authentication.LoginRequest
 import com.berkayozdag.sausocial.model.authentication.LoginResponse
 import com.berkayozdag.sausocial.model.profile.ProfileResponse
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
@@ -37,5 +38,21 @@ interface ApiService {
 
     @GET("User")
     suspend fun getUsers(): List<ProfileResponse>
+
+    @POST("Follower")
+    suspend fun follow(
+        @Body followRequest: FollowRequest
+    )
+
+    @DELETE("Follower/{followerId}/{appUserId}")
+    suspend fun unFollow(
+        @Path("followerId") followerId: Int,
+        @Path("appUserId") appUserId: Int
+    )
+
+    @POST("Like")
+    suspend fun postLike(
+        @Body postLikeRequest: PostLikeRequest
+    )
 
 }

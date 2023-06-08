@@ -75,7 +75,7 @@
                     android:layout_marginHorizontal="16dp"
                     android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="@+id/imageViewUserProfile"
-                    app:layout_constraintEnd_toStartOf="@+id/buttonFollow"
+                    app:layout_constraintEnd_toStartOf="@+id/postDetail_relative_layout"
                     app:layout_constraintStart_toEndOf="@+id/imageViewUserProfile"
                     app:layout_constraintTop_toTopOf="@+id/imageViewUserProfile">
 
@@ -99,20 +99,37 @@
 
                 </LinearLayout>
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/buttonFollow"
+                <RelativeLayout
+                    android:id="@+id/postDetail_relative_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:backgroundTint="@color/main_color"
-                    android:text="Follow"
-                    android:textAppearance="@style/PostDetailFollowButton"
-                    app:cornerRadius="24dp"
-                    app:icon="@drawable/ic_user_add"
-                    app:iconGravity="end"
                     app:layout_constraintBottom_toBottomOf="@+id/layoutNameAndDepartment"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/layoutNameAndDepartment" />
+                    app:layout_constraintTop_toTopOf="@+id/layoutNameAndDepartment">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/buttonFollow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/main_color"
+                        android:text="Follow"
+                        android:textAppearance="@style/PostDetailFollowButton"
+                        app:cornerRadius="24dp"
+                        app:icon="@drawable/ic_user_add"
+                        app:iconGravity="end" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/buttonUnFollow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/main_color"
+                        android:text="Following"
+                        android:textAppearance="@style/PostDetailFollowButton"
+                        android:visibility="gone"
+                        app:cornerRadius="24dp"
+                        app:icon="@drawable/ic_user_follow"
+                        app:iconGravity="end" />
+                </RelativeLayout>
 
                 <TextView
                     android:id="@+id/textViewPostDescription"
@@ -122,7 +139,7 @@
                     android:fontFamily="@font/text_regular"
                     android:textColor="@color/black"
                     android:textSize="16sp"
-                    app:layout_constraintEnd_toEndOf="@+id/buttonFollow"
+                    app:layout_constraintEnd_toEndOf="@+id/postDetail_relative_layout"
                     app:layout_constraintStart_toStartOf="@+id/imageViewUserProfile"
                     app:layout_constraintTop_toBottomOf="@+id/layoutNameAndDepartment"
                     tools:text="We are going to be here again next week. You should come eaerlier so you can get in the front." />

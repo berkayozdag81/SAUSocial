@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -24,13 +25,13 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class AllPostsFragment : Fragment() {
 
+    @Inject
+    lateinit var sessionManager: SessionManager
     private var _binding: FragmentAllPostBinding? = null
     private val binding get() = _binding!!
     private val adapter = PostsAdapter()
     private val allPostViewModel by viewModels<AllPostViewModel>()
 
-    @Inject
-    lateinit var sessionManager: SessionManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -71,12 +72,29 @@ class AllPostsFragment : Fragment() {
                     binding.layoutNoResult.root.setVisible(response.data.isEmpty())
                     loadPosts(response.data)
                 }
+
                 is NetworkResponse.Error -> {
                     stopShimmerEffect()
                     context?.showToast(response.errorMessage)
                 }
+
                 NetworkResponse.Loading -> {
                     startShimmerEffect()
+                }
+            }
+        }
+
+        allPostViewModel.postLikeResponse.observe(this.viewLifecycleOwner) { response ->
+            when (response) {
+                is NetworkResponse.Success -> {
+
+                }
+
+                is NetworkResponse.Error -> {
+                    context?.showToast(response.errorMessage)
+                }
+
+                NetworkResponse.Loading -> {
                 }
             }
         }
@@ -133,8 +151,8 @@ class AllPostsFragment : Fragment() {
     }
 
     private fun likeClicked() {
-        adapter.likeClicked = {
-            context?.showToast("Like ettim")
+        adapter.likeClicked = { postId, position ->
+
         }
     }
 

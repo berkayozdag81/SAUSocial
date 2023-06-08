@@ -5,7 +5,7 @@ data class Post(
     val comments: List<Comment>,
     val content: String,
     val id: Int,
-    val likeCount: Int,
+    val likes: List<Like>,
     val publishedDate: String,
     val title: String
 )

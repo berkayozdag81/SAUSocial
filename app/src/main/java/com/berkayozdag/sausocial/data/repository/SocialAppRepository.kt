@@ -67,4 +67,31 @@ class SocialAppRepository @Inject constructor(
             NetworkResponse.Error(e.message ?: "Bir hata oluştu")
         }
     }
+
+    suspend fun follow(followRequest: FollowRequest): NetworkResponse<Any> {
+        return try {
+            val response = api.follow(followRequest)
+            NetworkResponse.Success(response)
+        } catch (e: Exception) {
+            NetworkResponse.Error(e.message ?: "Bir hata oluştu")
+        }
+    }
+
+    suspend fun unFollow(followerId: Int, userId: Int): NetworkResponse<Any> {
+        return try {
+            val response = api.unFollow(followerId, userId)
+            NetworkResponse.Success(response)
+        } catch (e: Exception) {
+            NetworkResponse.Error(e.message ?: "Bir hata oluştu")
+        }
+    }
+
+    suspend fun postLike(postLikeRequest: PostLikeRequest): NetworkResponse<Any> {
+        return try {
+            val response = api.postLike(postLikeRequest)
+            NetworkResponse.Success(response)
+        } catch (e: Exception) {
+            NetworkResponse.Error(e.message ?: "Bir hata oluştu")
+        }
+    }
 }

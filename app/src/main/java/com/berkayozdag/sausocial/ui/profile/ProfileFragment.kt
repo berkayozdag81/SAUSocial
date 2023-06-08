@@ -56,10 +56,13 @@ class ProfileFragment : Fragment() {
 
     private fun initViews() {
         binding.profileBackBtn.setVisible(false)
+        binding.buttonFollow.setVisible(false)
+        binding.buttonUnFollow.setVisible(false)
         binding.profileLogoutBtn.setOnClickListener {
             signOut()
         }
     }
+
 
     private fun setupRecyclerview() = with(binding) {
         val layoutManager = LinearLayoutManager(requireContext())
@@ -77,15 +80,17 @@ class ProfileFragment : Fragment() {
                 is NetworkResponse.Loading -> {
                     binding.profileProgressBar.setVisible(true)
                 }
+
                 is NetworkResponse.Success -> {
                     binding.profileNameText.text = response.data.name + " " + response.data.surname
-                    //binding.profileFollowerCount.text = response.data.followers.size.toString()
+                    binding.profileFollowerCount.text = response.data.followers.size.toString()
                     binding.profileDepartmentText.text = response.data.part
-                    //binding.profileFollowingCount.text = response.data.followings.size.toString()
+                    binding.profileFollowingCount.text = response.data.followings.size.toString()
                     binding.profilePostCount.text = response.data.posts.size.toString()
                     binding.profileProgressBar.setVisible(false)
                     loadPosts(response.data.posts)
                 }
+
                 is NetworkResponse.Error -> {
                     binding.profileProgressBar.setVisible(false)
                     context?.showToast("Hatalı kullanıcı adı veya şifre")

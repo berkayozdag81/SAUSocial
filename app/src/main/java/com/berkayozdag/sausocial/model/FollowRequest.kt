@@ -1,5 +1,6 @@
 package com.berkayozdag.sausocial.model
 
-data class Follower(
+data class FollowRequest(
     val followerId: Int,
+    val appUserId: Int
 )

@@ -90,7 +90,10 @@ class PostDetailFragment : Fragment() {
                     userIdBundle
                 )
             }
+        }
 
+        buttonFollow.setOnClickListener {
+            userId?.let { it1 -> postDetailViewModel.follow(sessionManager.getUserId(), it1) }
         }
     }
 
@@ -120,19 +123,37 @@ class PostDetailFragment : Fragment() {
                     textViewUserDepartment.text = response.data.appUser.part
                     textViewPostDescription.text = response.data.content
                     textViewPostCreatedDate.text = response.data.publishedDate
-                    textViewPostNumberOfLike.text = response.data.likeCount.toString()
+                    textViewPostNumberOfLike.text = response.data.likes.size.toString()
                     textViewPostNumberOfComment.text = response.data.comments.size.toString()
                     userId = response.data.appUser.id
                     binding.layoutNoResult.root.setVisible(response.data.comments.isEmpty())
                     postDetailProgressBar.setVisible(false)
                     loadComments(response.data.comments)
                 }
+
                 is NetworkResponse.Error -> {
                     postDetailProgressBar.setVisible(false)
                     context?.showToast(response.errorMessage)
                 }
+
                 NetworkResponse.Loading -> {
                     postDetailProgressBar.setVisible(true)
+                }
+            }
+        }
+
+        postDetailViewModel.followResponse.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is NetworkResponse.Loading -> {
+                }
+
+                is NetworkResponse.Success -> {
+                    binding.buttonUnFollow.setVisible(true)
+                    binding.buttonFollow.setVisible(false)
+                }
+
+                is NetworkResponse.Error -> {
+                    context?.showToast("İstek başarısız")
                 }
             }
         }
@@ -145,10 +166,12 @@ class PostDetailFragment : Fragment() {
                     postId?.let { id -> postDetailViewModel.getPostById(id) }
                     editTextComment.text.clear()
                 }
+
                 is NetworkResponse.Error -> {
                     postDetailProgressBar.setVisible(false)
                     context?.showToast(response.errorMessage)
                 }
+
                 NetworkResponse.Loading -> {
                     postDetailProgressBar.setVisible(true)
                 }

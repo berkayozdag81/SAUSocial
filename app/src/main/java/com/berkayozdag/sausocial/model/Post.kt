@@ -7,5 +7,8 @@ data class Post(
     val id: Int,
     val likes: List<Like>,
     val publishedDate: String,
-    val title: String
-)
+) {
+    fun isUserLikedThisPost(appUserId: Int): Boolean {
+        return likes.any { it.appUserId == appUserId }
+    }
+}

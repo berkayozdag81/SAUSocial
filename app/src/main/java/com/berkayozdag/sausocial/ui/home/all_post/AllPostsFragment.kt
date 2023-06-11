@@ -115,11 +115,12 @@ class AllPostsFragment : Fragment() {
         )
         recyclerViewPosts.addItemDecoration(itemDecoration)
         recyclerViewPosts.layoutManager = layoutManager
+        recyclerViewPosts.adapter = adapter
+        adapter.appUserId = sessionManager.getUserId()
     }
 
     private fun loadPosts(posts: List<Post>) = with(binding) {
         adapter.setData(posts)
-        recyclerViewPosts.adapter = adapter
     }
 
     private fun postItemClick() {
@@ -151,8 +152,11 @@ class AllPostsFragment : Fragment() {
     }
 
     private fun likeClicked() {
-        adapter.likeClicked = { postId, position ->
-
+        adapter.likeClicked = { postId, appUserId ->
+            allPostViewModel.postLike(appUserId, postId)
+        }
+        adapter.disLikeClicked = { postId, appUserId ->
+            allPostViewModel.postDislike(appUserId, postId)
         }
     }
 

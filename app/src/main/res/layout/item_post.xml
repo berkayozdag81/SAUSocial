@@ -101,24 +101,12 @@
             android:textSize="12sp"
             tools:text="11 hours ago" />
 
-        <RelativeLayout
+        <ImageButton
+            android:id="@+id/buttonPostLike"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <ImageButton
-                android:id="@+id/buttonPostLike"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/ic_like" />
-
-            <ImageButton
-                android:id="@+id/buttonPostDisLike"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/ic_liked" />
-        </RelativeLayout>
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_like" />
 
 
         <TextView

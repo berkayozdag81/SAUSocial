@@ -1,10 +1,13 @@
 package com.berkayozdag.sausocial.ui.home.adapters
 
+import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.berkayozdag.sausocial.R
 import com.berkayozdag.sausocial.common.SessionManager
 import com.berkayozdag.sausocial.common.setVisible
 import com.berkayozdag.sausocial.databinding.ItemPostBinding
@@ -14,14 +17,13 @@ import javax.inject.Inject
 class PostsAdapter(
     var postItemClicked: ((Int) -> Unit) = {},
     var userItemClicked: ((Int) -> Unit) = {},
-    var likeClicked: ((Int, Int) -> Unit) = { _, _ ->
-    },
-    var disLikeClicked: ((Int, Int) -> Unit) = { _, _ ->
-    },
-    ) :
+    var likeClicked: ((Int, Int) -> Unit) = { _, _ -> },
+    var disLikeClicked: ((Int, Int) -> Unit) = { _, _ -> }
+) :
     RecyclerView.Adapter<PostsAdapter.PostViewHolder>() {
 
     private var items: List<Post> = emptyList()
+    var appUserId: Int = -1
 
     inner class PostViewHolder(private val binding: ItemPostBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -32,24 +34,28 @@ class PostsAdapter(
             textViewPostCreatedDate.text = post.publishedDate
             textViewPostNumberOfComment.text = post.comments.size.toString()
             textViewPostNumberOfLike.text = post.likes.size.toString()
-           /* if (post.likes.any{it.appUserId == sessionManager.getUserId()}){
-                buttonPostLike.setVisible(false)
-                buttonPostDisLike.setVisible(true)
-            }else{
-                buttonPostLike.setVisible(true)
-                buttonPostDisLike.setVisible(false)
-            }*/
             layoutPost.setOnClickListener {
                 postItemClicked(post.id)
             }
             imageViewUserProfile.setOnClickListener {
                 userItemClicked(post.appUser.id)
             }
+            if (post.isUserLikedThisPost(appUserId)) buttonPostLike.setImageDrawable(
+                ContextCompat.getDrawable(
+                    itemView.context,
+                    R.drawable.ic_liked
+                )
+            )
+            else buttonPostLike.setImageDrawable(
+                ContextCompat.getDrawable(
+                    itemView.context,
+                    R.drawable.ic_like
+                )
+            )
+
             buttonPostLike.setOnClickListener {
-                likeClicked(post.id, position)
-            }
-            buttonPostDisLike.setOnClickListener {
-                disLikeClicked(post.id, position)
+                if (post.isUserLikedThisPost(appUserId)) disLikeClicked(post.id, appUserId)
+                else likeClicked(post.id, appUserId)
             }
         }
     }

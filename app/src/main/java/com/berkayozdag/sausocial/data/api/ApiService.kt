@@ -55,4 +55,10 @@ interface ApiService {
         @Body postLikeRequest: PostLikeRequest
     )
 
+    @DELETE("Like/{appUserId}/{postId}")
+    suspend fun postDisLike(
+        @Path("appUserId") appUserId: Int,
+        @Path("postId") postId: Int
+    )
+
 }

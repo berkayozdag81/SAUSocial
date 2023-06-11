@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.berkayozdag.sausocial.data.NetworkResponse
 import com.berkayozdag.sausocial.data.repository.SocialAppRepository
+import com.berkayozdag.sausocial.model.Like
 import com.berkayozdag.sausocial.model.Post
 import com.berkayozdag.sausocial.model.PostLikeRequest
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,8 +31,37 @@ class AllPostViewModel @Inject constructor(
 
     fun postLike(appUserId: Int, postId: Int) {
         viewModelScope.launch {
-            _postLikeResponse.value = NetworkResponse.Loading
-            _postLikeResponse.value = repository.postLike(PostLikeRequest(appUserId, postId))
+            when (val postResponse = _postResponse.value) {
+                is NetworkResponse.Success -> {
+                    val newPosts = postResponse.data.map {
+                        if (postId == it.id)
+                            it.copy(likes = it.likes.plus(Like(appUserId,postId)))
+                        else it
+                    }
+                    _postResponse.postValue(NetworkResponse.Success(newPosts))
+                    repository.postLike(PostLikeRequest(appUserId, postId))
+                }
+
+                else -> Unit
+            }
+        }
+    }
+
+    fun postDislike(appUserId: Int, postId: Int) {
+        viewModelScope.launch {
+            when (val postResponse = _postResponse.value) {
+                is NetworkResponse.Success -> {
+                    val newPosts = postResponse.data.map { it ->
+                        if (postId == it.id)
+                            it.copy(likes = it.likes.filter { it.appUserId != appUserId })
+                        else it
+                    }
+                    _postResponse.postValue(NetworkResponse.Success(newPosts))
+                    repository.postDislike(appUserId, postId)
+                }
+
+                else -> Unit
+            }
         }
     }
 }

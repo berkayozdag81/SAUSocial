@@ -94,4 +94,13 @@ class SocialAppRepository @Inject constructor(
             NetworkResponse.Error(e.message ?: "Bir hata oluştu")
         }
     }
+
+    suspend fun postDislike(appUserId: Int, postId: Int): NetworkResponse<Any> {
+        return try {
+            val response = api.postDisLike(appUserId, postId)
+            NetworkResponse.Success(response)
+        } catch (e: Exception) {
+            NetworkResponse.Error(e.message ?: "Bir hata oluştu")
+        }
+    }
 }

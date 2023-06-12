@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -55,8 +56,14 @@ class PostDetailFragment : Fragment() {
         setupObserves()
     }
 
-
     private fun setupListeners() = with(binding) {
+        buttonPostLike.setOnClickListener {
+            postId?.let { it1 -> postDetailViewModel.postLike(sessionManager.getUserId(), it1) }
+        }
+
+        buttonPostdisLike.setOnClickListener {
+            postId?.let { it1 -> postDetailViewModel.postDisLike(sessionManager.getUserId(), it1) }
+        }
 
         buttonBackButton.setOnClickListener {
             findNavController().popBackStack()
@@ -146,6 +153,14 @@ class PostDetailFragment : Fragment() {
                         buttonUnFollow.setVisible(false)
                     }
 
+                    if (response.data.isUserLikedThisPost(sessionManager.getUserId())) {
+                        buttonPostLike.setVisible(false)
+                        buttonPostdisLike.setVisible(true)
+                    }else{
+                        buttonPostLike.setVisible(true)
+                        buttonPostdisLike.setVisible(false)
+                    }
+
                     loadComments(response.data.comments)
                 }
 
@@ -188,6 +203,38 @@ class PostDetailFragment : Fragment() {
 
                 is NetworkResponse.Error -> {
                     context?.showToast("İstek başarısız")
+                }
+            }
+        }
+
+        postDetailViewModel.postLikeResponse.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is NetworkResponse.Loading -> {}
+                is NetworkResponse.Success -> {
+                    val likeCount = binding.textViewPostNumberOfLike.text.toString().toInt() + 1
+                    buttonPostLike.setVisible(false)
+                    buttonPostdisLike.setVisible(true)
+                    binding.textViewPostNumberOfLike.text = likeCount.toString()
+                }
+
+                is NetworkResponse.Error -> {
+                    context?.showToast("İstek Başarısız")
+                }
+            }
+        }
+
+        postDetailViewModel.postDislikeResponse.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is NetworkResponse.Loading -> {}
+                is NetworkResponse.Success -> {
+                    val likeCount = binding.textViewPostNumberOfLike.text.toString().toInt() - 1
+                    buttonPostLike.setVisible(true)
+                    buttonPostdisLike.setVisible(false)
+                    binding.textViewPostNumberOfLike.text = likeCount.toString()
+                }
+
+                is NetworkResponse.Error -> {
+                    context?.showToast("İstek Başarısız")
                 }
             }
         }

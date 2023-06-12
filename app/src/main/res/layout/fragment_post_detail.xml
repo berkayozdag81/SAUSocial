@@ -85,10 +85,10 @@
                         android:id="@+id/textViewUserName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
                         android:fontFamily="@font/text_bold"
                         android:textColor="@color/black"
                         android:textSize="16sp"
-                        android:layout_marginTop="2dp"
                         tools:text="Ahmet Selim Öztürk" />
 
                     <TextView
@@ -168,12 +168,25 @@
                         android:textSize="12sp"
                         tools:text="15.03.2023 13:50" />
 
-                    <ImageButton
-                        android:id="@+id/buttonPostLike"
+                    <RelativeLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:src="@drawable/ic_like" />
+                        android:layout_height="wrap_content">
+
+                        <ImageButton
+                            android:id="@+id/buttonPostLike"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:src="@drawable/ic_like" />
+
+                        <ImageButton
+                            android:id="@+id/buttonPostdisLike"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:src="@drawable/ic_liked" />
+                    </RelativeLayout>
+
 
                     <TextView
                         android:id="@+id/textViewPostNumberOfLike"

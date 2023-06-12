@@ -10,6 +10,7 @@ import com.berkayozdag.sausocial.model.CommentRequest
 import com.berkayozdag.sausocial.model.CommentResponse
 import com.berkayozdag.sausocial.model.FollowRequest
 import com.berkayozdag.sausocial.model.Post
+import com.berkayozdag.sausocial.model.PostLikeRequest
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,11 +25,6 @@ class PostDetailViewModel @Inject constructor(
     val postDetailResponse: LiveData<NetworkResponse<Post>> =
         _postDetailResponse
 
-    fun getPostById(id: Int) = viewModelScope.launch {
-        _postDetailResponse.postValue(NetworkResponse.Loading)
-        _postDetailResponse.postValue(repository.getPostById(id))
-    }
-
     private val _commentCreateResponse = MutableLiveData<NetworkResponse<CommentResponse>>()
     val commentCreateResponse: LiveData<NetworkResponse<CommentResponse>> = _commentCreateResponse
 
@@ -37,6 +33,28 @@ class PostDetailViewModel @Inject constructor(
 
     private val _unFollowResponse = MutableLiveData<NetworkResponse<Any>>()
     val unFollowResponse: LiveData<NetworkResponse<Any>> = _unFollowResponse
+
+    private val _postLikeResponse = MutableLiveData<NetworkResponse<Any>>(null)
+    val postLikeResponse: LiveData<NetworkResponse<Any>> = _postLikeResponse
+
+    private val _postDislikeResponse = MutableLiveData<NetworkResponse<Any>>(null)
+    val postDislikeResponse: LiveData<NetworkResponse<Any>> = _postDislikeResponse
+
+    fun getPostById(id: Int) = viewModelScope.launch {
+        _postDetailResponse.postValue(NetworkResponse.Loading)
+        _postDetailResponse.postValue(repository.getPostById(id))
+    }
+
+    fun postLike(appUserId: Int, postId: Int) = viewModelScope.launch {
+        _postLikeResponse.value = NetworkResponse.Loading
+        _postLikeResponse.value = repository.postLike(PostLikeRequest(appUserId, postId))
+    }
+
+    fun postDisLike(appUserId: Int, postId: Int) = viewModelScope.launch {
+        _postDislikeResponse.value = NetworkResponse.Loading
+        _postDislikeResponse.value = repository.postDislike(appUserId, postId)
+    }
+
 
     fun sendComment(message: String, publishedDate: String, postId: Int, appUserId: Int) =
         viewModelScope.launch {

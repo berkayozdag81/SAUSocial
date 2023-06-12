@@ -1,238 +1,244 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/screens_background_color"
-    tools:context=".ui.profile.ProfileFragment">
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/main_color"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/topAppBar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize">
-
-            <ImageButton
-                android:id="@+id/profile_back_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/ic_back_button"
-                app:tint="@color/white" />
-
-            <TextView
-                android:id="@+id/toolbarTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:fontFamily="@font/text_bold"
-                android:gravity="center"
-                android:text="Profile"
-                android:textColor="@color/white"
-                android:textSize="20sp" />
-
-            <ImageButton
-                android:id="@+id/profile_logout_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginEnd="16dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/ic_logout"
-                app:tint="@color/white" />
-        </com.google.android.material.appbar.MaterialToolbar>
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <androidx.core.widget.NestedScrollView
+    android:id="@+id/profile_fragment_refresh_layout">
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:layout_marginBottom="?attr/actionBarSize">
+        android:background="@color/screens_background_color"
+        tools:context=".ui.profile.ProfileFragment">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:background="@color/main_color"
+            app:layout_constraintTop_toTopOf="parent">
 
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/profile_avatar"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="16dp"
-                android:src="@drawable/sample_profile_photo"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/profile_name_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:fontFamily="@font/text_bold"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="@+id/profile_avatar"
-                app:layout_constraintStart_toStartOf="@+id/profile_avatar"
-                app:layout_constraintTop_toBottomOf="@+id/profile_avatar"
-                tools:text="Berkay Özdağ" />
-
-            <TextView
-                android:id="@+id/profile_department_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/text_regular"
-                android:textColor="@color/grey_500"
-                android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="@+id/profile_name_text"
-                app:layout_constraintStart_toStartOf="@+id/profile_name_text"
-                app:layout_constraintTop_toBottomOf="@+id/profile_name_text"
-                tools:text="Computer Engineering" />
-
-            <RelativeLayout
-                android:id="@+id/profile_relative_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="@+id/profile_department_text"
-                app:layout_constraintStart_toStartOf="@+id/profile_department_text"
-                app:layout_constraintTop_toBottomOf="@+id/profile_department_text">
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/buttonFollow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/main_color"
-                    android:text="Follow"
-                    android:textAppearance="@style/PostDetailFollowButton"
-                    app:cornerRadius="24dp"
-                    app:icon="@drawable/ic_user_add"
-                    app:iconGravity="end" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/buttonUnFollow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/main_color"
-                    android:text="Following"
-                    android:textAppearance="@style/PostDetailFollowButton"
-                    app:cornerRadius="24dp"
-                    app:icon="@drawable/ic_user_follow"
-                    android:visibility="gone"
-                    app:iconGravity="end"
-                    />
-            </RelativeLayout>
-
-
-            <LinearLayout
-                android:id="@+id/profile_user_information_layout"
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/topAppBar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:baselineAligned="false"
-                android:orientation="horizontal"
-                android:paddingLeft="24dp"
-                android:paddingRight="24dp"
-                app:layout_constraintTop_toBottomOf="@id/profile_relative_layout">
+                android:layout_height="?attr/actionBarSize">
 
-                <LinearLayout
+                <ImageButton
+                    android:id="@+id/profile_back_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_gravity="start"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_back_button"
+                    app:tint="@color/white" />
 
-                    <TextView
-                        android:id="@+id/profile_follower_count"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/text_bold"
-                        android:gravity="center"
-                        android:textColor="@color/black"
-                        tools:text="547" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/text_medium"
-                        android:text="Takipçi Sayısı"
-                        android:textColor="@color/grey_500" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
+                <TextView
+                    android:id="@+id/toolbarTitle"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/text_bold"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:text="Profile"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
 
-                    <TextView
-                        android:id="@+id/profile_following_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/text_bold"
-                        android:textColor="@color/black"
-                        tools:text="150" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/text_medium"
-                        android:text="Takip Sayısı"
-                        android:textColor="@color/grey_500" />
-                </LinearLayout>
-
-                <LinearLayout
+                <ImageButton
+                    android:id="@+id/profile_logout_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="16dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_logout"
+                    app:tint="@color/white" />
+            </com.google.android.material.appbar.MaterialToolbar>
+        </com.google.android.material.appbar.AppBarLayout>
 
-                    <TextView
-                        android:id="@+id/profile_post_count"
-                        android:layout_width="match_parent"
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:layout_marginBottom="?attr/actionBarSize">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profile_avatar"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="16dp"
+                    android:src="@drawable/sample_profile_photo"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/profile_name_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:fontFamily="@font/text_bold"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="@+id/profile_avatar"
+                    app:layout_constraintStart_toStartOf="@+id/profile_avatar"
+                    app:layout_constraintTop_toBottomOf="@+id/profile_avatar"
+                    tools:text="Berkay Özdağ" />
+
+                <TextView
+                    android:id="@+id/profile_department_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/text_regular"
+                    android:textColor="@color/grey_500"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="@+id/profile_name_text"
+                    app:layout_constraintStart_toStartOf="@+id/profile_name_text"
+                    app:layout_constraintTop_toBottomOf="@+id/profile_name_text"
+                    tools:text="Computer Engineering" />
+
+                <RelativeLayout
+                    android:id="@+id/profile_relative_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="@+id/profile_department_text"
+                    app:layout_constraintStart_toStartOf="@+id/profile_department_text"
+                    app:layout_constraintTop_toBottomOf="@+id/profile_department_text">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/buttonFollow"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/text_bold"
+                        android:backgroundTint="@color/main_color"
+                        android:text="Follow"
+                        android:textAppearance="@style/PostDetailFollowButton"
+                        app:cornerRadius="24dp"
+                        app:icon="@drawable/ic_user_add"
+                        app:iconGravity="end" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/buttonUnFollow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/main_color"
+                        android:text="Following"
+                        android:textAppearance="@style/PostDetailFollowButton"
+                        app:cornerRadius="24dp"
+                        app:icon="@drawable/ic_user_follow"
+                        android:visibility="gone"
+                        app:iconGravity="end"
+                        />
+                </RelativeLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/profile_user_information_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    android:paddingLeft="24dp"
+                    android:paddingRight="24dp"
+                    app:layout_constraintTop_toBottomOf="@id/profile_relative_layout">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/profile_follower_count"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/text_bold"
+                            android:gravity="center"
+                            android:textColor="@color/black"
+                            tools:text="547" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/text_medium"
+                            android:text="Takipçi Sayısı"
+                            android:textColor="@color/grey_500" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:gravity="center"
-                        android:textColor="@color/black"
-                        tools:text="28" />
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="match_parent"
+                        <TextView
+                            android:id="@+id/profile_following_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/text_bold"
+                            android:textColor="@color/black"
+                            tools:text="150" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/text_medium"
+                            android:text="Takip Sayısı"
+                            android:textColor="@color/grey_500" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/text_medium"
-                        android:text="Gönderi Sayısı"
-                        android:textColor="@color/grey_500" />
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/profile_post_count"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/text_bold"
+                            android:gravity="center"
+                            android:textColor="@color/black"
+                            tools:text="28" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/text_medium"
+                            android:text="Gönderi Sayısı"
+                            android:textColor="@color/grey_500" />
+                    </LinearLayout>
+
                 </LinearLayout>
 
-            </LinearLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rw_profile_user_post"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@id/profile_user_information_layout" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rw_profile_user_post"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintTop_toBottomOf="@id/profile_user_information_layout" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
 
-    </androidx.core.widget.NestedScrollView>
+        <ProgressBar
+            android:id="@+id/profileProgressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="@color/main_color"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <ProgressBar
-        android:id="@+id/profileProgressBar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:indeterminateTint="@color/main_color"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

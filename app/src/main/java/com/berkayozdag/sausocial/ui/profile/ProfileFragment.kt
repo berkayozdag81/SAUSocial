@@ -61,6 +61,11 @@ class ProfileFragment : Fragment() {
         binding.profileLogoutBtn.setOnClickListener {
             signOut()
         }
+
+        binding.profileFragmentRefreshLayout.setOnRefreshListener {
+            binding.profileFragmentRefreshLayout.isRefreshing = false
+            profileViewModel.getUserById(sessionManager.getUserId())
+        }
     }
 
 

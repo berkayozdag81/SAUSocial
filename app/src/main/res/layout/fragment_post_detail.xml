@@ -55,7 +55,8 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/imageViewUserProfile"
@@ -73,6 +74,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="4dp"
                     android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="@+id/imageViewUserProfile"
                     app:layout_constraintEnd_toStartOf="@+id/postDetail_relative_layout"
@@ -86,6 +88,7 @@
                         android:fontFamily="@font/text_bold"
                         android:textColor="@color/black"
                         android:textSize="16sp"
+                        android:layout_marginTop="2dp"
                         tools:text="Ahmet Selim Öztürk" />
 
                     <TextView
@@ -114,6 +117,7 @@
                         android:backgroundTint="@color/main_color"
                         android:text="Follow"
                         android:textAppearance="@style/PostDetailFollowButton"
+                        android:visibility="gone"
                         app:cornerRadius="24dp"
                         app:icon="@drawable/ic_user_add"
                         app:iconGravity="end" />
@@ -205,6 +209,7 @@
                     android:layout_width="0dp"
                     android:layout_height="2dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginEnd="4dp"
                     android:background="@color/grey_300"
                     app:layout_constraintEnd_toEndOf="@+id/layoutLikesAndComments"
                     app:layout_constraintStart_toStartOf="@+id/layoutLikesAndComments"
@@ -215,6 +220,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
+                    android:layout_marginEnd="4dp"
                     android:fontFamily="@font/text_bold"
                     android:text="Comments"
                     android:textColor="@color/black"
@@ -228,6 +234,7 @@
                     android:layout_width="0dp"
                     android:layout_height="2dp"
                     android:layout_marginTop="4dp"
+                    android:layout_marginEnd="4dp"
                     android:background="@color/grey_300"
                     app:layout_constraintEnd_toEndOf="@+id/textViewComments"
                     app:layout_constraintStart_toStartOf="@+id/textViewComments"

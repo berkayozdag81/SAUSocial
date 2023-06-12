@@ -35,6 +35,9 @@ class PostDetailViewModel @Inject constructor(
     private val _followResponse = MutableLiveData<NetworkResponse<Any>>()
     val followResponse: LiveData<NetworkResponse<Any>> = _followResponse
 
+    private val _unFollowResponse = MutableLiveData<NetworkResponse<Any>>()
+    val unFollowResponse: LiveData<NetworkResponse<Any>> = _unFollowResponse
+
     fun sendComment(message: String, publishedDate: String, postId: Int, appUserId: Int) =
         viewModelScope.launch {
             _commentCreateResponse.value = NetworkResponse.Loading
@@ -42,9 +45,16 @@ class PostDetailViewModel @Inject constructor(
                 repository.sendComment(CommentRequest(message, publishedDate, postId, appUserId))
         }
 
+
     fun follow(followerId: Int, userId: Int) = viewModelScope.launch {
         _followResponse.value = NetworkResponse.Loading
         _followResponse.value =
             repository.follow(FollowRequest(followerId, userId))
+    }
+
+    fun unFollow(followerId: Int, userId: Int) = viewModelScope.launch {
+        _unFollowResponse.value = NetworkResponse.Loading
+        _unFollowResponse.value =
+            repository.unFollow(followerId, userId)
     }
 }

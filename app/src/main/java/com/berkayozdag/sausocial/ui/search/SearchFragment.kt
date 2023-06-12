@@ -28,6 +28,7 @@ class SearchFragment : Fragment() {
     private val binding get() = _binding!!
     private val adapter = UsersAdapter()
     private val userItems = arrayListOf<ProfileResponse>()
+    private val users = arrayListOf<ProfileResponse>()
     private val searchViewModel: SearchViewModel by viewModels()
 
     @Inject
@@ -64,14 +65,21 @@ class SearchFragment : Fragment() {
     }
 
     private fun setupObserves() {
-        searchViewModel.usersResponse.observe(viewLifecycleOwner) {
+        searchViewModel.usersResponse.observe(viewLifecycleOwner) { it ->
             when (it) {
                 is NetworkResponse.Loading -> {
 
                 }
+
                 is NetworkResponse.Success -> {
-                    loadUser(it.data)
+                    it.data.map {
+                        if (!it.isGroup) {
+                            users.add(it)
+                        }
+                    }
+                    loadUser(users)
                 }
+
                 is NetworkResponse.Error -> {
 
                 }

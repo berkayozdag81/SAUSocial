@@ -55,6 +55,7 @@ class PostDetailFragment : Fragment() {
         setupObserves()
     }
 
+
     private fun setupListeners() = with(binding) {
 
         buttonBackButton.setOnClickListener {
@@ -95,6 +96,10 @@ class PostDetailFragment : Fragment() {
         buttonFollow.setOnClickListener {
             userId?.let { it1 -> postDetailViewModel.follow(sessionManager.getUserId(), it1) }
         }
+
+        buttonUnFollow.setOnClickListener {
+            userId?.let { it1 -> postDetailViewModel.unFollow(sessionManager.getUserId(), it1) }
+        }
     }
 
     private fun userItemClicked() {
@@ -128,6 +133,19 @@ class PostDetailFragment : Fragment() {
                     userId = response.data.appUser.id
                     binding.layoutNoResult.root.setVisible(response.data.comments.isEmpty())
                     postDetailProgressBar.setVisible(false)
+                    if (response.data.appUser.followers.any { it.followerId == sessionManager.getUserId() }) {
+                        buttonFollow.setVisible(false)
+                        buttonUnFollow.setVisible(true)
+                    } else {
+                        buttonFollow.setVisible(true)
+                        buttonUnFollow.setVisible(false)
+                    }
+
+                    if (response.data.appUser.id == sessionManager.getUserId()) {
+                        buttonFollow.setVisible(false)
+                        buttonUnFollow.setVisible(false)
+                    }
+
                     loadComments(response.data.comments)
                 }
 
@@ -150,6 +168,22 @@ class PostDetailFragment : Fragment() {
                 is NetworkResponse.Success -> {
                     binding.buttonUnFollow.setVisible(true)
                     binding.buttonFollow.setVisible(false)
+                }
+
+                is NetworkResponse.Error -> {
+                    context?.showToast("İstek başarısız")
+                }
+            }
+        }
+
+        postDetailViewModel.unFollowResponse.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is NetworkResponse.Loading -> {
+                }
+
+                is NetworkResponse.Success -> {
+                    binding.buttonUnFollow.setVisible(false)
+                    binding.buttonFollow.setVisible(true)
                 }
 
                 is NetworkResponse.Error -> {

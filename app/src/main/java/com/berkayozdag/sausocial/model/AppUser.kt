@@ -5,6 +5,7 @@ data class AppUser(
     val id: Int,
     val name: String,
     val part: String,
-    val profileImagUrl: Any,
-    val surname: String
+    val profileImageUrl: Any,
+    val surname: String,
+    val followers: List<Follower>
 )

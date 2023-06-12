@@ -4,11 +4,7 @@ import com.berkayozdag.sausocial.model.*
 import com.berkayozdag.sausocial.model.authentication.LoginRequest
 import com.berkayozdag.sausocial.model.authentication.LoginResponse
 import com.berkayozdag.sausocial.model.profile.ProfileResponse
-import retrofit2.http.Body
-import retrofit2.http.DELETE
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface ApiService {
 
@@ -60,5 +56,10 @@ interface ApiService {
         @Path("appUserId") appUserId: Int,
         @Path("postId") postId: Int
     )
+
+    @GET("Posts/followerPost/{appUserId}")
+    suspend fun getFollowingPosts(
+        @Path("appUserId") appUserId: Int
+    ): List<Post>
 
 }

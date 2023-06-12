@@ -1,5 +1,6 @@
 package com.berkayozdag.sausocial.ui.home
 
+import AllPostsFragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.berkayozdag.sausocial.R
 import com.berkayozdag.sausocial.databinding.FragmentHomeBinding
 import com.berkayozdag.sausocial.ui.home.adapters.ViewPagerAdapter
-import com.berkayozdag.sausocial.ui.home.all_post.AllPostsFragment
+import com.berkayozdag.sausocial.ui.home.posts.PostsIFollowFragment
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 

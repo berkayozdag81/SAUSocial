@@ -4,9 +4,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.berkayozdag.sausocial.ui.home.posts.BasePostFragment
 
 class ViewPagerAdapter(
-    private val list: ArrayList<Fragment>,
+    private val list: ArrayList<BasePostFragment>,
     fragmentManager: FragmentManager,
     lifecycle: Lifecycle
 ) :

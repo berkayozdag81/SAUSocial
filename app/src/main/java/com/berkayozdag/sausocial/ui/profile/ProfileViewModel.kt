@@ -6,8 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.berkayozdag.sausocial.data.NetworkResponse
 import com.berkayozdag.sausocial.data.repository.SocialAppRepository
-import com.berkayozdag.sausocial.model.CommentRequest
-import com.berkayozdag.sausocial.model.CommentResponse
 import com.berkayozdag.sausocial.model.FollowRequest
 import com.berkayozdag.sausocial.model.profile.ProfileResponse
 import dagger.hilt.android.lifecycle.HiltViewModel

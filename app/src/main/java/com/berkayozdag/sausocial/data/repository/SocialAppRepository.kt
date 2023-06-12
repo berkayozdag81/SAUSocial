@@ -103,4 +103,13 @@ class SocialAppRepository @Inject constructor(
             NetworkResponse.Error(e.message ?: "Bir hata oluştu")
         }
     }
+
+    suspend fun getFollowingPosts(appUserId: Int): NetworkResponse<List<Post>> {
+        return try {
+            val response = api.getFollowingPosts(appUserId)
+            NetworkResponse.Success(response)
+        } catch (e: Exception) {
+            NetworkResponse.Error(e.message ?: "Bir hata oluştu")
+        }
+    }
 }

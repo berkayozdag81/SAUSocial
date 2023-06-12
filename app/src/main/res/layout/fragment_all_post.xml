@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.all_post.AllPostsFragment">
+    tools:context=".ui.home.posts.AllPostsFragment">
 
     <include
         android:id="@+id/layout_no_result"

@@ -62,4 +62,9 @@ interface ApiService {
         @Path("appUserId") appUserId: Int
     ): List<Post>
 
+    @DELETE("Posts/{id}")
+    suspend fun postDelete(
+        @Path("id") id: Int,
+    )
+
 }

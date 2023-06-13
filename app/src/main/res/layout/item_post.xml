@@ -27,7 +27,7 @@
         android:layout_marginStart="12dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="@+id/imageViewUserProfile"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/post_delete_button"
         app:layout_constraintStart_toEndOf="@+id/imageViewUserProfile"
         app:layout_constraintTop_toTopOf="@+id/imageViewUserProfile">
 
@@ -50,6 +50,17 @@
             tools:text="Computer Engineering" />
 
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/post_delete_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:src="@drawable/ic_delete"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/layoutNameAndDepartment"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/layoutPostContent"

@@ -26,6 +26,9 @@ class ProfileViewModel @Inject constructor(
     private val _unFollowResponse = MutableLiveData<NetworkResponse<Any>>()
     val unFollowResponse: LiveData<NetworkResponse<Any>> = _unFollowResponse
 
+    private val _postDeleteResponse = MutableLiveData<NetworkResponse<Any>>()
+    val postDeleteResponse: LiveData<NetworkResponse<Any>> = _postDeleteResponse
+
     fun getUserById(id: Int) = viewModelScope.launch {
         _profileState.value = NetworkResponse.Loading
         _profileState.value = repository.getUserById(id)
@@ -41,5 +44,10 @@ class ProfileViewModel @Inject constructor(
         _unFollowResponse.value = NetworkResponse.Loading
         _unFollowResponse.value =
             repository.unFollow(followerId, userId)
+    }
+
+    fun postDelete(postId: Int) = viewModelScope.launch {
+        _postDeleteResponse.value = NetworkResponse.Loading
+        _postDeleteResponse.value = repository.postDelete(postId)
     }
 }

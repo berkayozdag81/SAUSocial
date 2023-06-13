@@ -18,12 +18,14 @@ class PostsAdapter(
     var postItemClicked: ((Int) -> Unit) = {},
     var userItemClicked: ((Int) -> Unit) = {},
     var likeClicked: ((Int, Int) -> Unit) = { _, _ -> },
-    var disLikeClicked: ((Int, Int) -> Unit) = { _, _ -> }
+    var disLikeClicked: ((Int, Int) -> Unit) = { _, _ -> },
+    var postDelete: ((Int) -> Unit) = {},
 ) :
     RecyclerView.Adapter<PostsAdapter.PostViewHolder>() {
 
     private var items: List<Post> = emptyList()
     var appUserId: Int = -1
+    var isProfile: Boolean = false
 
     inner class PostViewHolder(private val binding: ItemPostBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -53,9 +55,16 @@ class PostsAdapter(
                 )
             )
 
+            if (isProfile) postDeleteButton.setVisible(true)
+            else postDeleteButton.setVisible(false)
+
             buttonPostLike.setOnClickListener {
                 if (post.isUserLikedThisPost(appUserId)) disLikeClicked(post.id, appUserId)
                 else likeClicked(post.id, appUserId)
+            }
+
+            postDeleteButton.setOnClickListener {
+                postDelete(post.id)
             }
         }
     }

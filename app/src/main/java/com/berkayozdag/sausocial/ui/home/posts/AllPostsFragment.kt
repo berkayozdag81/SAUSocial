@@ -91,6 +91,7 @@ class AllPostsFragment : BasePostFragment() {
         binding.recyclerViewPosts.layoutManager = layoutManager
         binding.recyclerViewPosts.adapter = adapter
         adapter.appUserId = sessionManager.getUserId()
+        adapter.isProfile = false
     }
 
     override fun onDestroyView() {

@@ -80,6 +80,7 @@ class OtherProfileFragment : Fragment() {
         )
         binding.profileLayout.rwProfileUserPost.addItemDecoration(itemDecoration)
         binding.profileLayout.rwProfileUserPost.layoutManager = layoutManager
+        adapter.isProfile = false
     }
 
     private fun setupObservers() {

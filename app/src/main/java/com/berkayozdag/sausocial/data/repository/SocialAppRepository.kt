@@ -112,4 +112,13 @@ class SocialAppRepository @Inject constructor(
             NetworkResponse.Error(e.message ?: "Bir hata oluştu")
         }
     }
+
+    suspend fun postDelete(id: Int): NetworkResponse<Any> {
+        return try {
+            val response = api.postDelete(id)
+            NetworkResponse.Success(response)
+        } catch (e: Exception) {
+            NetworkResponse.Error(e.message ?: "Bir hata oluştu")
+        }
+    }
 }

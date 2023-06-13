@@ -18,6 +18,7 @@ import com.berkayozdag.sausocial.common.setVisible
 import com.berkayozdag.sausocial.common.showToast
 import com.berkayozdag.sausocial.data.NetworkResponse
 import com.berkayozdag.sausocial.databinding.FragmentProfileBinding
+import com.berkayozdag.sausocial.databinding.PostDeleteDialogBinding
 import com.berkayozdag.sausocial.databinding.SignOutDialogBinding
 import com.berkayozdag.sausocial.model.Post
 import com.berkayozdag.sausocial.ui.AuthenticationActivity
@@ -52,6 +53,7 @@ class ProfileFragment : Fragment() {
         setupObservers()
         setupRecyclerview()
         postItemClicked()
+        postDelete()
     }
 
     private fun initViews() {
@@ -77,6 +79,7 @@ class ProfileFragment : Fragment() {
         )
         rwProfileUserPost.addItemDecoration(itemDecoration)
         rwProfileUserPost.layoutManager = layoutManager
+        adapter.isProfile = true
     }
 
     private fun setupObservers() {
@@ -102,6 +105,21 @@ class ProfileFragment : Fragment() {
                 }
             }
         }
+
+        profileViewModel.postDeleteResponse.observe(viewLifecycleOwner) {
+            when (it) {
+                is NetworkResponse.Loading -> {
+                }
+
+                is NetworkResponse.Success -> {
+                    profileViewModel.getUserById(sessionManager.getUserId())
+                }
+
+                is NetworkResponse.Error -> {
+                    context?.showToast("İşlem başarısız")
+                }
+            }
+        }
     }
 
     private fun loadPosts(posts: List<Post>) = with(binding) {
@@ -117,6 +135,21 @@ class ProfileFragment : Fragment() {
                 R.id.action_navigation_profile_to_postDetailFragment,
                 postIdBundle
             )
+        }
+    }
+
+    private fun postDelete() {
+        adapter.postDelete = { id ->
+            val dialogBinding: PostDeleteDialogBinding =
+                PostDeleteDialogBinding.inflate(layoutInflater)
+            val builder = AlertDialog.Builder(requireContext()).setView(dialogBinding.root).show()
+            dialogBinding.signOutButton.setOnClickListener {
+                profileViewModel.postDelete(id)
+                builder.dismiss()
+            }
+            dialogBinding.signOutCancelButton.setOnClickListener {
+                builder.dismiss()
+            }
         }
     }
 

@@ -5,8 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.berkayozdag.sausocial.databinding.ItemGroupBinding
 import com.berkayozdag.sausocial.model.profile.ProfileResponse
+import com.bumptech.glide.Glide
 
-class GroupsAdapter(var onItemClicked: ((ProfileResponse) -> Unit) = {}) :
+class GroupsAdapter(var onItemClicked: ((Int) -> Unit) = {}) :
     RecyclerView.Adapter<GroupsAdapter.GroupViewHolder>() {
 
     var items: List<ProfileResponse> = emptyList()
@@ -18,14 +19,16 @@ class GroupsAdapter(var onItemClicked: ((ProfileResponse) -> Unit) = {}) :
     inner class GroupViewHolder(private val binding: ItemGroupBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(profileResponse: ProfileResponse) = with(binding) {
+            textViewMembersCount.text = profileResponse.followers.size.toString()
             textViewGroupName.text = profileResponse.name + " " + profileResponse.surname
-            /*
-            Glide
-                .with(binding.root)
-                .load(group.imageUrl)
+            Glide.with(itemView.context)
+                .load(profileResponse.profileImageUrl)
                 .centerCrop()
                 .into(imageViewGroup)
-             */
+
+            imageViewGroup.setOnClickListener {
+                onItemClicked(profileResponse.id)
+            }
         }
     }
 

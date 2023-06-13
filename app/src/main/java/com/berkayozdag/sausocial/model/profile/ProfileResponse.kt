@@ -12,7 +12,7 @@ data class ProfileResponse(
     val name: String,
     val part: String,
     val posts: List<Post>,
-    val profileImagUrl: Any,
-    val isGroup:Boolean,
+    val profileImageUrl: String,
+    val isGroup: Boolean,
     val surname: String
 )

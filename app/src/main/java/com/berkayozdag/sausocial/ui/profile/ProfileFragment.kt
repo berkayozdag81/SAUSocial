@@ -23,6 +23,7 @@ import com.berkayozdag.sausocial.databinding.SignOutDialogBinding
 import com.berkayozdag.sausocial.model.Post
 import com.berkayozdag.sausocial.ui.AuthenticationActivity
 import com.berkayozdag.sausocial.ui.home.adapters.PostsAdapter
+import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -90,6 +91,10 @@ class ProfileFragment : Fragment() {
                 }
 
                 is NetworkResponse.Success -> {
+                    Glide.with(requireContext())
+                        .load(response.data.profileImageUrl)
+                        .into(binding.profileAvatar)
+
                     binding.profileNameText.text = response.data.name + " " + response.data.surname
                     binding.profileFollowerCount.text = response.data.followers.size.toString()
                     binding.profileDepartmentText.text = response.data.part

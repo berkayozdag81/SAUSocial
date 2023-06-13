@@ -4,7 +4,7 @@ import android.content.SharedPreferences
 import javax.inject.Inject
 
 class SessionManager @Inject constructor(
-        private val sharedPreferences: SharedPreferences
+    private val sharedPreferences: SharedPreferences
 ) {
 
     fun setLogin(isLogin: Boolean) {
@@ -29,5 +29,13 @@ class SessionManager @Inject constructor(
 
     fun getUserName(): String {
         return sharedPreferences.getString(Constants.USER_NAME_AND_SURNAME, "") ?: ""
+    }
+
+    fun setUserProfileImage(profileImage: String) {
+        sharedPreferences.edit().putString(Constants.USER_PROFILE_IMAGE, profileImage).apply() ?: ""
+    }
+
+    fun getUserProfileImage(): String {
+        return sharedPreferences.getString(Constants.USER_PROFILE_IMAGE, "") ?: ""
     }
 }

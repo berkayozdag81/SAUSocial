@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.berkayozdag.sausocial.databinding.ItemUserBinding
 import com.berkayozdag.sausocial.model.profile.ProfileResponse
+import com.bumptech.glide.Glide
 
 class UsersAdapter(var onItemClicked: ((ProfileResponse) -> Unit) = {}) :
     RecyclerView.Adapter<UsersAdapter.UserViewHolder>() {
@@ -15,6 +16,9 @@ class UsersAdapter(var onItemClicked: ((ProfileResponse) -> Unit) = {}) :
     inner class UserViewHolder(private val binding: ItemUserBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(user: ProfileResponse) = with(binding) {
+            Glide.with(itemView.context)
+                .load(user.profileImageUrl)
+                .into(imageViewUserProfile)
             textViewUserName.text = user.name + " " + user.surname
             textViewUserDepartment.text = user.part
             layoutPost.setOnClickListener {

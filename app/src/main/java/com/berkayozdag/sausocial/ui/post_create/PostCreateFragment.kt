@@ -14,6 +14,7 @@ import com.berkayozdag.sausocial.common.setVisible
 import com.berkayozdag.sausocial.common.showToast
 import com.berkayozdag.sausocial.data.NetworkResponse
 import com.berkayozdag.sausocial.databinding.FragmentPostCreateBinding
+import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
@@ -48,6 +49,9 @@ class PostCreateFragment : Fragment() {
 
     private fun initViews() {
         binding.textViewUserName.text = sessionManager.getUserName()
+        Glide.with(requireContext())
+            .load(sessionManager.getUserProfileImage())
+            .into(binding.imageViewUserProfile)
     }
 
     private fun setupListeners() = with(binding) {
@@ -100,10 +104,12 @@ class PostCreateFragment : Fragment() {
                 is NetworkResponse.Loading -> {
 
                 }
+
                 is NetworkResponse.Success -> {
                     binding.sharePostSuccessAnimation.setVisible(true)
                     binding.sharePostSuccessAnimation.playAnimation()
                 }
+
                 is NetworkResponse.Error -> {
                     context?.showToast("Post paylaşılmadı")
                 }

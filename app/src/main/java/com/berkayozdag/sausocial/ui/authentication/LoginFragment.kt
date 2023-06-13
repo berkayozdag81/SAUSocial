@@ -54,11 +54,12 @@ class LoginFragment : Fragment() {
     }
 
     private fun setupObserves() {
-        loginViewModel.loginState.observe(viewLifecycleOwner) {response->
+        loginViewModel.loginState.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResponse.Loading -> {
                     binding.loginProgressBar.setVisible(true)
                 }
+
                 is NetworkResponse.Success -> {
                     binding.loginProgressBar.setVisible(false)
                     val intent = Intent(requireContext(), MainActivity::class.java)
@@ -66,8 +67,10 @@ class LoginFragment : Fragment() {
                     sessionManager.setLogin(true)
                     sessionManager.setUserId(response.data.id)
                     sessionManager.setUserName(response.data.name + " " + response.data.surname)
+                    sessionManager.setUserProfileImage("https://sausocialmedia.com.tr/api/User/Images/${response.data.imageUrl}")
                     activity?.finish()
                 }
+
                 is NetworkResponse.Error -> {
                     binding.loginProgressBar.setVisible(false)
                     context?.showToast("Hatalı kullanıcı adı veya şifre")

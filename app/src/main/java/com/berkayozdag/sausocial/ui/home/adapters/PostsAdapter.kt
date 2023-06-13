@@ -12,6 +12,8 @@ import com.berkayozdag.sausocial.common.SessionManager
 import com.berkayozdag.sausocial.common.setVisible
 import com.berkayozdag.sausocial.databinding.ItemPostBinding
 import com.berkayozdag.sausocial.model.Post
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import javax.inject.Inject
 
 class PostsAdapter(
@@ -29,7 +31,11 @@ class PostsAdapter(
 
     inner class PostViewHolder(private val binding: ItemPostBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(post: Post, position: Int) = with(binding) {
+        fun bind(post: Post) = with(binding) {
+
+            Glide.with(itemView.context)
+                .load("https://sausocialmedia.com.tr/api/User/Images/${post.appUser.profileImageUrl}")
+                .into(imageViewUserProfile)
             textViewUserName.text = post.appUser.name + " " + post.appUser.surname
             textViewUserDepartment.text = post.appUser.part
             textViewPostDescription.text = post.content
@@ -75,7 +81,7 @@ class PostsAdapter(
     }
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
-        holder.bind(items[position], position)
+        holder.bind(items[position])
     }
 
     override fun getItemCount() = items.size

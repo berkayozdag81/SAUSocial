@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.berkayozdag.sausocial.R
 import com.berkayozdag.sausocial.data.NetworkResponse
 import com.berkayozdag.sausocial.databinding.FragmentGroupsBinding
 import com.berkayozdag.sausocial.model.profile.ProfileResponse
@@ -56,9 +58,11 @@ class GroupsFragment : Fragment() {
                 is NetworkResponse.Loading -> {
 
                 }
+
                 is NetworkResponse.Success -> {
                     loadGroups(it.data.filter { it.isGroup })
                 }
+
                 is NetworkResponse.Error -> {
 
                 }
@@ -72,7 +76,13 @@ class GroupsFragment : Fragment() {
     }
 
     private fun onItemClick() {
-        adapter.onItemClicked = {
+        adapter.onItemClicked = { id ->
+            val groupIdBundle = Bundle()
+            groupIdBundle.putInt("id", id)
+            findNavController().navigate(
+                R.id.action_navigation_groups_to_otherProfileFragment,
+                groupIdBundle
+            )
         }
     }
 

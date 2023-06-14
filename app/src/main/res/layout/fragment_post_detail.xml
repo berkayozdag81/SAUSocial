@@ -39,7 +39,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:fontFamily="@font/text_bold"
-                    android:text="Post Detail"
+                    android:text="Gönderi"
                     android:textColor="@color/white"
                     android:textSize="20sp" />
 
@@ -63,7 +63,7 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_marginStart="16dp"
-                    android:src="@drawable/sample_profile_photo"
+                    android:src="@drawable/ic_person"
                     app:civ_border_color="@color/main_color"
                     app:civ_border_width="1dp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -115,7 +115,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/main_color"
-                        android:text="Follow"
+                        android:text="Takip et"
                         android:textAppearance="@style/PostDetailFollowButton"
                         android:visibility="gone"
                         app:cornerRadius="24dp"
@@ -127,7 +127,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/main_color"
-                        android:text="Following"
+                        android:text="Takip ediliyor"
                         android:textAppearance="@style/PostDetailFollowButton"
                         android:visibility="gone"
                         app:cornerRadius="24dp"
@@ -203,7 +203,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:background="@android:color/transparent"
+                        android:clickable="false"
                         android:src="@drawable/ic_comment" />
 
                     <TextView
@@ -235,7 +236,7 @@
                     android:layout_marginTop="4dp"
                     android:layout_marginEnd="4dp"
                     android:fontFamily="@font/text_bold"
-                    android:text="Comments"
+                    android:text="Yorumlar"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="@+id/viewHorizontal1"
@@ -287,7 +288,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:backgroundTint="@color/main_color"
-                android:hint="Leave a comment"
+                android:hint="Yorum yaz"
                 android:importantForAutofill="no"
                 android:inputType="textMultiLine"
                 android:textAppearance="@style/PostDetailCommentEditText"

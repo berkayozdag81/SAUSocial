@@ -1,13 +1,13 @@
 package com.berkayozdag.sausocial.ui.home.posts
 
 import android.os.Bundle
-import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.berkayozdag.sausocial.R
 import com.berkayozdag.sausocial.common.SessionManager
+import com.berkayozdag.sausocial.common.setVisible
 import com.berkayozdag.sausocial.model.Post
 import com.berkayozdag.sausocial.ui.home.adapters.PostsAdapter
 import com.facebook.shimmer.ShimmerFrameLayout
@@ -35,8 +35,9 @@ abstract class BasePostFragment : Fragment() {
 
     protected fun postItemClick() {
         adapter.postItemClicked = { id ->
-            val postIdBundle = Bundle()
-            postIdBundle.putInt("id", id)
+            val postIdBundle = Bundle().apply {
+                putInt("id", id)
+            }
             findNavController().navigate(
                 R.id.action_navigation_home_to_postDetailFragment,
                 postIdBundle
@@ -51,8 +52,9 @@ abstract class BasePostFragment : Fragment() {
                     R.id.action_navigation_home_to_navigation_profile,
                 )
             } else {
-                val userIdBundle = Bundle()
-                userIdBundle.putInt("id", id)
+                val userIdBundle = Bundle().apply {
+                    putInt("id", id)
+                }
                 findNavController().navigate(
                     R.id.action_navigation_home_to_otherProfileFragment,
                     userIdBundle
@@ -75,14 +77,14 @@ abstract class BasePostFragment : Fragment() {
         recyclerView: RecyclerView
     ) {
         shimmerLayout.startShimmer()
-        shimmerLayout.visibility = View.VISIBLE
-        recyclerView.visibility = View.GONE
+        shimmerLayout.setVisible(true)
+        recyclerView.setVisible(false)
     }
 
     protected fun stopShimmerEffect(shimmerLayout: ShimmerFrameLayout, recyclerView: RecyclerView) {
         shimmerLayout.stopShimmer()
-        shimmerLayout.visibility = View.GONE
-        recyclerView.visibility = View.VISIBLE
+        shimmerLayout.setVisible(false)
+        recyclerView.setVisible(true)
     }
 
 }

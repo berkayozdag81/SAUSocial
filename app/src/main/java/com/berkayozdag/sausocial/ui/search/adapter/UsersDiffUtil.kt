@@ -23,4 +23,5 @@ class UsersDiffUtil(
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
         return oldList[oldItemPosition].id != newList[newItemPosition].id
     }
+
 }

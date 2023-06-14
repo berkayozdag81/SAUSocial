@@ -18,4 +18,5 @@ class AuthRepository @Inject constructor(
             NetworkResponse.Error(e.message ?: "Bir hata oluştu")
         }
     }
+
 }

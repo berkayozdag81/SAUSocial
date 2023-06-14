@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:fontFamily="@font/text_bold"
-                android:text="Groups"
+                android:text="Topluluklar"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
         </com.google.android.material.appbar.MaterialToolbar>
@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="8dp"
-        android:hint="Search"
+        android:hint="Ara"
         app:boxCornerRadiusBottomEnd="12dp"
         app:boxCornerRadiusBottomStart="12dp"
         app:boxCornerRadiusTopEnd="12dp"

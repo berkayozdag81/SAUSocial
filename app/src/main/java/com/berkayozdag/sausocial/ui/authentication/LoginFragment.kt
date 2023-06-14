@@ -7,10 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.berkayozdag.sausocial.common.SessionManager
-import com.berkayozdag.sausocial.common.checkEditTexts
-import com.berkayozdag.sausocial.common.setVisible
-import com.berkayozdag.sausocial.common.showToast
+import com.berkayozdag.sausocial.common.*
 import com.berkayozdag.sausocial.data.NetworkResponse
 import com.berkayozdag.sausocial.databinding.FragmentLoginBinding
 import com.berkayozdag.sausocial.ui.MainActivity
@@ -40,10 +37,10 @@ class LoginFragment : Fragment() {
         setupObserves()
     }
 
-    private fun setupListeners() {
-        binding.loginButton.setOnClickListener {
-            val username = binding.fragmentLoginTextInputUserName
-            val password = binding.fragmentLoginTextInputPassword
+    private fun setupListeners() = with(binding) {
+        loginButton.setOnClickListener {
+            val username = fragmentLoginTextInputUserName
+            val password = fragmentLoginTextInputPassword
             if (checkEditTexts(username, password)) {
                 loginViewModel.login(
                     username.text.toString(),
@@ -62,20 +59,32 @@ class LoginFragment : Fragment() {
 
                 is NetworkResponse.Success -> {
                     binding.loginProgressBar.setVisible(false)
+                    val data = response.data
+                    val fullName = "${data.name} ${data.surname}"
+
+                    sessionManager.apply {
+                        setLogin(true)
+                        setUserId(data.id)
+                        setUserName(fullName)
+                        setUserProfileImage(Constants.USER_PROFILE_IMAGE + data.imageUrl)
+                    }
+
                     val intent = Intent(requireContext(), MainActivity::class.java)
                     startActivity(intent)
-                    sessionManager.setLogin(true)
-                    sessionManager.setUserId(response.data.id)
-                    sessionManager.setUserName(response.data.name + " " + response.data.surname)
-                    sessionManager.setUserProfileImage("https://sausocialmedia.com.tr/api/User/Images/${response.data.imageUrl}")
                     activity?.finish()
                 }
 
                 is NetworkResponse.Error -> {
                     binding.loginProgressBar.setVisible(false)
-                    context?.showToast("Hatalı kullanıcı adı veya şifre")
+                    context?.showToast("Hatalı e-posta veya şifre girdiniz.")
                 }
             }
         }
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
 }

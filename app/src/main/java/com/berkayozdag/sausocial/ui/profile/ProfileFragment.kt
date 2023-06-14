@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.berkayozdag.sausocial.R
 import com.berkayozdag.sausocial.common.SessionManager
+import com.berkayozdag.sausocial.common.loadImage
 import com.berkayozdag.sausocial.common.setVisible
 import com.berkayozdag.sausocial.common.showToast
 import com.berkayozdag.sausocial.data.NetworkResponse
@@ -23,7 +24,6 @@ import com.berkayozdag.sausocial.databinding.SignOutDialogBinding
 import com.berkayozdag.sausocial.model.Post
 import com.berkayozdag.sausocial.ui.AuthenticationActivity
 import com.berkayozdag.sausocial.ui.home.adapters.PostsAdapter
-import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -51,22 +51,26 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         profileViewModel.getUserById(sessionManager.getUserId())
         initViews()
+        setupListeners()
         setupObservers()
         setupRecyclerview()
         postItemClicked()
         postDelete()
     }
 
-    private fun initViews() {
-        binding.profileBackBtn.setVisible(false)
-        binding.buttonFollow.setVisible(false)
-        binding.buttonUnFollow.setVisible(false)
-        binding.profileLogoutBtn.setOnClickListener {
+    private fun initViews() = with(binding) {
+        profileBackBtn.setVisible(false)
+        buttonFollow.setVisible(false)
+        buttonUnFollow.setVisible(false)
+    }
+
+    private fun setupListeners() = with(binding) {
+        profileLogoutBtn.setOnClickListener {
             signOut()
         }
 
-        binding.profileFragmentRefreshLayout.setOnRefreshListener {
-            binding.profileFragmentRefreshLayout.isRefreshing = false
+        profileFragmentRefreshLayout.setOnRefreshListener {
+            profileFragmentRefreshLayout.isRefreshing = false
             profileViewModel.getUserById(sessionManager.getUserId())
         }
     }
@@ -91,37 +95,39 @@ class ProfileFragment : Fragment() {
                 }
 
                 is NetworkResponse.Success -> {
-                    Glide.with(requireContext())
-                        .load(response.data.profileImageUrl)
-                        .into(binding.profileAvatar)
-
-                    binding.profileNameText.text = response.data.name + " " + response.data.surname
-                    binding.profileFollowerCount.text = response.data.followers.size.toString()
-                    binding.profileDepartmentText.text = response.data.part
-                    binding.profileFollowingCount.text = response.data.followings.size.toString()
-                    binding.profilePostCount.text = response.data.posts.size.toString()
-                    binding.profileProgressBar.setVisible(false)
+                    with(binding) {
+                        response.data.profileImageUrl.let { url ->
+                            profileAvatar.loadImage(url)
+                        }
+                        profileNameText.text = "${response.data.name} ${response.data.surname}"
+                        profileFollowerCount.text = response.data.followers.size.toString()
+                        profileDepartmentText.text = response.data.part
+                        profileFollowingCount.text =
+                            response.data.followings.size.toString()
+                        profilePostCount.text = response.data.posts.size.toString()
+                        layoutNoResult.root.setVisible(response.data.posts.isEmpty())
+                        profileProgressBar.setVisible(false)
+                    }
                     loadPosts(response.data.posts)
                 }
 
                 is NetworkResponse.Error -> {
                     binding.profileProgressBar.setVisible(false)
-                    context?.showToast("Hatalı kullanıcı adı veya şifre")
+                    context?.showToast("Kullanıcı profili getirilemedi.")
                 }
             }
         }
 
-        profileViewModel.postDeleteResponse.observe(viewLifecycleOwner) {
-            when (it) {
-                is NetworkResponse.Loading -> {
-                }
+        profileViewModel.postDeleteResponse.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is NetworkResponse.Loading -> {}
 
                 is NetworkResponse.Success -> {
                     profileViewModel.getUserById(sessionManager.getUserId())
                 }
 
                 is NetworkResponse.Error -> {
-                    context?.showToast("İşlem başarısız")
+                    context?.showToast("Gönderi silinemedi.")
                 }
             }
         }
@@ -134,8 +140,9 @@ class ProfileFragment : Fragment() {
 
     private fun postItemClicked() {
         adapter.postItemClicked = { id ->
-            val postIdBundle = Bundle()
-            postIdBundle.putInt("id", id)
+            val postIdBundle = Bundle().apply {
+                putInt("id", id)
+            }
             findNavController().navigate(
                 R.id.action_navigation_profile_to_postDetailFragment,
                 postIdBundle
@@ -177,4 +184,5 @@ class ProfileFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
 }

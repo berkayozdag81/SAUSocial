@@ -1,11 +1,11 @@
 package com.berkayozdag.sausocial.ui
 
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.berkayozdag.sausocial.R.id
+import com.berkayozdag.sausocial.common.setVisible
 import com.berkayozdag.sausocial.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,9 +23,9 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == id.postDetailFragment || destination.id == id.postCreateFragment) {
-                binding.bottomNavigationView.visibility = View.GONE
+                binding.bottomNavigationView.setVisible(false)
             } else {
-                binding.bottomNavigationView.visibility = View.VISIBLE
+                binding.bottomNavigationView.setVisible(true)
             }
         }
 
@@ -43,4 +43,5 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
 }

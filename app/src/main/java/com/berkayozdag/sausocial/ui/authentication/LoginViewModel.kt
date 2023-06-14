@@ -26,4 +26,5 @@ class LoginViewModel @Inject constructor(
             _loginState.value = repository.login(LoginRequest(userName, password))
         }
     }
+
 }

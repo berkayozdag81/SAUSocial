@@ -50,4 +50,5 @@ class ProfileViewModel @Inject constructor(
         _postDeleteResponse.value = NetworkResponse.Loading
         _postDeleteResponse.value = repository.postDelete(postId)
     }
+
 }

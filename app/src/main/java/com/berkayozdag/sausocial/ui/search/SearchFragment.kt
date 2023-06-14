@@ -26,6 +26,7 @@ class SearchFragment : Fragment() {
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
+
     private val adapter = UsersAdapter()
     private val userItems = arrayListOf<ProfileResponse>()
     private val users = arrayListOf<ProfileResponse>()
@@ -51,7 +52,6 @@ class SearchFragment : Fragment() {
         initSearch()
         setupObserves()
         searchViewModel.getUsers()
-
     }
 
     private fun setupRecyclerview() = with(binding) {
@@ -65,24 +65,17 @@ class SearchFragment : Fragment() {
     }
 
     private fun setupObserves() {
-        searchViewModel.usersResponse.observe(viewLifecycleOwner) { it ->
-            when (it) {
-                is NetworkResponse.Loading -> {
-
-                }
+        searchViewModel.usersResponse.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is NetworkResponse.Loading -> {}
 
                 is NetworkResponse.Success -> {
-                    it.data.map {
-                        if (!it.isGroup) {
-                            users.add(it)
-                        }
-                    }
+                    val filteredUsers = response.data.filter { !it.isGroup }
+                    users.addAll(filteredUsers)
                     loadUser(users)
                 }
 
-                is NetworkResponse.Error -> {
-
-                }
+                is NetworkResponse.Error -> {}
             }
         }
     }
@@ -90,9 +83,7 @@ class SearchFragment : Fragment() {
     private fun loadUser(users: List<ProfileResponse>) = with(binding) {
         adapter.setData(users)
         searchFragmentRecyclerView.adapter = adapter
-        for (item in users.iterator()) {
-            userItems.add(item)
-        }
+        userItems.addAll(users)
     }
 
     private fun onItemClick() {
@@ -102,8 +93,9 @@ class SearchFragment : Fragment() {
                     R.id.action_navigation_search_to_navigation_profile,
                 )
             } else {
-                val profileIdBundle = Bundle()
-                profileIdBundle.putInt("id", profile.id)
+                val profileIdBundle = Bundle().apply {
+                    putInt("id", profile.id)
+                }
                 findNavController().navigate(
                     R.id.action_navigation_search_to_otherProfileFragment,
                     profileIdBundle
@@ -137,4 +129,5 @@ class SearchFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
 }

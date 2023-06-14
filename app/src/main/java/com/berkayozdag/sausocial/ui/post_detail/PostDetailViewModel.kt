@@ -6,11 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.berkayozdag.sausocial.data.NetworkResponse
 import com.berkayozdag.sausocial.data.repository.SocialAppRepository
-import com.berkayozdag.sausocial.model.CommentRequest
-import com.berkayozdag.sausocial.model.CommentResponse
-import com.berkayozdag.sausocial.model.FollowRequest
-import com.berkayozdag.sausocial.model.Post
-import com.berkayozdag.sausocial.model.PostLikeRequest
+import com.berkayozdag.sausocial.model.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -55,14 +51,12 @@ class PostDetailViewModel @Inject constructor(
         _postDislikeResponse.value = repository.postDislike(appUserId, postId)
     }
 
-
     fun sendComment(message: String, publishedDate: String, postId: Int, appUserId: Int) =
         viewModelScope.launch {
             _commentCreateResponse.value = NetworkResponse.Loading
             _commentCreateResponse.value =
                 repository.sendComment(CommentRequest(message, publishedDate, postId, appUserId))
         }
-
 
     fun follow(followerId: Int, userId: Int) = viewModelScope.launch {
         _followResponse.value = NetworkResponse.Loading
@@ -75,4 +69,5 @@ class PostDetailViewModel @Inject constructor(
         _unFollowResponse.value =
             repository.unFollow(followerId, userId)
     }
+
 }

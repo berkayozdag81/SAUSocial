@@ -1,6 +1,6 @@
 package com.berkayozdag.sausocial.ui.home
 
-import AllPostsFragment
+import com.berkayozdag.sausocial.ui.home.posts.AllPostsFragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,17 +8,24 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.berkayozdag.sausocial.R
+import com.berkayozdag.sausocial.common.SessionManager
+import com.berkayozdag.sausocial.common.loadImage
 import com.berkayozdag.sausocial.databinding.FragmentHomeBinding
 import com.berkayozdag.sausocial.ui.home.adapters.ViewPagerAdapter
 import com.berkayozdag.sausocial.ui.home.posts.PostsIFollowFragment
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+
+    @Inject
+    lateinit var sessionManager: SessionManager
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -32,6 +39,11 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupViewPager()
         setupListeners()
+        initViews()
+    }
+
+    private fun initViews() {
+        binding.profileAvatar.loadImage(sessionManager.getUserProfileImage())
     }
 
     private fun setupListeners() = with(binding) {
@@ -52,10 +64,10 @@ class HomeFragment : Fragment() {
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             when (position) {
                 0 -> {
-                    tab.text = "All posts"
+                    tab.text = "Tüm gönderiler"
                 }
                 1 -> {
-                    tab.text = "Following"
+                    tab.text = "Takip edilenler"
                 }
             }
         }.attach()

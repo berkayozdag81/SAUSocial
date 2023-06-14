@@ -10,6 +10,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class SplashActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivitySplashBinding
 
     @Inject
@@ -32,4 +33,5 @@ class SplashActivity : AppCompatActivity() {
             }
         }
     }
+
 }

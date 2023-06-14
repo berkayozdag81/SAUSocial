@@ -3,9 +3,9 @@ package com.berkayozdag.sausocial.ui.groups.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.berkayozdag.sausocial.common.loadImage
 import com.berkayozdag.sausocial.databinding.ItemGroupBinding
 import com.berkayozdag.sausocial.model.profile.ProfileResponse
-import com.bumptech.glide.Glide
 
 class GroupsAdapter(var onItemClicked: ((Int) -> Unit) = {}) :
     RecyclerView.Adapter<GroupsAdapter.GroupViewHolder>() {
@@ -19,13 +19,11 @@ class GroupsAdapter(var onItemClicked: ((Int) -> Unit) = {}) :
     inner class GroupViewHolder(private val binding: ItemGroupBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(profileResponse: ProfileResponse) = with(binding) {
+            profileResponse.profileImageUrl.let {
+                imageViewGroup.loadImage(profileResponse.profileImageUrl)
+            }
             textViewMembersCount.text = profileResponse.followers.size.toString()
-            textViewGroupName.text = profileResponse.name + " " + profileResponse.surname
-            Glide.with(itemView.context)
-                .load(profileResponse.profileImageUrl)
-                .centerCrop()
-                .into(imageViewGroup)
-
+            textViewGroupName.text = "${profileResponse.name} ${profileResponse.surname}"
             imageViewGroup.setOnClickListener {
                 onItemClicked(profileResponse.id)
             }

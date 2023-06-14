@@ -5,16 +5,15 @@
     android:id="@+id/splashLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/screens_background_color"
+    android:background="@color/main_color"
     tools:context=".ui.SplashActivity">
 
     <ImageView
         android:id="@+id/imageViewLogo"
-        android:layout_width="175dp"
-        android:layout_height="175dp"
-        android:layout_gravity="center"
-        app:srcCompat="@drawable/ic_splash_logo"
-        app:tint="@color/logo_color" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srcCompat="@drawable/ic_logo"
+        />
 
     <TextView
         android:id="@+id/textViewVersionNumber"
@@ -24,5 +23,5 @@
         android:layout_marginBottom="16dp"
         android:fontFamily="@font/text_regular"
         android:text="@string/version_number"
-        android:textColor="@color/black" />
+        android:textColor="@color/white" />
 </FrameLayout>

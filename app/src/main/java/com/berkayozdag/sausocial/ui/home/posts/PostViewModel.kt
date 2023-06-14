@@ -76,18 +76,19 @@ class PostViewModel @Inject constructor(
     }
 
     private fun updatePostLike(posts: List<Post>, postId: Int, appUserId: Int): List<Post> {
-        return posts.map {
-            if (postId == it.id)
-                it.copy(likes = it.likes.plus(Like(appUserId, postId)))
-            else it
+        return posts.map { post ->
+            if (postId == post.id)
+                post.copy(likes = post.likes.plus(Like(appUserId, postId)))
+            else post
         }
     }
 
     private fun updatePostDislike(posts: List<Post>, postId: Int, appUserId: Int): List<Post> {
-        return posts.map {
-            if (postId == it.id)
-                it.copy(likes = it.likes.filter { like -> like.appUserId != appUserId })
-            else it
+        return posts.map { post ->
+            if (postId == post.id)
+                post.copy(likes = post.likes.filter { like -> like.appUserId != appUserId })
+            else post
         }
     }
+
 }

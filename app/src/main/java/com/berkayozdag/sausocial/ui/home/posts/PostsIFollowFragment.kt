@@ -41,58 +41,64 @@ class PostsIFollowFragment : BasePostFragment() {
         postViewModel.followingPosts.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResponse.Success -> {
-                    stopShimmerEffect(
-                        binding.shimmerFrameLayout,
-                        binding.recyclerViewPosts
-                    )
-                    binding.layoutNoResult.root.setVisible(response.data.isEmpty())
+                    with(binding) {
+                        stopShimmerEffect(
+                            shimmerFrameLayout,
+                            recyclerViewPosts
+                        )
+                        layoutNoResult.root.setVisible(response.data.isEmpty())
+                    }
                     loadPosts(response.data)
                 }
+
                 is NetworkResponse.Error -> {
-                    stopShimmerEffect(
-                        binding.shimmerFrameLayout,
-                        binding.recyclerViewPosts
-                    )
-                    context?.showToast(response.errorMessage)
+                    with(binding) {
+                        stopShimmerEffect(
+                            shimmerFrameLayout,
+                            recyclerViewPosts
+                        )
+                    }
+                    context?.showToast("Gönderiler yüklenirken bir hata oluştu.")
                 }
-                NetworkResponse.Loading -> {
-                    startShimmerEffect(
-                        binding.shimmerFrameLayout,
-                        binding.recyclerViewPosts
-                    )
+
+                is NetworkResponse.Loading -> {
+                    with(binding) {
+                        startShimmerEffect(
+                            shimmerFrameLayout,
+                            recyclerViewPosts
+                        )
+                    }
                 }
             }
         }
 
         postViewModel.postLikeResponse.observe(viewLifecycleOwner) { response ->
             when (response) {
-                is NetworkResponse.Success -> {
-                    // İşleme devam et
-                }
+                is NetworkResponse.Success -> {}
+
                 is NetworkResponse.Error -> {
-                    context?.showToast(response.errorMessage)
+                    context?.showToast("Gönderi beğenilemedi.")
                 }
-                NetworkResponse.Loading -> {
-                    // İşleme devam et
-                }
+
+                is NetworkResponse.Loading -> {}
             }
         }
     }
 
-    override fun setupListeners() {
-        binding.swipeRefreshLayout.setOnRefreshListener {
-            binding.swipeRefreshLayout.isRefreshing = false
+    override fun setupListeners() = with(binding) {
+        swipeRefreshLayout.setOnRefreshListener {
+            swipeRefreshLayout.isRefreshing = false
             postViewModel.getPosts()
         }
     }
 
-    override fun setupRecyclerView() {
+    override fun setupRecyclerView() = with(binding) {
         val layoutManager = LinearLayoutManager(requireContext())
         val itemDecoration: RecyclerView.ItemDecoration =
             DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
-        binding.recyclerViewPosts.addItemDecoration(itemDecoration)
-        binding.recyclerViewPosts.layoutManager = layoutManager
-        binding.recyclerViewPosts.adapter = adapter
+        recyclerViewPosts.addItemDecoration(itemDecoration)
+        recyclerViewPosts.layoutManager = layoutManager
+        recyclerViewPosts.adapter = adapter
         adapter.appUserId = sessionManager.getUserId()
         adapter.isProfile = false
     }
@@ -101,4 +107,5 @@ class PostsIFollowFragment : BasePostFragment() {
         super.onDestroyView()
         _binding = null
     }
+
 }

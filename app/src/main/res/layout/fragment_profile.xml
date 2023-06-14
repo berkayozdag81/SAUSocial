@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-     android:layout_height="match_parent"
+    android:id="@+id/profile_fragment_refresh_layout"
     android:layout_width="match_parent"
-    android:id="@+id/profile_fragment_refresh_layout">
+    android:layout_height="match_parent">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -40,7 +40,7 @@
                     android:layout_gravity="center"
                     android:fontFamily="@font/text_bold"
                     android:gravity="center"
-                    android:text="Profile"
+                    android:text="Profil"
                     android:textColor="@color/white"
                     android:textSize="20sp" />
 
@@ -115,7 +115,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/main_color"
-                        android:text="Follow"
+                        android:text="Takip et"
                         android:textAppearance="@style/PostDetailFollowButton"
                         app:cornerRadius="24dp"
                         app:icon="@drawable/ic_user_add"
@@ -126,15 +126,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/main_color"
-                        android:text="Following"
+                        android:text="Takip ediliyor"
                         android:textAppearance="@style/PostDetailFollowButton"
+                        android:visibility="gone"
                         app:cornerRadius="24dp"
                         app:icon="@drawable/ic_user_follow"
-                        android:visibility="gone"
-                        app:iconGravity="end"
-                        />
+                        app:iconGravity="end" />
                 </RelativeLayout>
-
 
                 <LinearLayout
                     android:id="@+id/profile_user_information_layout"
@@ -215,6 +213,16 @@
                     </LinearLayout>
 
                 </LinearLayout>
+
+                <include
+                    android:layout_marginTop="16dp"
+                    android:id="@+id/layout_no_result"
+                    layout="@layout/no_result"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@id/profile_user_information_layout" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rw_profile_user_post"

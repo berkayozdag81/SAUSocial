@@ -26,6 +26,6 @@
         android:fontFamily="@font/text_regular"
         android:gravity="center"
         android:lineSpacingExtra="8.0sp"
-        android:text="Herhangi bir sonuç bulunamadı"
+        android:text="Herhangi bir veri bulunamadı."
         android:textColor="@color/grey_500" />
 </LinearLayout>

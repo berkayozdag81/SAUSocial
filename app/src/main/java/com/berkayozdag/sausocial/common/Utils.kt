@@ -3,7 +3,9 @@ package com.berkayozdag.sausocial.common
 import android.content.Context
 import android.view.View
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
+import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputLayout
 
 fun Context.showToast(message: String, duration: Int = Toast.LENGTH_SHORT) {
@@ -23,10 +25,16 @@ fun EditText.isNullorEmpty(errorString: String): Boolean {
 
 fun checkEditTexts(vararg editTexts: EditText): Boolean {
     return editTexts.all {
-        it.isNullorEmpty("Required field")
+        it.isNullorEmpty("Zorunlu alan")
     }
 }
 
 fun View.setVisible(visible: Boolean) {
     visibility = if (visible) View.VISIBLE else View.GONE
+}
+
+fun ImageView.loadImage(url: String) {
+    Glide.with(context)
+        .load(url)
+        .into(this)
 }

@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.berkayozdag.sausocial.common.Constants
+import com.berkayozdag.sausocial.common.loadImage
 import com.berkayozdag.sausocial.databinding.ItemCommentBinding
 import com.berkayozdag.sausocial.model.Comment
 
@@ -15,7 +17,10 @@ class CommentsAdapter(var userItemClicked: ((Int) -> Unit) = {}) :
     inner class CommentViewHolder(private val binding: ItemCommentBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(comment: Comment) = with(binding) {
-            textViewUserName.text = comment.appUser.name + " " + comment.appUser.surname
+            comment.appUser.profileImageUrl.let {
+                imageViewUserProfile.loadImage(Constants.API_USER_IMAGES_URL + comment.appUser.profileImageUrl)
+            }
+            textViewUserName.text = "${comment.appUser.name} ${comment.appUser.surname}"
             textViewUserDepartment.text = comment.appUser.part
             textViewComment.text = comment.message
             textViewCommentCreatedDate.text = comment.publishedDate

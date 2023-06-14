@@ -4,20 +4,20 @@
     <item
         android:id="@+id/navigation_home"
         android:icon="@drawable/ic_home_menu"
-        android:title="@string/title_home" />
+        android:title="Anasayfa" />
 
     <item
         android:id="@+id/navigation_search"
         android:icon="@drawable/ic_search_menu"
-        android:title="@string/title_search" />
+        android:title="Arama" />
 
     <item
         android:id="@+id/navigation_groups"
         android:icon="@drawable/ic_groups_menu"
-        android:title="@string/title_groups" />
+        android:title="Topluluklar" />
     <item
         android:id="@+id/navigation_profile"
         android:icon="@drawable/ic_profile_menu"
-        android:title="@string/title_profile" />
+        android:title="Profilim" />
 
 </menu>

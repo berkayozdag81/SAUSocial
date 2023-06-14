@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -12,9 +11,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.berkayozdag.sausocial.R
-import com.berkayozdag.sausocial.common.SessionManager
-import com.berkayozdag.sausocial.common.setVisible
-import com.berkayozdag.sausocial.common.showToast
+import com.berkayozdag.sausocial.common.*
 import com.berkayozdag.sausocial.data.NetworkResponse
 import com.berkayozdag.sausocial.databinding.FragmentPostDetailBinding
 import com.berkayozdag.sausocial.model.Comment
@@ -43,12 +40,12 @@ class PostDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentPostDetailBinding.inflate(inflater, container, false)
-        postId = arguments?.getInt("id")
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        postId = arguments?.getInt("id")
         userItemClicked()
         setupRecyclerview()
         setupListeners()
@@ -58,11 +55,11 @@ class PostDetailFragment : Fragment() {
 
     private fun setupListeners() = with(binding) {
         buttonPostLike.setOnClickListener {
-            postId?.let { it1 -> postDetailViewModel.postLike(sessionManager.getUserId(), it1) }
+            postId?.let { id -> postDetailViewModel.postLike(sessionManager.getUserId(), id) }
         }
 
         buttonPostdisLike.setOnClickListener {
-            postId?.let { it1 -> postDetailViewModel.postDisLike(sessionManager.getUserId(), it1) }
+            postId?.let { id -> postDetailViewModel.postDisLike(sessionManager.getUserId(), id) }
         }
 
         buttonBackButton.setOnClickListener {
@@ -82,7 +79,7 @@ class PostDetailFragment : Fragment() {
 
         swipeRefreshLayout.setOnRefreshListener {
             swipeRefreshLayout.isRefreshing = false
-            postId?.let { postId -> postDetailViewModel.getPostById(postId) }
+            postId?.let { id -> postDetailViewModel.getPostById(id) }
         }
 
         imageViewUserProfile.setOnClickListener {
@@ -101,11 +98,11 @@ class PostDetailFragment : Fragment() {
         }
 
         buttonFollow.setOnClickListener {
-            userId?.let { it1 -> postDetailViewModel.follow(sessionManager.getUserId(), it1) }
+            userId?.let { id -> postDetailViewModel.follow(sessionManager.getUserId(), id) }
         }
 
         buttonUnFollow.setOnClickListener {
-            userId?.let { it1 -> postDetailViewModel.unFollow(sessionManager.getUserId(), it1) }
+            userId?.let { id -> postDetailViewModel.unFollow(sessionManager.getUserId(), id) }
         }
     }
 
@@ -116,8 +113,9 @@ class PostDetailFragment : Fragment() {
                     R.id.action_postDetailFragment_to_navigation_profile,
                 )
             } else {
-                val userIdBundle = Bundle()
-                userIdBundle.putInt("id", id)
+                val userIdBundle = Bundle().apply {
+                    putInt("id", id)
+                }
                 findNavController().navigate(
                     R.id.action_postDetailFragment_to_otherProfileFragment,
                     userIdBundle
@@ -126,83 +124,89 @@ class PostDetailFragment : Fragment() {
         }
     }
 
-    private fun setupObserves() = with(binding) {
+    private fun setupObserves() {
         postDetailViewModel.postDetailResponse.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResponse.Success -> {
-                    textViewUserName.text =
-                        response.data.appUser.name + " " + response.data.appUser.surname
-                    textViewUserDepartment.text = response.data.appUser.part
-                    textViewPostDescription.text = response.data.content
-                    textViewPostCreatedDate.text = response.data.publishedDate
-                    textViewPostNumberOfLike.text = response.data.likes.size.toString()
-                    textViewPostNumberOfComment.text = response.data.comments.size.toString()
-                    userId = response.data.appUser.id
-                    binding.layoutNoResult.root.setVisible(response.data.comments.isEmpty())
-                    postDetailProgressBar.setVisible(false)
-                    if (response.data.appUser.followers.any { it.followerId == sessionManager.getUserId() }) {
-                        buttonFollow.setVisible(false)
-                        buttonUnFollow.setVisible(true)
-                    } else {
-                        buttonFollow.setVisible(true)
-                        buttonUnFollow.setVisible(false)
-                    }
+                    with(binding) {
+                        val appUser = response.data.appUser
 
-                    if (response.data.appUser.id == sessionManager.getUserId()) {
-                        buttonFollow.setVisible(false)
-                        buttonUnFollow.setVisible(false)
-                    }
+                        textViewUserName.text = "${appUser.name} ${appUser.surname}"
+                        textViewUserDepartment.text = appUser.part
+                        textViewPostDescription.text = response.data.content
+                        textViewPostCreatedDate.text = response.data.publishedDate
+                        textViewPostNumberOfLike.text = response.data.likes.size.toString()
+                        textViewPostNumberOfComment.text = response.data.comments.size.toString()
+                        userId = appUser.id
+                        binding.layoutNoResult.root.setVisible(response.data.comments.isEmpty())
+                        postDetailProgressBar.setVisible(false)
+                        appUser.profileImageUrl.let { url ->
+                            imageViewUserProfile.loadImage(Constants.API_USER_IMAGES_URL + url)
+                        }
 
-                    if (response.data.isUserLikedThisPost(sessionManager.getUserId())) {
-                        buttonPostLike.setVisible(false)
-                        buttonPostdisLike.setVisible(true)
-                    }else{
-                        buttonPostLike.setVisible(true)
-                        buttonPostdisLike.setVisible(false)
+                        textViewUserDepartment.setVisible(!appUser.part.isNullOrEmpty())
+
+                        val isCurrentUserFollowing =
+                            appUser.followers.any { it.followerId == sessionManager.getUserId() }
+                        buttonFollow.setVisible(!isCurrentUserFollowing)
+                        buttonUnFollow.setVisible(isCurrentUserFollowing)
+
+                        val isCurrentUserPost = appUser.id == sessionManager.getUserId()
+                        buttonFollow.setVisible(!isCurrentUserPost)
+                        buttonUnFollow.setVisible(!isCurrentUserPost)
+
+                        val isCurrentUserLikedPost =
+                            response.data.isUserLikedThisPost(sessionManager.getUserId())
+                        buttonPostLike.setVisible(!isCurrentUserLikedPost)
+                        buttonPostdisLike.setVisible(isCurrentUserLikedPost)
                     }
 
                     loadComments(response.data.comments)
                 }
 
                 is NetworkResponse.Error -> {
-                    postDetailProgressBar.setVisible(false)
-                    context?.showToast(response.errorMessage)
+                    with(binding) {
+                        postDetailProgressBar.setVisible(false)
+                        context?.showToast(response.errorMessage)
+                    }
                 }
 
                 NetworkResponse.Loading -> {
-                    postDetailProgressBar.setVisible(true)
+                    binding.postDetailProgressBar.setVisible(true)
                 }
             }
         }
 
         postDetailViewModel.followResponse.observe(viewLifecycleOwner) { response ->
             when (response) {
-                is NetworkResponse.Loading -> {
-                }
+                is NetworkResponse.Loading -> {}
 
                 is NetworkResponse.Success -> {
-                    binding.buttonUnFollow.setVisible(true)
-                    binding.buttonFollow.setVisible(false)
+                    with(binding) {
+                        buttonUnFollow.setVisible(true)
+                        buttonFollow.setVisible(false)
+                    }
                 }
 
                 is NetworkResponse.Error -> {
-                    context?.showToast("İstek başarısız")
+                    context?.showToast("Kullanıcı takip edilemedi.")
                 }
             }
         }
 
         postDetailViewModel.unFollowResponse.observe(viewLifecycleOwner) { response ->
             when (response) {
-                is NetworkResponse.Loading -> {
-                }
+                is NetworkResponse.Loading -> {}
 
                 is NetworkResponse.Success -> {
-                    binding.buttonUnFollow.setVisible(false)
-                    binding.buttonFollow.setVisible(true)
+                    with(binding) {
+                        buttonUnFollow.setVisible(false)
+                        buttonFollow.setVisible(true)
+                    }
                 }
 
                 is NetworkResponse.Error -> {
-                    context?.showToast("İstek başarısız")
+                    context?.showToast("Kullanıcı takipten çıkarılamadı.")
                 }
             }
         }
@@ -211,14 +215,16 @@ class PostDetailFragment : Fragment() {
             when (response) {
                 is NetworkResponse.Loading -> {}
                 is NetworkResponse.Success -> {
-                    val likeCount = binding.textViewPostNumberOfLike.text.toString().toInt() + 1
-                    buttonPostLike.setVisible(false)
-                    buttonPostdisLike.setVisible(true)
-                    binding.textViewPostNumberOfLike.text = likeCount.toString()
+                    with(binding) {
+                        val likeCount = textViewPostNumberOfLike.text.toString().toInt() + 1
+                        buttonPostLike.setVisible(false)
+                        buttonPostdisLike.setVisible(true)
+                        textViewPostNumberOfLike.text = likeCount.toString()
+                    }
                 }
 
                 is NetworkResponse.Error -> {
-                    context?.showToast("İstek Başarısız")
+                    context?.showToast("Gönderi beğenilemedi.")
                 }
             }
         }
@@ -227,14 +233,16 @@ class PostDetailFragment : Fragment() {
             when (response) {
                 is NetworkResponse.Loading -> {}
                 is NetworkResponse.Success -> {
-                    val likeCount = binding.textViewPostNumberOfLike.text.toString().toInt() - 1
-                    buttonPostLike.setVisible(true)
-                    buttonPostdisLike.setVisible(false)
-                    binding.textViewPostNumberOfLike.text = likeCount.toString()
+                    with(binding) {
+                        val likeCount = textViewPostNumberOfLike.text.toString().toInt() - 1
+                        buttonPostLike.setVisible(true)
+                        buttonPostdisLike.setVisible(false)
+                        textViewPostNumberOfLike.text = likeCount.toString()
+                    }
                 }
 
                 is NetworkResponse.Error -> {
-                    context?.showToast("İstek Başarısız")
+                    context?.showToast("Gönderi beğenilerden çıkarılamadı.")
                 }
             }
         }
@@ -242,19 +250,20 @@ class PostDetailFragment : Fragment() {
         postDetailViewModel.commentCreateResponse.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResponse.Success -> {
-                    context?.showToast("Yorum paylaşıldı.")
-                    postDetailProgressBar.setVisible(false)
-                    postId?.let { id -> postDetailViewModel.getPostById(id) }
-                    editTextComment.text.clear()
+                    with(binding) {
+                        postDetailProgressBar.setVisible(false)
+                        postId?.let { id -> postDetailViewModel.getPostById(id) }
+                        editTextComment.text.clear()
+                    }
                 }
 
                 is NetworkResponse.Error -> {
-                    postDetailProgressBar.setVisible(false)
-                    context?.showToast(response.errorMessage)
+                    binding.postDetailProgressBar.setVisible(false)
+                    context?.showToast("Yorum paylaşılamadı.")
                 }
 
                 NetworkResponse.Loading -> {
-                    postDetailProgressBar.setVisible(true)
+                    binding.postDetailProgressBar.setVisible(true)
                 }
             }
         }

@@ -26,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:fontFamily="@font/text_bold"
-                android:text="Explore"
+                android:text="Keşfet"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
         </com.google.android.material.appbar.MaterialToolbar>
@@ -38,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="8dp"
-        android:hint="Search"
+        android:hint="Ara"
         app:boxCornerRadiusBottomEnd="12dp"
         app:boxCornerRadiusBottomStart="12dp"
         app:boxCornerRadiusTopEnd="12dp"
@@ -78,6 +78,7 @@
         android:text="Henüz bir arama yapmadınız."
         android:gravity="center"
         android:textSize="20sp"
+        android:textColor="@color/grey_500"
         android:fontFamily="@font/text_semi_bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layoutSearchInput"/>

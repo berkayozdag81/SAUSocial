@@ -32,10 +32,11 @@ class SessionManager @Inject constructor(
     }
 
     fun setUserProfileImage(profileImage: String) {
-        sharedPreferences.edit().putString(Constants.USER_PROFILE_IMAGE, profileImage).apply() ?: ""
+        sharedPreferences.edit().putString(Constants.USER_PROFILE_IMAGE, profileImage).apply()
     }
 
     fun getUserProfileImage(): String {
         return sharedPreferences.getString(Constants.USER_PROFILE_IMAGE, "") ?: ""
     }
+
 }

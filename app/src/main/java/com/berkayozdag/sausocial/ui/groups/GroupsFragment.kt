@@ -22,6 +22,7 @@ class GroupsFragment : Fragment() {
 
     private var _binding: FragmentGroupsBinding? = null
     private val binding get() = _binding!!
+
     private val adapter = GroupsAdapter()
     private val groupsViewModel: GroupsViewModel by viewModels()
 
@@ -53,19 +54,15 @@ class GroupsFragment : Fragment() {
     }
 
     private fun setupObserves() {
-        groupsViewModel.usersResponse.observe(viewLifecycleOwner) {
-            when (it) {
-                is NetworkResponse.Loading -> {
-
-                }
+        groupsViewModel.usersResponse.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is NetworkResponse.Loading -> {}
 
                 is NetworkResponse.Success -> {
-                    loadGroups(it.data.filter { it.isGroup })
+                    loadGroups(response.data.filter { it.isGroup })
                 }
 
-                is NetworkResponse.Error -> {
-
-                }
+                is NetworkResponse.Error -> {}
             }
         }
     }
@@ -77,8 +74,9 @@ class GroupsFragment : Fragment() {
 
     private fun onItemClick() {
         adapter.onItemClicked = { id ->
-            val groupIdBundle = Bundle()
-            groupIdBundle.putInt("id", id)
+            val groupIdBundle = Bundle().apply {
+                putInt("id", id)
+            }
             findNavController().navigate(
                 R.id.action_navigation_groups_to_otherProfileFragment,
                 groupIdBundle
@@ -90,4 +88,5 @@ class GroupsFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
 }

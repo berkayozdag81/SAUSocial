@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.berkayozdag.sausocial.R
 import com.berkayozdag.sausocial.common.SessionManager
+import com.berkayozdag.sausocial.common.loadImage
 import com.berkayozdag.sausocial.common.setVisible
 import com.berkayozdag.sausocial.common.showToast
 import com.berkayozdag.sausocial.data.NetworkResponse
@@ -19,7 +20,6 @@ import com.berkayozdag.sausocial.databinding.FragmentOtherProfileBinding
 import com.berkayozdag.sausocial.model.Post
 import com.berkayozdag.sausocial.ui.home.adapters.PostsAdapter
 import com.berkayozdag.sausocial.ui.profile.ProfileViewModel
-import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -28,8 +28,10 @@ class OtherProfileFragment : Fragment() {
 
     private var _binding: FragmentOtherProfileBinding? = null
     private val binding get() = _binding!!
+
     private val adapter = PostsAdapter()
     private val profileViewModel: ProfileViewModel by viewModels()
+    private var userId: Int? = null
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -44,32 +46,34 @@ class OtherProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        userId = arguments?.getInt("id")
         setupRecyclerview()
         postItemClicked()
         initViews()
-        setListener()
-        arguments?.getInt("id")?.let { userId -> profileViewModel.getUserById(userId) }
+        setupListeners()
+        userId?.let { id -> profileViewModel.getUserById(id) }
         setupObservers()
     }
 
-    private fun initViews() {
-        binding.profileLayout.profileLogoutBtn.setVisible(false)
-        binding.profileLayout.profileBackBtn.setOnClickListener {
+    private fun initViews() = with(binding.profileLayout) {
+        profileLogoutBtn.setVisible(false)
+        profileBackBtn.setOnClickListener {
             findNavController().popBackStack()
         }
 
-
+        profileFragmentRefreshLayout.setOnRefreshListener {
+            profileFragmentRefreshLayout.isRefreshing = false
+            userId?.let { userId -> profileViewModel.getUserById(userId) }
+        }
     }
 
-    private fun setListener() {
-        binding.profileLayout.buttonFollow.setOnClickListener {
-            arguments?.getInt("id")
-                ?.let { it1 -> profileViewModel.follow(sessionManager.getUserId(), it1) }
+    private fun setupListeners() = with(binding.profileLayout) {
+        buttonFollow.setOnClickListener {
+            userId?.let { id -> profileViewModel.follow(sessionManager.getUserId(), id) }
         }
 
-        binding.profileLayout.buttonUnFollow.setOnClickListener {
-            arguments?.getInt("id")
-                ?.let { id -> profileViewModel.unFollow(sessionManager.getUserId(), id) }
+        buttonUnFollow.setOnClickListener {
+            userId?.let { id -> profileViewModel.unFollow(sessionManager.getUserId(), id) }
         }
     }
 
@@ -79,8 +83,8 @@ class OtherProfileFragment : Fragment() {
             context,
             DividerItemDecoration.VERTICAL
         )
-        binding.profileLayout.rwProfileUserPost.addItemDecoration(itemDecoration)
-        binding.profileLayout.rwProfileUserPost.layoutManager = layoutManager
+        profileLayout.rwProfileUserPost.addItemDecoration(itemDecoration)
+        profileLayout.rwProfileUserPost.layoutManager = layoutManager
         adapter.isProfile = false
     }
 
@@ -88,65 +92,75 @@ class OtherProfileFragment : Fragment() {
         profileViewModel.profileState.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResponse.Loading -> {
+                    binding.profileLayout.profileProgressBar.setVisible(true)
                 }
 
                 is NetworkResponse.Success -> {
-                    Glide.with(requireContext())
-                        .load(response.data.profileImageUrl)
-                        .into(binding.profileLayout.profileAvatar)
-                    binding.profileLayout.profileNameText.text =
-                        response.data.name + " " + response.data.surname
-                    binding.profileLayout.profileFollowerCount.text =
-                        response.data.followers.size.toString()
-                    binding.profileLayout.profileDepartmentText.text = response.data.part
-                    binding.profileLayout.profileFollowingCount.text =
-                        response.data.followings.size.toString()
-                    binding.profileLayout.profilePostCount.text =
-                        response.data.posts.size.toString()
+                    val profileData = response.data
+                    with(binding.profileLayout) {
+                        profileNameText.text = "${profileData.name} ${profileData.surname}"
+                        profileFollowerCount.text = profileData.followers.size.toString()
+                        profileDepartmentText.setVisible(!profileData.isGroup)
+                        profileDepartmentText.text = profileData.part
+                        profileFollowingCount.text = profileData.followings.size.toString()
+                        profilePostCount.text = profileData.posts.size.toString()
 
-                    if (response.data.followers.any { it.followerId == sessionManager.getUserId() }) {
-                        binding.profileLayout.buttonUnFollow.setVisible(true)
-                        binding.profileLayout.buttonFollow.setVisible(false)
+                        val isCurrentUserFollower =
+                            profileData.followers.any { it.followerId == sessionManager.getUserId() }
+                        buttonUnFollow.setVisible(isCurrentUserFollower)
+                        buttonFollow.setVisible(!isCurrentUserFollower)
+
+                        profileData.profileImageUrl.let { imageUrl ->
+                            profileAvatar.loadImage(imageUrl)
+                        }
+
+                        layoutNoResult.root.setVisible(response.data.posts.isEmpty())
+
+                        profileProgressBar.setVisible(false)
                     }
-                    loadPosts(response.data.posts)
+                    loadPosts(profileData.posts)
                 }
 
                 is NetworkResponse.Error -> {
-                    context?.showToast("Hatalı kullanıcı adı veya şifre")
+                    binding.profileLayout.profileProgressBar.setVisible(false)
+                    context?.showToast("Kullanıcı profili getirilemedi.")
                 }
             }
         }
 
+
         profileViewModel.followResponse.observe(viewLifecycleOwner) { response ->
             when (response) {
-                is NetworkResponse.Loading -> {
-                }
+                is NetworkResponse.Loading -> {}
 
                 is NetworkResponse.Success -> {
-                    binding.profileLayout.buttonUnFollow.setVisible(true)
-                    binding.profileLayout.buttonFollow.setVisible(false)
-                    arguments?.getInt("id")?.let { userId -> profileViewModel.getUserById(userId) }
+                    with(binding.profileLayout) {
+                        buttonUnFollow.setVisible(true)
+                        buttonFollow.setVisible(false)
+                        userId?.let { id -> profileViewModel.getUserById(id) }
+                    }
                 }
 
                 is NetworkResponse.Error -> {
-                    context?.showToast("İstek başarısız")
+                    context?.showToast("Kullanıcı takip edilemedi.")
                 }
             }
         }
 
         profileViewModel.unFollowResponse.observe(viewLifecycleOwner) { response ->
             when (response) {
-                is NetworkResponse.Loading -> {
-                }
+                is NetworkResponse.Loading -> {}
 
                 is NetworkResponse.Success -> {
-                    binding.profileLayout.buttonUnFollow.setVisible(false)
-                    binding.profileLayout.buttonFollow.setVisible(true)
-                    arguments?.getInt("id")?.let { userId -> profileViewModel.getUserById(userId) }
+                    with(binding.profileLayout) {
+                        buttonUnFollow.setVisible(false)
+                        buttonFollow.setVisible(true)
+                        userId?.let { id -> profileViewModel.getUserById(id) }
+                    }
                 }
 
                 is NetworkResponse.Error -> {
-                    context?.showToast("İstek başarısız")
+                    context?.showToast("Kullanıcı takipten çıkarılamadı.")
                 }
             }
         }
@@ -154,13 +168,14 @@ class OtherProfileFragment : Fragment() {
 
     private fun loadPosts(posts: List<Post>) = with(binding) {
         adapter.setData(posts)
-        binding.profileLayout.rwProfileUserPost.adapter = adapter
+        profileLayout.rwProfileUserPost.adapter = adapter
     }
 
     private fun postItemClicked() {
         adapter.postItemClicked = { id ->
-            val postIdBundle = Bundle()
-            postIdBundle.putInt("id", id)
+            val postIdBundle = Bundle().apply {
+                putInt("id", id)
+            }
             findNavController().navigate(
                 R.id.action_otherProfileFragment_to_postDetailFragment,
                 postIdBundle

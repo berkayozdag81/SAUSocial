@@ -23,4 +23,5 @@ class GroupsViewModel @Inject constructor(
         _usersResponse.value = NetworkResponse.Loading
         _usersResponse.value = repository.getUsers()
     }
+
 }

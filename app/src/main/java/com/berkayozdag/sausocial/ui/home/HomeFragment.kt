@@ -1,6 +1,5 @@
 package com.berkayozdag.sausocial.ui.home
 
-import com.berkayozdag.sausocial.ui.home.posts.AllPostsFragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +11,7 @@ import com.berkayozdag.sausocial.common.SessionManager
 import com.berkayozdag.sausocial.common.loadImage
 import com.berkayozdag.sausocial.databinding.FragmentHomeBinding
 import com.berkayozdag.sausocial.ui.home.adapters.ViewPagerAdapter
+import com.berkayozdag.sausocial.ui.home.posts.AllPostsFragment
 import com.berkayozdag.sausocial.ui.home.posts.PostsIFollowFragment
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint

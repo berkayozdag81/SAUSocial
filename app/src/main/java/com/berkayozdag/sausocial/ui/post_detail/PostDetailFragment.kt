@@ -1,9 +1,11 @@
 package com.berkayozdag.sausocial.ui.post_detail
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -30,7 +32,8 @@ class PostDetailFragment : Fragment() {
     private var postId: Int? = null
     private var userId: Int? = null
     private val postDetailViewModel by viewModels<PostDetailViewModel>()
-    private val dateFormat = SimpleDateFormat("dd.MM.yyyy hh:mm:ss")
+    @RequiresApi(Build.VERSION_CODES.N)
+    private val dateFormat = SimpleDateFormat("dd.MM.yyyy hh:mm:ss", Locale.getDefault(Locale.Category.FORMAT))
     private val currentDate = Date()
 
     @Inject
@@ -43,6 +46,7 @@ class PostDetailFragment : Fragment() {
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         postId = arguments?.getInt("id")
@@ -53,6 +57,7 @@ class PostDetailFragment : Fragment() {
         setupObserves()
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     private fun setupListeners() = with(binding) {
         buttonPostLike.setOnClickListener {
             postId?.let { id -> postDetailViewModel.postLike(sessionManager.getUserId(), id) }

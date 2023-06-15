@@ -1,5 +1,7 @@
 package com.berkayozdag.sausocial.data.repository
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.berkayozdag.sausocial.data.NetworkResponse
 import com.berkayozdag.sausocial.data.api.ApiService
 import com.berkayozdag.sausocial.model.*
@@ -12,8 +14,11 @@ class SocialAppRepository @Inject constructor(
     private val api: ApiService,
 ) {
 
-    private val dateFormat = SimpleDateFormat("dd.MM.yyyy hh:mm:ss", Locale.getDefault())
+    @RequiresApi(Build.VERSION_CODES.N)
+    private val dateFormat =
+        SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.getDefault(Locale.Category.FORMAT))
 
+    @RequiresApi(Build.VERSION_CODES.N)
     suspend fun getPosts(): NetworkResponse<List<Post>> {
         return try {
             val response = api.getPosts().sortedByDescending { dateFormat.parse(it.publishedDate) }
@@ -104,9 +109,11 @@ class SocialAppRepository @Inject constructor(
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     suspend fun getFollowingPosts(appUserId: Int): NetworkResponse<List<Post>> {
         return try {
-            val response = api.getFollowingPosts(appUserId).sortedByDescending { dateFormat.parse(it.publishedDate) }
+            val response = api.getFollowingPosts(appUserId)
+                .sortedByDescending { dateFormat.parse(it.publishedDate) }
             NetworkResponse.Success(response)
         } catch (e: Exception) {
             NetworkResponse.Error(e.message ?: "Bir hata oluştu")

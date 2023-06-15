@@ -1,10 +1,12 @@
 package com.berkayozdag.sausocial.ui.post_create
 
 import android.animation.Animator
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -27,7 +29,8 @@ class PostCreateFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val postCreateViewModel: PostCreateViewModel by viewModels()
-    private val dateFormat = SimpleDateFormat("dd.MM.yyyy hh:mm:ss")
+    @RequiresApi(Build.VERSION_CODES.N)
+    private val dateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.getDefault(Locale.Category.FORMAT))
     private val currentDate = Date()
 
     @Inject
@@ -41,6 +44,7 @@ class PostCreateFragment : Fragment() {
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
@@ -53,6 +57,7 @@ class PostCreateFragment : Fragment() {
         imageViewUserProfile.loadImage(sessionManager.getUserProfileImage())
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     private fun setupListeners() = with(binding) {
         editTextPostDescription.addTextChangedListener { text ->
             if (text?.isNotEmpty() == true) {

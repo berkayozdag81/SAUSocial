@@ -62,17 +62,18 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/searchFragmentRecyclerView"
+        android:id="@+id/recyclerViewUserUsers"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         android:padding="8dp"
+        android:layout_marginBottom="?attr/actionBarSize"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layoutSearchInput" />
 
     <TextView
-        android:id="@+id/searchFragmentNonSearchText"
+        android:id="@+id/textViewNoSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Henüz bir arama yapmadınız."
@@ -82,6 +83,5 @@
         android:fontFamily="@font/text_semi_bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layoutSearchInput"/>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

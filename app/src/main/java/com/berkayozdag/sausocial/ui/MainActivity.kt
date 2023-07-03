@@ -38,8 +38,8 @@ class MainActivity : AppCompatActivity() {
                 NavigationUI.onNavDestinationSelected(item, navController)
                 true
             }
-            setOnItemReselectedListener {
-                navController.popBackStack(destinationId = it.itemId, inclusive = false)
+            setOnItemReselectedListener { item ->
+                navController.popBackStack(destinationId = item.itemId, inclusive = false)
             }
         }
     }

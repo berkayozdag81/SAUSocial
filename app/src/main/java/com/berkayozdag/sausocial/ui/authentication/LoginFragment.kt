@@ -38,9 +38,9 @@ class LoginFragment : Fragment() {
     }
 
     private fun setupListeners() = with(binding) {
-        loginButton.setOnClickListener {
-            val username = fragmentLoginTextInputUserName
-            val password = fragmentLoginTextInputPassword
+        buttonLogin.setOnClickListener {
+            val username = editTextMail
+            val password = editTextPassword
             if (checkEditTexts(username, password)) {
                 loginViewModel.login(
                     username.text.toString(),
@@ -66,7 +66,7 @@ class LoginFragment : Fragment() {
                         setLogin(true)
                         setUserId(data.id)
                         setUserName(fullName)
-                        setUserProfileImage(Constants.USER_PROFILE_IMAGE + data.imageUrl)
+                        setUserProfileImage(Constants.API_USER_IMAGES_URL + data.imageUrl)
                     }
 
                     val intent = Intent(requireContext(), MainActivity::class.java)

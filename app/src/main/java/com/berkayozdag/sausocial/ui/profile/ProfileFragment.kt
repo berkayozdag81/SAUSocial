@@ -51,6 +51,7 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         profileViewModel.getUserById(sessionManager.getUserId())
         initViews()
+        likeClicked()
         setupListeners()
         setupObservers()
         setupRecyclerview()
@@ -59,13 +60,13 @@ class ProfileFragment : Fragment() {
     }
 
     private fun initViews() = with(binding) {
-        profileBackBtn.setVisible(false)
+        buttonBack.setVisible(false)
         buttonFollow.setVisible(false)
         buttonUnFollow.setVisible(false)
     }
 
     private fun setupListeners() = with(binding) {
-        profileLogoutBtn.setOnClickListener {
+        buttonLogout.setOnClickListener {
             signOut()
         }
 
@@ -82,8 +83,9 @@ class ProfileFragment : Fragment() {
             context,
             DividerItemDecoration.VERTICAL
         )
-        rwProfileUserPost.addItemDecoration(itemDecoration)
-        rwProfileUserPost.layoutManager = layoutManager
+        recyclerViewUserPosts.addItemDecoration(itemDecoration)
+        recyclerViewUserPosts.layoutManager = layoutManager
+        adapter.appUserId = sessionManager.getUserId()
         adapter.isProfile = true
     }
 
@@ -97,14 +99,14 @@ class ProfileFragment : Fragment() {
                 is NetworkResponse.Success -> {
                     with(binding) {
                         response.data.profileImageUrl.let { url ->
-                            profileAvatar.loadImage(url)
+                            imageViewAvatar.loadImage(url)
                         }
-                        profileNameText.text = "${response.data.name} ${response.data.surname}"
-                        profileFollowerCount.text = response.data.followers.size.toString()
-                        profileDepartmentText.text = response.data.part
-                        profileFollowingCount.text =
+                        textViewName.text = "${response.data.name} ${response.data.surname}"
+                        textViewFollowerCount.text = response.data.followers.size.toString()
+                        textViewDepartment.text = response.data.part
+                        textViewFollowingCount.text =
                             response.data.followings.size.toString()
-                        profilePostCount.text = response.data.posts.size.toString()
+                        textViewPostCount.text = response.data.posts.size.toString()
                         layoutNoResult.root.setVisible(response.data.posts.isEmpty())
                         profileProgressBar.setVisible(false)
                     }
@@ -135,7 +137,7 @@ class ProfileFragment : Fragment() {
 
     private fun loadPosts(posts: List<Post>) = with(binding) {
         adapter.setData(posts)
-        rwProfileUserPost.adapter = adapter
+        recyclerViewUserPosts.adapter = adapter
     }
 
     private fun postItemClicked() {
@@ -150,16 +152,25 @@ class ProfileFragment : Fragment() {
         }
     }
 
+    private fun likeClicked() {
+        adapter.likeClicked = { postId, appUserId ->
+            profileViewModel.postLike(appUserId, postId)
+        }
+        adapter.disLikeClicked = { postId, appUserId ->
+            profileViewModel.postDislike(appUserId, postId)
+        }
+    }
+
     private fun postDelete() {
         adapter.postDelete = { id ->
             val dialogBinding: PostDeleteDialogBinding =
                 PostDeleteDialogBinding.inflate(layoutInflater)
             val builder = AlertDialog.Builder(requireContext()).setView(dialogBinding.root).show()
-            dialogBinding.signOutButton.setOnClickListener {
+            dialogBinding.buttonSignOut.setOnClickListener {
                 profileViewModel.postDelete(id)
                 builder.dismiss()
             }
-            dialogBinding.signOutCancelButton.setOnClickListener {
+            dialogBinding.buttonSignOutCancel.setOnClickListener {
                 builder.dismiss()
             }
         }
@@ -168,14 +179,14 @@ class ProfileFragment : Fragment() {
     private fun signOut() {
         val dialogBinding: SignOutDialogBinding = SignOutDialogBinding.inflate(layoutInflater)
         val builder = AlertDialog.Builder(requireContext()).setView(dialogBinding.root).show()
-        dialogBinding.signOutButton.setOnClickListener {
+        dialogBinding.buttonSignOut.setOnClickListener {
             sessionManager.setLogin(false)
             builder.dismiss()
             val intent = Intent(requireContext(), AuthenticationActivity::class.java)
             startActivity(intent)
             requireActivity().finish()
         }
-        dialogBinding.signOutCancelButton.setOnClickListener {
+        dialogBinding.buttonSignOutCancel.setOnClickListener {
             builder.dismiss()
         }
     }

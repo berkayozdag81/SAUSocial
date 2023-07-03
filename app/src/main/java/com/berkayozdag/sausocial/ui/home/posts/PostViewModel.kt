@@ -1,5 +1,7 @@
 package com.berkayozdag.sausocial.ui.home.posts
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -27,11 +29,13 @@ class PostViewModel @Inject constructor(
     private val _postLikeResponse = MutableLiveData<NetworkResponse<Any>>(null)
     val postLikeResponse: LiveData<NetworkResponse<Any>> = _postLikeResponse
 
+    @RequiresApi(Build.VERSION_CODES.N)
     fun getPosts() = viewModelScope.launch {
         _allPostResponse.postValue(NetworkResponse.Loading)
         _allPostResponse.postValue(repository.getPosts())
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     fun getFollowingPosts(userId: Int) = viewModelScope.launch {
         _followingPosts.postValue(NetworkResponse.Loading)
         _followingPosts.postValue(repository.getFollowingPosts(userId))

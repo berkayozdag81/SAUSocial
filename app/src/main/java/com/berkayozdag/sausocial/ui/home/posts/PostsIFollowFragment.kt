@@ -1,9 +1,11 @@
 package com.berkayozdag.sausocial.ui.home.posts
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,10 +28,13 @@ class PostsIFollowFragment : BasePostFragment() {
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupListeners()
         setupRecyclerView()
+        scrollRecyclerViewToTopOnItemReselected(binding.recyclerViewPosts)
+        handleScrollAnimation(binding.recyclerViewPosts)
         likeClicked()
         userItemClicked()
         postItemClick()
@@ -85,6 +90,7 @@ class PostsIFollowFragment : BasePostFragment() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun setupListeners() = with(binding) {
         swipeRefreshLayout.setOnRefreshListener {
             swipeRefreshLayout.isRefreshing = false

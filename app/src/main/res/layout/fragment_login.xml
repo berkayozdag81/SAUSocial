@@ -9,7 +9,7 @@
     tools:context=".ui.authentication.LoginFragment">
 
     <TextView
-        android:id="@+id/fragment_login_header"
+        android:id="@+id/textViewHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -23,7 +23,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/fragment_login_header2"
+        android:id="@+id/textViewHeader2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/text_light"
@@ -33,10 +33,10 @@
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_login_header" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewHeader" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/fragment_login_textInputLayout"
+        android:id="@+id/layoutMailInput"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -49,13 +49,12 @@
         app:boxCornerRadiusTopStart="12dp"
         app:boxStrokeColor="@color/grey_500"
         app:hintTextColor="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/fragment_login_header2">
+        app:layout_constraintTop_toBottomOf="@id/textViewHeader2">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/fragment_login_textInputUserName"
+            android:id="@+id/editTextMail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -72,7 +71,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/fragment_login_textInputLayout2"
+        android:id="@+id/layoutPasswordInput"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -85,10 +84,10 @@
         app:boxStrokeColor="@color/grey_500"
         app:endIconMode="password_toggle"
         app:hintTextColor="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/fragment_login_textInputLayout">
+        app:layout_constraintTop_toBottomOf="@id/layoutMailInput">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/fragment_login_textInputPassword"
+            android:id="@+id/editTextPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableEnd="@drawable/ic_hidden_password"
@@ -97,7 +96,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
-        android:id="@+id/fragment_login_recovery_password_txt"
+        android:id="@+id/textViewRecoveryPassword"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/text_regular"
@@ -105,12 +104,12 @@
         android:padding="16dp"
         android:text="Şifremi unuttum"
         android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@+id/fragment_login_textInputLayout2"
-        app:layout_constraintStart_toStartOf="@+id/fragment_login_textInputLayout2"
-        app:layout_constraintTop_toBottomOf="@id/fragment_login_textInputLayout2" />
+        app:layout_constraintEnd_toEndOf="@+id/layoutPasswordInput"
+        app:layout_constraintStart_toStartOf="@+id/layoutPasswordInput"
+        app:layout_constraintTop_toBottomOf="@id/layoutPasswordInput" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/login_button"
+        android:id="@+id/buttonLogin"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -119,8 +118,8 @@
         android:padding="16dp"
         android:text="Giriş"
         app:cornerRadius="12dp"
-        app:layout_constraintEnd_toEndOf="@+id/fragment_login_recovery_password_txt"
-        app:layout_constraintStart_toStartOf="@+id/fragment_login_recovery_password_txt"
-        app:layout_constraintTop_toBottomOf="@id/fragment_login_recovery_password_txt" />
+        app:layout_constraintEnd_toEndOf="@+id/textViewRecoveryPassword"
+        app:layout_constraintStart_toStartOf="@+id/textViewRecoveryPassword"
+        app:layout_constraintTop_toBottomOf="@id/textViewRecoveryPassword" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

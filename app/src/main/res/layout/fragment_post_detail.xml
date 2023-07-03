@@ -77,7 +77,7 @@
                     android:layout_marginTop="4dp"
                     android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="@+id/imageViewUserProfile"
-                    app:layout_constraintEnd_toStartOf="@+id/postDetail_relative_layout"
+                    app:layout_constraintEnd_toStartOf="@+id/layoutFollowAndFollowingButtons"
                     app:layout_constraintStart_toEndOf="@+id/imageViewUserProfile"
                     app:layout_constraintTop_toTopOf="@+id/imageViewUserProfile">
 
@@ -103,7 +103,7 @@
                 </LinearLayout>
 
                 <RelativeLayout
-                    android:id="@+id/postDetail_relative_layout"
+                    android:id="@+id/layoutFollowAndFollowingButtons"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintBottom_toBottomOf="@+id/layoutNameAndDepartment"
@@ -143,7 +143,7 @@
                     android:fontFamily="@font/text_regular"
                     android:textColor="@color/black"
                     android:textSize="16sp"
-                    app:layout_constraintEnd_toEndOf="@+id/postDetail_relative_layout"
+                    app:layout_constraintEnd_toEndOf="@+id/layoutFollowAndFollowingButtons"
                     app:layout_constraintStart_toStartOf="@+id/imageViewUserProfile"
                     app:layout_constraintTop_toBottomOf="@+id/layoutNameAndDepartment"
                     tools:text="We are going to be here again next week. You should come eaerlier so you can get in the front." />
@@ -180,7 +180,7 @@
                             android:src="@drawable/ic_like" />
 
                         <ImageButton
-                            android:id="@+id/buttonPostdisLike"
+                            android:id="@+id/buttonPostDislike"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="?attr/selectableItemBackgroundBorderless"
@@ -255,7 +255,7 @@
                     app:layout_constraintTop_toBottomOf="@id/textViewComments" />
 
                 <include
-                    android:id="@+id/layout_no_result"
+                    android:id="@+id/layoutNoResult"
                     layout="@layout/no_result"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

@@ -32,8 +32,10 @@ class PostDetailFragment : Fragment() {
     private var postId: Int? = null
     private var userId: Int? = null
     private val postDetailViewModel by viewModels<PostDetailViewModel>()
+
     @RequiresApi(Build.VERSION_CODES.N)
-    private val dateFormat = SimpleDateFormat("dd.MM.yyyy hh:mm:ss", Locale.getDefault(Locale.Category.FORMAT))
+    private val dateFormat =
+        SimpleDateFormat("dd.MM.yyyy hh:mm:ss", Locale.getDefault(Locale.Category.FORMAT))
     private val currentDate = Date()
 
     @Inject
@@ -63,7 +65,7 @@ class PostDetailFragment : Fragment() {
             postId?.let { id -> postDetailViewModel.postLike(sessionManager.getUserId(), id) }
         }
 
-        buttonPostdisLike.setOnClickListener {
+        buttonPostDislike.setOnClickListener {
             postId?.let { id -> postDetailViewModel.postDisLike(sessionManager.getUserId(), id) }
         }
 
@@ -151,19 +153,17 @@ class PostDetailFragment : Fragment() {
 
                         textViewUserDepartment.setVisible(!appUser.part.isNullOrEmpty())
 
-                        val isCurrentUserFollowing =
-                            appUser.followers.any { it.followerId == sessionManager.getUserId() }
-                        buttonFollow.setVisible(!isCurrentUserFollowing)
-                        buttonUnFollow.setVisible(isCurrentUserFollowing)
+                        val isCurrentUser = response.data.appUser.id == sessionManager.getUserId()
+                        val isFollowing =
+                            response.data.appUser.followers.any { it.followerId == sessionManager.getUserId() }
 
-                        val isCurrentUserPost = appUser.id == sessionManager.getUserId()
-                        buttonFollow.setVisible(!isCurrentUserPost)
-                        buttonUnFollow.setVisible(!isCurrentUserPost)
+                        buttonFollow.setVisible(!isCurrentUser && !isFollowing)
+                        buttonUnFollow.setVisible(!isCurrentUser && isFollowing)
 
                         val isCurrentUserLikedPost =
                             response.data.isUserLikedThisPost(sessionManager.getUserId())
                         buttonPostLike.setVisible(!isCurrentUserLikedPost)
-                        buttonPostdisLike.setVisible(isCurrentUserLikedPost)
+                        buttonPostDislike.setVisible(isCurrentUserLikedPost)
                     }
 
                     loadComments(response.data.comments)
@@ -223,7 +223,7 @@ class PostDetailFragment : Fragment() {
                     with(binding) {
                         val likeCount = textViewPostNumberOfLike.text.toString().toInt() + 1
                         buttonPostLike.setVisible(false)
-                        buttonPostdisLike.setVisible(true)
+                        buttonPostDislike.setVisible(true)
                         textViewPostNumberOfLike.text = likeCount.toString()
                     }
                 }
@@ -241,7 +241,7 @@ class PostDetailFragment : Fragment() {
                     with(binding) {
                         val likeCount = textViewPostNumberOfLike.text.toString().toInt() - 1
                         buttonPostLike.setVisible(true)
-                        buttonPostdisLike.setVisible(false)
+                        buttonPostDislike.setVisible(false)
                         textViewPostNumberOfLike.text = likeCount.toString()
                     }
                 }

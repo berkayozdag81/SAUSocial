@@ -1,6 +1,7 @@
 package com.berkayozdag.sausocial.ui.home.posts
 
 import android.os.Bundle
+import android.view.animation.AccelerateInterpolator
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -11,6 +12,8 @@ import com.berkayozdag.sausocial.common.setVisible
 import com.berkayozdag.sausocial.model.Post
 import com.berkayozdag.sausocial.ui.home.adapters.PostsAdapter
 import com.facebook.shimmer.ShimmerFrameLayout
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -31,6 +34,59 @@ abstract class BasePostFragment : Fragment() {
 
     protected fun loadPosts(posts: List<Post>) {
         adapter.setData(posts)
+        adapter.notifyDataSetChanged()
+    }
+
+    protected fun scrollRecyclerViewToTopOnItemReselected(recyclerView: RecyclerView) {
+        val nav = activity?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        nav?.setOnItemReselectedListener { item ->
+            when (item.itemId) {
+                R.id.navigation_home -> {
+                    recyclerView.smoothScrollToPosition(0)
+                }
+            }
+        }
+    }
+
+    protected fun handleScrollAnimation(recyclerView: RecyclerView) {
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (dy > 0) {
+                    animateFloatingActionButton(false)
+                    animateBottomNavigationView(false)
+                } else if (dy < 0) {
+                    animateFloatingActionButton(true)
+                    animateBottomNavigationView(true)
+                }
+            }
+        })
+    }
+
+    private fun animateBottomNavigationView(show: Boolean) {
+        val bottomNavigationView =
+            activity?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        val translationY = if (show) 0f else bottomNavigationView?.height?.toFloat() ?: 0f
+        val animator = bottomNavigationView?.animate()?.translationY(translationY)?.setDuration(75)
+
+        animator?.apply {
+            interpolator = AccelerateInterpolator()
+            start()
+        }
+    }
+
+    private fun animateFloatingActionButton(show: Boolean) {
+        val floatingActionButton =
+            activity?.findViewById<FloatingActionButton>(R.id.createPostButton)
+        val scaleX = if (show) 1f else 0f
+        val scaleY = if (show) 1f else 0f
+        val alpha = if (show) 1f else 0f
+        val animator = floatingActionButton?.animate()?.scaleX(scaleX)?.scaleY(scaleY)?.alpha(alpha)
+            ?.setDuration(75)
+
+        animator?.apply {
+            interpolator = AccelerateInterpolator()
+            start()
+        }
     }
 
     protected fun postItemClick() {

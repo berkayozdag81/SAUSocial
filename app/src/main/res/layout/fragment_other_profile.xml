@@ -6,7 +6,7 @@
     tools:context=".ui.other_profile.OtherProfileFragment">
 
     <include
-        android:id="@+id/profile_layout"
+        android:id="@+id/layoutProfile"
         layout="@layout/fragment_profile" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,7 +10,7 @@ data class ProfileResponse(
     val followings: List<Following>,
     val id: Int,
     val name: String,
-    val part: String,
+    val part: String?,
     val posts: List<Post>,
     val profileImageUrl: String,
     val isGroup: Boolean,

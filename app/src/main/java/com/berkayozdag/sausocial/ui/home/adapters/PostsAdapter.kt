@@ -49,7 +49,7 @@ class PostsAdapter(
                         if (post.isUserLikedThisPost(appUserId)) R.drawable.ic_liked else R.drawable.ic_like
                     )
                 )
-                postDeleteButton.setVisible(isProfile)
+                buttonPostDelete.setVisible(isProfile)
                 textViewUserDepartment.setVisible(!post.appUser.part.isNullOrEmpty())
 
                 buttonPostLike.setOnClickListener {
@@ -57,7 +57,7 @@ class PostsAdapter(
                     else likeClicked(post.id, appUserId)
                 }
 
-                postDeleteButton.setOnClickListener {
+                buttonPostDelete.setOnClickListener {
                     postDelete(post.id)
                 }
             }

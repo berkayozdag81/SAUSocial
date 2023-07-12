@@ -6,7 +6,7 @@
     tools:context=".ui.home.posts.PostsIFollowFragment">
 
     <include
-        android:id="@+id/layout_no_result"
+        android:id="@+id/layoutNoResult"
         layout="@layout/no_result"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

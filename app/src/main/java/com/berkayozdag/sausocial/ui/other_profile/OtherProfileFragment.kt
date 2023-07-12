@@ -48,6 +48,7 @@ class OtherProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         userId = arguments?.getInt("id")
         setupRecyclerview()
+        likeClicked()
         postItemClicked()
         initViews()
         setupListeners()
@@ -55,9 +56,9 @@ class OtherProfileFragment : Fragment() {
         setupObservers()
     }
 
-    private fun initViews() = with(binding.profileLayout) {
-        profileLogoutBtn.setVisible(false)
-        profileBackBtn.setOnClickListener {
+    private fun initViews() = with(binding.layoutProfile) {
+        buttonLogout.setVisible(false)
+        buttonBack.setOnClickListener {
             findNavController().popBackStack()
         }
 
@@ -67,7 +68,7 @@ class OtherProfileFragment : Fragment() {
         }
     }
 
-    private fun setupListeners() = with(binding.profileLayout) {
+    private fun setupListeners() = with(binding.layoutProfile) {
         buttonFollow.setOnClickListener {
             userId?.let { id -> profileViewModel.follow(sessionManager.getUserId(), id) }
         }
@@ -83,8 +84,9 @@ class OtherProfileFragment : Fragment() {
             context,
             DividerItemDecoration.VERTICAL
         )
-        profileLayout.rwProfileUserPost.addItemDecoration(itemDecoration)
-        profileLayout.rwProfileUserPost.layoutManager = layoutManager
+        layoutProfile.recyclerViewUserPosts.addItemDecoration(itemDecoration)
+        layoutProfile.recyclerViewUserPosts.layoutManager = layoutManager
+        adapter.appUserId = sessionManager.getUserId()
         adapter.isProfile = false
     }
 
@@ -92,18 +94,18 @@ class OtherProfileFragment : Fragment() {
         profileViewModel.profileState.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResponse.Loading -> {
-                    binding.profileLayout.profileProgressBar.setVisible(true)
+                    binding.layoutProfile.profileProgressBar.setVisible(true)
                 }
 
                 is NetworkResponse.Success -> {
                     val profileData = response.data
-                    with(binding.profileLayout) {
-                        profileNameText.text = "${profileData.name} ${profileData.surname}"
-                        profileFollowerCount.text = profileData.followers.size.toString()
-                        profileDepartmentText.setVisible(!profileData.isGroup)
-                        profileDepartmentText.text = profileData.part
-                        profileFollowingCount.text = profileData.followings.size.toString()
-                        profilePostCount.text = profileData.posts.size.toString()
+                    with(binding.layoutProfile) {
+                        textViewName.text = "${profileData.name} ${profileData.surname}"
+                        textViewFollowerCount.text = profileData.followers.size.toString()
+                        textViewDepartment.setVisible(!profileData.isGroup)
+                        textViewDepartment.text = profileData.part
+                        textViewFollowingCount.text = profileData.followings.size.toString()
+                        textViewPostCount.text = profileData.posts.size.toString()
 
                         val isCurrentUserFollower =
                             profileData.followers.any { it.followerId == sessionManager.getUserId() }
@@ -111,7 +113,7 @@ class OtherProfileFragment : Fragment() {
                         buttonFollow.setVisible(!isCurrentUserFollower)
 
                         profileData.profileImageUrl.let { imageUrl ->
-                            profileAvatar.loadImage(imageUrl)
+                            imageViewAvatar.loadImage(imageUrl)
                         }
 
                         layoutNoResult.root.setVisible(response.data.posts.isEmpty())
@@ -122,7 +124,7 @@ class OtherProfileFragment : Fragment() {
                 }
 
                 is NetworkResponse.Error -> {
-                    binding.profileLayout.profileProgressBar.setVisible(false)
+                    binding.layoutProfile.profileProgressBar.setVisible(false)
                     context?.showToast("Kullanıcı profili getirilemedi.")
                 }
             }
@@ -134,7 +136,7 @@ class OtherProfileFragment : Fragment() {
                 is NetworkResponse.Loading -> {}
 
                 is NetworkResponse.Success -> {
-                    with(binding.profileLayout) {
+                    with(binding.layoutProfile) {
                         buttonUnFollow.setVisible(true)
                         buttonFollow.setVisible(false)
                         userId?.let { id -> profileViewModel.getUserById(id) }
@@ -152,7 +154,7 @@ class OtherProfileFragment : Fragment() {
                 is NetworkResponse.Loading -> {}
 
                 is NetworkResponse.Success -> {
-                    with(binding.profileLayout) {
+                    with(binding.layoutProfile) {
                         buttonUnFollow.setVisible(false)
                         buttonFollow.setVisible(true)
                         userId?.let { id -> profileViewModel.getUserById(id) }
@@ -168,7 +170,7 @@ class OtherProfileFragment : Fragment() {
 
     private fun loadPosts(posts: List<Post>) = with(binding) {
         adapter.setData(posts)
-        profileLayout.rwProfileUserPost.adapter = adapter
+        layoutProfile.recyclerViewUserPosts.adapter = adapter
     }
 
     private fun postItemClicked() {
@@ -180,6 +182,15 @@ class OtherProfileFragment : Fragment() {
                 R.id.action_otherProfileFragment_to_postDetailFragment,
                 postIdBundle
             )
+        }
+    }
+
+    private fun likeClicked() {
+        adapter.likeClicked = { postId, appUserId ->
+            profileViewModel.postLike(appUserId, postId)
+        }
+        adapter.disLikeClicked = { postId, appUserId ->
+            profileViewModel.postDislike(appUserId, postId)
         }
     }
 

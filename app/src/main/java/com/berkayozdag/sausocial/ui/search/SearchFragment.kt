@@ -28,8 +28,8 @@ class SearchFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val adapter = UsersAdapter()
-    private val userItems = arrayListOf<ProfileResponse>()
-    private val users = arrayListOf<ProfileResponse>()
+    private val users = arrayListOf<ProfileResponse>() // Sadece kullanıcıların tutulduğu liste
+
     private val searchViewModel: SearchViewModel by viewModels()
 
     @Inject
@@ -46,7 +46,6 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        userItems.clear()
         setupRecyclerview()
         onItemClick()
         initSearch()
@@ -60,8 +59,9 @@ class SearchFragment : Fragment() {
             context,
             DividerItemDecoration.VERTICAL
         )
-        searchFragmentRecyclerView.addItemDecoration(itemDecoration)
-        searchFragmentRecyclerView.layoutManager = layoutManager
+        recyclerViewUserUsers.addItemDecoration(itemDecoration)
+        recyclerViewUserUsers.layoutManager = layoutManager
+        recyclerViewUserUsers.adapter = adapter // Adapteri burada set et
     }
 
     private fun setupObserves() {
@@ -71,19 +71,14 @@ class SearchFragment : Fragment() {
 
                 is NetworkResponse.Success -> {
                     val filteredUsers = response.data.filter { !it.isGroup }
+                    users.clear()
                     users.addAll(filteredUsers)
-                    loadUser(users)
+                    setSearchedItems(binding.editTextSearch.text.toString())
                 }
 
                 is NetworkResponse.Error -> {}
             }
         }
-    }
-
-    private fun loadUser(users: List<ProfileResponse>) = with(binding) {
-        adapter.setData(users)
-        searchFragmentRecyclerView.adapter = adapter
-        userItems.addAll(users)
     }
 
     private fun onItemClick() {
@@ -107,21 +102,18 @@ class SearchFragment : Fragment() {
     private fun initSearch() = with(binding) {
         editTextSearch.addTextChangedListener {
             if (it.toString().isEmpty()) {
-                searchFragmentRecyclerView.setVisible(false)
-                searchFragmentNonSearchText.setVisible(true)
-                val searchQuery = it.toString()
-                setSearchedItems(searchQuery)
+                recyclerViewUserUsers.setVisible(false)
+                textViewNoSearch.setVisible(true)
             } else {
-                searchFragmentRecyclerView.setVisible(true)
-                searchFragmentNonSearchText.setVisible(false)
-                val searchQuery = it.toString()
-                setSearchedItems(searchQuery)
+                recyclerViewUserUsers.setVisible(true)
+                textViewNoSearch.setVisible(false)
             }
+            setSearchedItems(it.toString())
         }
     }
 
     private fun setSearchedItems(query: String) {
-        val items = userItems.filter { it.name.contains(query, ignoreCase = true) }
+        val items = users.filter { it.name.contains(query, ignoreCase = true) }
         adapter.setData(items)
     }
 
@@ -129,5 +121,4 @@ class SearchFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
 }

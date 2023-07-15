@@ -8,8 +8,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.berkayozdag.sausocial.R
 import com.berkayozdag.sausocial.common.SessionManager
-import com.berkayozdag.sausocial.common.setVisible
-import com.berkayozdag.sausocial.model.Post
+import com.berkayozdag.sausocial.common.util.setVisible
+import com.berkayozdag.sausocial.data.entities.Post
 import com.berkayozdag.sausocial.ui.home.adapters.PostsAdapter
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -32,8 +32,8 @@ abstract class BasePostFragment : Fragment() {
 
     abstract fun setupRecyclerView()
 
-    protected fun loadPosts(posts: List<Post>) {
-        adapter.setData(posts)
+    protected fun loadPosts(postEntities: List<Post>) {
+        adapter.setData(postEntities)
         adapter.notifyDataSetChanged()
     }
 

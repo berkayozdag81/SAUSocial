@@ -14,9 +14,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.berkayozdag.sausocial.R
 import com.berkayozdag.sausocial.common.*
-import com.berkayozdag.sausocial.data.NetworkResponse
+import com.berkayozdag.sausocial.common.util.Constants
+import com.berkayozdag.sausocial.common.util.NetworkResponse
+import com.berkayozdag.sausocial.common.util.loadImage
+import com.berkayozdag.sausocial.common.util.setVisible
+import com.berkayozdag.sausocial.common.util.showToast
+import com.berkayozdag.sausocial.data.entities.Comment
 import com.berkayozdag.sausocial.databinding.FragmentPostDetailBinding
-import com.berkayozdag.sausocial.model.Comment
 import com.berkayozdag.sausocial.ui.post_detail.adapters.CommentsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
@@ -45,6 +49,7 @@ class PostDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentPostDetailBinding.inflate(inflater, container, false)
+        binding.imageViewUserComment.loadImage(sessionManager.getUserProfileImage())
         return binding.root
     }
 
@@ -259,6 +264,7 @@ class PostDetailFragment : Fragment() {
                         postDetailProgressBar.setVisible(false)
                         postId?.let { id -> postDetailViewModel.getPostById(id) }
                         editTextComment.text.clear()
+                        recyclerViewPostComments.scrollToPosition(adapter.itemCount-1)
                     }
                 }
 
@@ -284,8 +290,8 @@ class PostDetailFragment : Fragment() {
         recyclerViewPostComments.layoutManager = layoutManager
     }
 
-    private fun loadComments(comments: List<Comment>) = with(binding) {
-        adapter.setData(comments)
+    private fun loadComments(commentEntities: List<Comment>) = with(binding) {
+        adapter.setData(commentEntities)
         recyclerViewPostComments.adapter = adapter
     }
 

@@ -4,9 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.berkayozdag.sausocial.common.loadImage
+import com.berkayozdag.sausocial.common.util.GenericDiffUtil
+import com.berkayozdag.sausocial.common.util.loadImage
+import com.berkayozdag.sausocial.data.entities.ProfileResponse
 import com.berkayozdag.sausocial.databinding.ItemUserBinding
-import com.berkayozdag.sausocial.model.profile.ProfileResponse
 
 class UsersAdapter(var onItemClicked: ((ProfileResponse) -> Unit) = {}) :
     RecyclerView.Adapter<UsersAdapter.UserViewHolder>() {
@@ -39,10 +40,10 @@ class UsersAdapter(var onItemClicked: ((ProfileResponse) -> Unit) = {}) :
     override fun getItemCount() = items.size
 
     fun setData(newUserItems: List<ProfileResponse>) {
-        val diffUtil = UsersDiffUtil(items, newUserItems)
-        val diffResults = DiffUtil.calculateDiff(diffUtil)
+        val diffCallback = GenericDiffUtil(items, newUserItems)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
         items = newUserItems
-        diffResults.dispatchUpdatesTo(this)
+        diffResult.dispatchUpdatesTo(this)
     }
 
 }

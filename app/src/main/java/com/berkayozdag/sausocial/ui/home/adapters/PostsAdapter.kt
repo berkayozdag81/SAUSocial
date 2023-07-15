@@ -6,11 +6,12 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.berkayozdag.sausocial.R
-import com.berkayozdag.sausocial.common.Constants
-import com.berkayozdag.sausocial.common.loadImage
-import com.berkayozdag.sausocial.common.setVisible
+import com.berkayozdag.sausocial.common.util.Constants
+import com.berkayozdag.sausocial.common.util.GenericDiffUtil
+import com.berkayozdag.sausocial.common.util.loadImage
+import com.berkayozdag.sausocial.common.util.setVisible
+import com.berkayozdag.sausocial.data.entities.Post
 import com.berkayozdag.sausocial.databinding.ItemPostBinding
-import com.berkayozdag.sausocial.model.Post
 
 class PostsAdapter(
     var postItemClicked: (Int) -> Unit = {},
@@ -28,8 +29,8 @@ class PostsAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(post: Post) {
             with(binding) {
-                post.appUser.profileImageUrl.let {
-                    imageViewUserProfile.loadImage(Constants.API_USER_IMAGES_URL + post.appUser.profileImageUrl)
+                post.appUser.profileImageUrl.let { url->
+                    imageViewUserProfile.loadImage(Constants.API_USER_IMAGES_URL + url)
                 }
                 textViewUserName.text = "${post.appUser.name} ${post.appUser.surname}"
                 textViewUserDepartment.text = post.appUser.part
@@ -75,11 +76,11 @@ class PostsAdapter(
 
     override fun getItemCount() = items.size
 
-    fun setData(newPostItems: List<Post>) {
-        val diffUtil = PostsDiffUtil(items, newPostItems)
-        val diffResults = DiffUtil.calculateDiff(diffUtil)
-        items = newPostItems
-        diffResults.dispatchUpdatesTo(this)
+    fun setData(newPostItemEntities: List<Post>) {
+        val diffCallback = GenericDiffUtil(items, newPostItemEntities)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+        items = newPostItemEntities
+        diffResult.dispatchUpdatesTo(this)
     }
 
 }

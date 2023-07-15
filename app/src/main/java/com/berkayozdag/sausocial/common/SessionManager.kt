@@ -1,6 +1,7 @@
 package com.berkayozdag.sausocial.common
 
 import android.content.SharedPreferences
+import com.berkayozdag.sausocial.common.util.Constants
 import javax.inject.Inject
 
 class SessionManager @Inject constructor(

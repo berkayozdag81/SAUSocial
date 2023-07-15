@@ -4,22 +4,24 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.berkayozdag.sausocial.data.NetworkResponse
-import com.berkayozdag.sausocial.data.repository.SocialAppRepository
-import com.berkayozdag.sausocial.model.*
+import com.berkayozdag.sausocial.common.util.NetworkResponse
+import com.berkayozdag.sausocial.data.entities.CommentRequest
+import com.berkayozdag.sausocial.data.entities.CommentResponse
+import com.berkayozdag.sausocial.data.entities.FollowRequest
+import com.berkayozdag.sausocial.data.entities.Post
+import com.berkayozdag.sausocial.data.entities.PostLikeRequest
+import com.berkayozdag.sausocial.domain.usecase.SocialAppUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class PostDetailViewModel @Inject constructor(
-    private val repository: SocialAppRepository
+    private val socialAppUseCases: SocialAppUseCases
 ) : ViewModel() {
 
-    private val _postDetailResponse =
-        MutableLiveData<NetworkResponse<Post>>(null)
-    val postDetailResponse: LiveData<NetworkResponse<Post>> =
-        _postDetailResponse
+    private val _postDetailResponse = MutableLiveData<NetworkResponse<Post>>(null)
+    val postDetailResponse: LiveData<NetworkResponse<Post>> = _postDetailResponse
 
     private val _commentCreateResponse = MutableLiveData<NetworkResponse<CommentResponse>>()
     val commentCreateResponse: LiveData<NetworkResponse<CommentResponse>> = _commentCreateResponse
@@ -38,36 +40,36 @@ class PostDetailViewModel @Inject constructor(
 
     fun getPostById(id: Int) = viewModelScope.launch {
         _postDetailResponse.postValue(NetworkResponse.Loading)
-        _postDetailResponse.postValue(repository.getPostById(id))
+        _postDetailResponse.postValue(socialAppUseCases.getPostById(id))
     }
 
     fun postLike(appUserId: Int, postId: Int) = viewModelScope.launch {
         _postLikeResponse.value = NetworkResponse.Loading
-        _postLikeResponse.value = repository.postLike(PostLikeRequest(appUserId, postId))
+        _postLikeResponse.value = socialAppUseCases.postLike(PostLikeRequest(appUserId, postId))
     }
 
     fun postDisLike(appUserId: Int, postId: Int) = viewModelScope.launch {
         _postDislikeResponse.value = NetworkResponse.Loading
-        _postDislikeResponse.value = repository.postDislike(appUserId, postId)
+        _postDislikeResponse.value = socialAppUseCases.postDisLike(appUserId, postId)
     }
 
     fun sendComment(message: String, publishedDate: String, postId: Int, appUserId: Int) =
         viewModelScope.launch {
             _commentCreateResponse.value = NetworkResponse.Loading
             _commentCreateResponse.value =
-                repository.sendComment(CommentRequest(message, publishedDate, postId, appUserId))
+                socialAppUseCases.sendComment(CommentRequest(message, publishedDate, postId, appUserId))
         }
 
     fun follow(followerId: Int, userId: Int) = viewModelScope.launch {
         _followResponse.value = NetworkResponse.Loading
         _followResponse.value =
-            repository.follow(FollowRequest(followerId, userId))
+            socialAppUseCases.follow(FollowRequest(followerId, userId))
     }
 
     fun unFollow(followerId: Int, userId: Int) = viewModelScope.launch {
         _unFollowResponse.value = NetworkResponse.Loading
         _unFollowResponse.value =
-            repository.unFollow(followerId, userId)
+            socialAppUseCases.unFollow(followerId, userId)
     }
 
 }

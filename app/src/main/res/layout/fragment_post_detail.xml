@@ -283,11 +283,22 @@
             android:paddingRight="16dp"
             app:layout_constraintBottom_toBottomOf="parent">
 
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imageViewUserComment"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_avatar"
+                android:layout_alignParentStart="true"
+                app:civ_border_color="@color/white"
+                app:civ_border_width="1dp" />
+
             <EditText
                 android:id="@+id/editTextComment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:backgroundTint="@color/main_color"
+                android:layout_toStartOf="@id/buttonSendComment"
+                android:layout_toEndOf="@id/imageViewUserComment"                android:backgroundTint="@color/main_color"
                 android:hint="Yorum yaz"
                 android:importantForAutofill="no"
                 android:inputType="textMultiLine"

@@ -14,14 +14,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.berkayozdag.sausocial.R
 import com.berkayozdag.sausocial.common.SessionManager
-import com.berkayozdag.sausocial.common.loadImage
-import com.berkayozdag.sausocial.common.setVisible
-import com.berkayozdag.sausocial.common.showToast
-import com.berkayozdag.sausocial.data.NetworkResponse
+import com.berkayozdag.sausocial.common.util.NetworkResponse
+import com.berkayozdag.sausocial.common.util.loadImage
+import com.berkayozdag.sausocial.common.util.setVisible
+import com.berkayozdag.sausocial.common.util.showToast
+import com.berkayozdag.sausocial.data.entities.Post
 import com.berkayozdag.sausocial.databinding.FragmentProfileBinding
 import com.berkayozdag.sausocial.databinding.PostDeleteDialogBinding
 import com.berkayozdag.sausocial.databinding.SignOutDialogBinding
-import com.berkayozdag.sausocial.model.Post
 import com.berkayozdag.sausocial.ui.AuthenticationActivity
 import com.berkayozdag.sausocial.ui.home.adapters.PostsAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -135,8 +135,8 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    private fun loadPosts(posts: List<Post>) = with(binding) {
-        adapter.setData(posts)
+    private fun loadPosts(postEntities: List<Post>) = with(binding) {
+        adapter.setData(postEntities)
         recyclerViewUserPosts.adapter = adapter
     }
 

@@ -12,10 +12,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.berkayozdag.sausocial.common.SessionManager
-import com.berkayozdag.sausocial.common.loadImage
-import com.berkayozdag.sausocial.common.setVisible
-import com.berkayozdag.sausocial.common.showToast
-import com.berkayozdag.sausocial.data.NetworkResponse
+import com.berkayozdag.sausocial.common.util.NetworkResponse
+import com.berkayozdag.sausocial.common.util.loadImage
+import com.berkayozdag.sausocial.common.util.setVisible
+import com.berkayozdag.sausocial.common.util.showToast
 import com.berkayozdag.sausocial.databinding.FragmentPostCreateBinding
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat

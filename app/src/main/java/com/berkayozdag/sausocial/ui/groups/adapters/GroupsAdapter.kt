@@ -3,9 +3,9 @@ package com.berkayozdag.sausocial.ui.groups.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.berkayozdag.sausocial.common.loadImage
+import com.berkayozdag.sausocial.common.util.loadImage
+import com.berkayozdag.sausocial.data.entities.ProfileResponse
 import com.berkayozdag.sausocial.databinding.ItemGroupBinding
-import com.berkayozdag.sausocial.model.profile.ProfileResponse
 
 class GroupsAdapter(var onItemClicked: ((Int) -> Unit) = {}) :
     RecyclerView.Adapter<GroupsAdapter.GroupViewHolder>() {

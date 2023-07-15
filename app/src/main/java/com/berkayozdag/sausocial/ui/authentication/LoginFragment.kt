@@ -7,8 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.berkayozdag.sausocial.common.*
-import com.berkayozdag.sausocial.data.NetworkResponse
+import com.berkayozdag.sausocial.common.SessionManager
+import com.berkayozdag.sausocial.common.util.Constants
+import com.berkayozdag.sausocial.common.util.NetworkResponse
+import com.berkayozdag.sausocial.common.util.checkEditTexts
+import com.berkayozdag.sausocial.common.util.setVisible
+import com.berkayozdag.sausocial.common.util.showToast
 import com.berkayozdag.sausocial.databinding.FragmentLoginBinding
 import com.berkayozdag.sausocial.ui.MainActivity
 import dagger.hilt.android.AndroidEntryPoint

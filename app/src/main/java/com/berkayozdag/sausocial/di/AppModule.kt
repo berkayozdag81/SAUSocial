@@ -4,10 +4,27 @@ import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import com.berkayozdag.sausocial.BuildConfig
-import com.berkayozdag.sausocial.common.Constants
-import com.berkayozdag.sausocial.data.api.ApiService
-import com.berkayozdag.sausocial.data.repository.AuthRepository
-import com.berkayozdag.sausocial.data.repository.SocialAppRepository
+import com.berkayozdag.sausocial.common.util.Constants
+import com.berkayozdag.sausocial.data.api.SocialAppApi
+import com.berkayozdag.sausocial.data.repository.AuthRepositoryImpl
+import com.berkayozdag.sausocial.data.repository.SocialAppRepositoryImpl
+import com.berkayozdag.sausocial.domain.repository.AuthRepository
+import com.berkayozdag.sausocial.domain.repository.SocialAppRepository
+import com.berkayozdag.sausocial.domain.usecase.AuthUseCases
+import com.berkayozdag.sausocial.domain.usecase.Follow
+import com.berkayozdag.sausocial.domain.usecase.GetFollowingPosts
+import com.berkayozdag.sausocial.domain.usecase.GetPostById
+import com.berkayozdag.sausocial.domain.usecase.GetPosts
+import com.berkayozdag.sausocial.domain.usecase.GetUserById
+import com.berkayozdag.sausocial.domain.usecase.GetUsers
+import com.berkayozdag.sausocial.domain.usecase.Login
+import com.berkayozdag.sausocial.domain.usecase.PostDelete
+import com.berkayozdag.sausocial.domain.usecase.PostDisLike
+import com.berkayozdag.sausocial.domain.usecase.PostLike
+import com.berkayozdag.sausocial.domain.usecase.SendComment
+import com.berkayozdag.sausocial.domain.usecase.SendPost
+import com.berkayozdag.sausocial.domain.usecase.SocialAppUseCases
+import com.berkayozdag.sausocial.domain.usecase.UnFollow
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -45,26 +62,53 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideApiService(retrofit: Retrofit): ApiService {
-        return retrofit.create(ApiService::class.java)
-    }
-
-    @Provides
-    @Singleton
-    fun provideSocialAppRepository(api: ApiService): SocialAppRepository {
-        return SocialAppRepository(api)
-    }
-
-    @Provides
-    @Singleton
-    fun provideAuthRepository(api: ApiService): AuthRepository {
-        return AuthRepository(api)
+    fun provideApiService(retrofit: Retrofit): SocialAppApi {
+        return retrofit.create(SocialAppApi::class.java)
     }
 
     @Provides
     @Singleton
     fun provideSharedPreference(application: Application): SharedPreferences {
         return application.getSharedPreferences(Constants.PREFERENCES_NAME, Context.MODE_PRIVATE)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAuthRepository(api: SocialAppApi): AuthRepository {
+        return AuthRepositoryImpl(api)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAuthUseCases(repository: AuthRepository): AuthUseCases {
+        return AuthUseCases(
+            login = Login(repository),
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideSocialAppRepository(api: SocialAppApi): SocialAppRepository {
+        return SocialAppRepositoryImpl(api)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSocialAppUseCases(repository: SocialAppRepository): SocialAppUseCases {
+        return SocialAppUseCases(
+            getPosts = GetPosts(repository),
+            getPostById = GetPostById(repository),
+            sendPost = SendPost(repository),
+            sendComment = SendComment(repository),
+            getUserById = GetUserById(repository),
+            getUsers = GetUsers(repository),
+            follow = Follow(repository),
+            unFollow = UnFollow(repository),
+            postLike = PostLike(repository),
+            postDisLike = PostDisLike(repository),
+            getFollowingPosts = GetFollowingPosts(repository),
+            postDelete = PostDelete(repository),
+        )
     }
 
 }

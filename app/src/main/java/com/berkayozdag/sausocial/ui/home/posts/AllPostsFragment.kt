@@ -9,9 +9,9 @@ import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.berkayozdag.sausocial.common.setVisible
-import com.berkayozdag.sausocial.common.showToast
-import com.berkayozdag.sausocial.data.NetworkResponse
+import com.berkayozdag.sausocial.common.util.NetworkResponse
+import com.berkayozdag.sausocial.common.util.setVisible
+import com.berkayozdag.sausocial.common.util.showToast
 import com.berkayozdag.sausocial.databinding.FragmentAllPostBinding
 
 
@@ -44,7 +44,7 @@ class AllPostsFragment : BasePostFragment() {
     }
 
     override fun setupObserves() {
-        postViewModel.allPostResponse.observe(viewLifecycleOwner) { response ->
+        postViewModel.allPostResponseEntity.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResponse.Success -> {
                     with(binding) {

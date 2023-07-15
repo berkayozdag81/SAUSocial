@@ -4,16 +4,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.berkayozdag.sausocial.data.NetworkResponse
-import com.berkayozdag.sausocial.data.repository.SocialAppRepository
-import com.berkayozdag.sausocial.model.profile.ProfileResponse
+import com.berkayozdag.sausocial.common.util.NetworkResponse
+import com.berkayozdag.sausocial.data.entities.ProfileResponse
+import com.berkayozdag.sausocial.domain.usecase.SocialAppUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    private val repository: SocialAppRepository
+    private val socialAppUseCases: SocialAppUseCases
 ) : ViewModel() {
 
     private val _usersResponse = MutableLiveData<NetworkResponse<List<ProfileResponse>>>()
@@ -21,7 +21,7 @@ class SearchViewModel @Inject constructor(
 
     fun getUsers() = viewModelScope.launch {
         _usersResponse.value = NetworkResponse.Loading
-        _usersResponse.value = repository.getUsers()
+        _usersResponse.value = socialAppUseCases.getUsers()
     }
 
 }

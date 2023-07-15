@@ -4,16 +4,16 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.berkayozdag.sausocial.common.Constants
-import com.berkayozdag.sausocial.common.loadImage
+import com.berkayozdag.sausocial.common.util.Constants
+import com.berkayozdag.sausocial.common.util.GenericDiffUtil
+import com.berkayozdag.sausocial.common.util.loadImage
+import com.berkayozdag.sausocial.data.entities.Comment
 import com.berkayozdag.sausocial.databinding.ItemCommentBinding
-import com.berkayozdag.sausocial.model.Comment
 
 class CommentsAdapter(var userItemClicked: ((Int) -> Unit) = {}) :
     RecyclerView.Adapter<CommentsAdapter.CommentViewHolder>() {
 
     private var items: List<Comment> = emptyList()
-
     inner class CommentViewHolder(private val binding: ItemCommentBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(comment: Comment) = with(binding) {
@@ -41,11 +41,11 @@ class CommentsAdapter(var userItemClicked: ((Int) -> Unit) = {}) :
 
     override fun getItemCount() = items.size
 
-    fun setData(newCommentItems: List<Comment>) {
-        val diffUtil = CommentsDiffUtil(items, newCommentItems)
-        val diffResults = DiffUtil.calculateDiff(diffUtil)
-        items = newCommentItems
-        diffResults.dispatchUpdatesTo(this)
+    fun setData(newCommentItemEntities: List<Comment>) {
+        val diffCallback = GenericDiffUtil(items, newCommentItemEntities)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+        items = newCommentItemEntities
+        diffResult.dispatchUpdatesTo(this)
     }
 
 }

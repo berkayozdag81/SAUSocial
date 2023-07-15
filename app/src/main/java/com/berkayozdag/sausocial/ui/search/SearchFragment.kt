@@ -13,10 +13,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.berkayozdag.sausocial.R
 import com.berkayozdag.sausocial.common.SessionManager
-import com.berkayozdag.sausocial.common.setVisible
-import com.berkayozdag.sausocial.data.NetworkResponse
+import com.berkayozdag.sausocial.common.util.NetworkResponse
+import com.berkayozdag.sausocial.common.util.setVisible
+import com.berkayozdag.sausocial.data.entities.ProfileResponse
 import com.berkayozdag.sausocial.databinding.FragmentSearchBinding
-import com.berkayozdag.sausocial.model.profile.ProfileResponse
 import com.berkayozdag.sausocial.ui.search.adapter.UsersAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject

@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.berkayozdag.sausocial.R.id
-import com.berkayozdag.sausocial.common.setVisible
+import com.berkayozdag.sausocial.common.util.setVisible
 import com.berkayozdag.sausocial.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 

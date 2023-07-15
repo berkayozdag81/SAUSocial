@@ -30,6 +30,7 @@
         android:gravity="center"
         android:padding="16dp"
         android:text="Aramıza hoş geldin! Seni özledik!"
+        android:textColor="@color/grey_700"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,12 +50,15 @@
         app:boxCornerRadiusTopStart="12dp"
         app:boxStrokeColor="@color/grey_500"
         app:hintTextColor="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/textViewHeader2">
+        app:layout_constraintTop_toBottomOf="@id/textViewHeader2"
+        app:startIconDrawable="@drawable/ic_mail">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextMail"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/text_medium"
+            android:inputType="textEmailAddress" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -84,33 +88,35 @@
         app:boxStrokeColor="@color/grey_500"
         app:endIconMode="password_toggle"
         app:hintTextColor="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/layoutMailInput">
+        app:layout_constraintTop_toBottomOf="@id/layoutMailInput"
+        app:startIconDrawable="@drawable/ic_lock">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableEnd="@drawable/ic_hidden_password"
+            android:fontFamily="@font/text_medium"
             android:inputType="textPassword" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/textViewRecoveryPassword"
-        android:layout_width="0dp"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:rippleColor="@color/grey_300"
         android:fontFamily="@font/text_regular"
-        android:gravity="end"
-        android:padding="16dp"
         android:text="Şifremi unuttum"
+        android:textColor="@color/grey_700"
         android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@+id/layoutPasswordInput"
-        app:layout_constraintStart_toStartOf="@+id/layoutPasswordInput"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layoutPasswordInput" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonLogin"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:backgroundTint="@color/main_color"
@@ -118,8 +124,6 @@
         android:padding="16dp"
         android:text="Giriş"
         app:cornerRadius="12dp"
-        app:layout_constraintEnd_toEndOf="@+id/textViewRecoveryPassword"
-        app:layout_constraintStart_toStartOf="@+id/textViewRecoveryPassword"
         app:layout_constraintTop_toBottomOf="@id/textViewRecoveryPassword" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
